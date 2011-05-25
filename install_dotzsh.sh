@@ -44,9 +44,10 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/incr.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
 }
 
-zsh_cleanup() {
+zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/lib/load.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
@@ -54,6 +55,7 @@ zsh_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/incr.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
 }
 
 install_dotzsh() {
@@ -61,7 +63,7 @@ install_dotzsh() {
     test -d $TARGET || $SUDO mkdir -p $TARGET
     zsh_compile
     $SUDO cp $OPTIONS $SOURCE/dot_zsh/* $TARGET/
-    zsh_cleanup
+    zwc_cleanup
     test -n "$2" || set_permission
 }
 

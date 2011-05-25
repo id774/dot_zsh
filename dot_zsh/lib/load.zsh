@@ -12,17 +12,18 @@ call_screen() {
 
 load_plugins() {
     if [ -d /etc/zsh/plugins ]; then
-        for PLUGIN in /etc/zsh/plugins/*.zsh
+        for ZSH_PLUGIN in /etc/zsh/plugins/*.zsh
         do
-            source $PLUGIN
+            source $ZSH_PLUGIN
         done
     fi
     if [ -d $HOME/.zsh/plugins ]; then
-        for PLUGIN in $HOME/.zsh/plugins/*.zsh
+        for ZSH_PLUGIN in $HOME/.zsh/plugins/*.zsh
         do
-            source $PLUGIN
+            source $ZSH_PLUGIN
         done
     fi
+    unset ZSH_PLUGIN
 }
 
 load_local_settings() {

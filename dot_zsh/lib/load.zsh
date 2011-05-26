@@ -16,14 +16,15 @@ load_plugins() {
         do
             source $ZSH_PLUGIN
         done
+        unset ZSH_PLUGIN
     fi
     if [ -d $HOME/.zsh/plugins ]; then
         for ZSH_PLUGIN in $HOME/.zsh/plugins/*.zsh
         do
             source $ZSH_PLUGIN
         done
+        unset ZSH_PLUGIN
     fi
-    unset ZSH_PLUGIN
 }
 
 load_local_settings() {

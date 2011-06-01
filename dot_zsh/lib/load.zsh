@@ -1,5 +1,5 @@
 # load.zsh
-# Last Change: 24-May-2011.
+# Last Change: 1-Jun-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_screen() {
@@ -11,14 +11,13 @@ call_screen() {
 }
 
 load_plugins() {
-    if [ -d /etc/zsh/plugins ]; then
+    if [ -d $HOME/.zsh/plugins ]; then
         for ZSH_PLUGIN in /etc/zsh/plugins/*.zsh
         do
             source $ZSH_PLUGIN
         done
         unset ZSH_PLUGIN
-    fi
-    if [ -d $HOME/.zsh/plugins ]; then
+    elif [ -d /etc/zsh/plugins ]; then
         for ZSH_PLUGIN in $HOME/.zsh/plugins/*.zsh
         do
             source $ZSH_PLUGIN

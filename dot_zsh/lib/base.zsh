@@ -132,7 +132,7 @@ set_basic_options() {
         zle -N predict-on
         zle -N predict-off
         PROMPT="%{$reset_color%}%{$fg[green]%}%(!.#.$) %{$reset_color%}"
-        PROMPT="%{$reset_color%}%{$fg[green]%}:%{$fg[red]%}%B%~%b%{$reset_color%}$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[green]%}:%{$fg[magenta]%}%B%~%b%{$reset_color%}$PROMPT"
         PROMPT="%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}$PROMPT"
         PROMPT="%{$reset_color%}%{%(?.$fg[cyan].$fg[red])%}%*%{$reset_color%} $PROMPT"
     fi

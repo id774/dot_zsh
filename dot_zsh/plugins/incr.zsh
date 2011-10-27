@@ -2,7 +2,7 @@
 # by y.fujii <y-fujii at mimosa-pudica.net>, public domain
 #
 # incr-0.2.zsh
-# Last Change: 24-May-2011.
+# Last Change: 27-Oct-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 autoload -U compinit
@@ -26,6 +26,8 @@ compdef -d ssh
 compdef -d sshfs
 compdef -d scp
 compdef -d rsync
+compdef -d rsh
+compdef -d rcp
 compdef -d tar
 compdef -d make
 compdef -d java

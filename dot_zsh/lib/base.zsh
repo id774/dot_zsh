@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 14-Jun-2011.
+# Last Change: 19-Nov-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -193,10 +193,9 @@ set_basic_options() {
     alias -g A='| awk'
     alias -g W='| wc'
     alias g='gvim'
-    alias vi='screen -U vim'
     alias v='vim'
     alias e='emacs -nw'
-    alias em='screen -U emacs -nw'
+    alias em='emacs -nw'
     alias l='ls -ltra'
     alias d='ls -ltr'
     alias dir='ls -ltr'

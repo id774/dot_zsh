@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 19-Nov-2011.
+# Last Change: 14-Dec-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -14,16 +14,10 @@ set_gnu_env() {
 
 set_linux_env() {
     export PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games
-    set_java_path /usr/lib/jvm/java-6-openjdk
-    set_java_path /usr/lib/jvm/java-6-sun
-    set_java_path /usr/java/default
-    set_java_path /opt/java/jdk
 }
 
 set_solaris_env() {
     export PATH=/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin
-    set_java_path /usr/java
-    set_java_path /opt/java/jdk
 }
 
 set_darwin_env() {
@@ -43,16 +37,6 @@ set_darwin_env() {
     fi
     export PATH=/opt/sbin:/opt/bin:/opt/ruby/bin:/opt/python/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/usr/X11/bin
     export MANPATH=/usr/local/share/man:/usr/share/man:/opt/local/man:/usr/X11/man
-    set_java_path /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
-    set_java_path /System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home
-}
-
-set_java_path() {
-    if [ -d $1 ]; then
-        export JAVA_HOME=$1
-        export PATH=$JAVA_HOME/bin:$PATH
-        export CLASSPATH=.:$JAVA_HOME/lib/tools.jar
-    fi
 }
 
 set_os_env() {

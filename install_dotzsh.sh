@@ -45,6 +45,7 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/incr.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
 }
 
 zwc_cleanup() {
@@ -56,6 +57,7 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/incr.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc
 }
 
 install_dotzsh() {

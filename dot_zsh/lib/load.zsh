@@ -1,5 +1,5 @@
 # load.zsh
-# Last Change: 02-Jun-2011.
+# Last Change: 15-Dec-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_screen() {
@@ -47,6 +47,7 @@ load_main() {
     load_base
     load_local_settings
     load_plugins
+    test -d $HOME/bin && export PATH=$HOME/bin:$PATH
     call_screen
 }
 

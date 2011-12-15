@@ -40,6 +40,7 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/load.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/alias.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cryptfs.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
@@ -53,6 +54,7 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/lib/load.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/alias.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/cryptfs.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc

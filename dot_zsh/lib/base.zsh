@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 14-Dec-2011.
+# Last Change: 15-Dec-2011.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -125,9 +125,6 @@ set_basic_options() {
     setopt pushd_ignore_dups
     setopt pushd_to_home
     setopt pushd_silent
-    alias pd='popd'
-    alias gd='dirs -v; echo -n "select number: ";
-    read newdir; cd +"$newdir" '
     setopt no_beep
     setopt complete_in_word
     setopt extended_glob
@@ -168,38 +165,6 @@ set_basic_options() {
     ulimit -s unlimited
     limit coredumpsize 0
     export G_FILENAME_ENCODING=@locale
-    alias sudo='sudo '
-    alias -g L='| less'
-    alias -g H='| head'
-    alias -g T='| tail'
-    alias -g G='| grep'
-    alias -g S='| sed'
-    alias -g A='| awk'
-    alias -g W='| wc'
-    alias g='gvim'
-    alias v='vim'
-    alias e='emacs -nw'
-    alias em='emacs -nw'
-    alias l='ls -ltra'
-    alias d='ls -ltr'
-    alias dir='ls -ltr'
-    alias la='ls -a'
-    alias a='ls -a'
-    alias f='file'
-    alias j='cd'
-    alias c='cd'
-    alias cl='clear'
-    alias cls='clear'
-    alias k='clear'
-    alias copy='cp'
-    alias move='mv'
-    alias ren='mv'
-    alias del='rm'
-    alias md='mkdir'
-    alias s='screen -U'
-    alias scrr='screen -U -D -RR'
-    alias mv='mv -vi'
-    alias rm='rm -i'
     export RUBYOPT=rubygems
 }
 
@@ -234,7 +199,6 @@ base_main() {
     set_tmp_path $HOME/.tmp
     set_private_path $HOME/private/scripts
     set_scripts_path $HOME/scripts
-    test -d $HOME/bin && export PATH=$HOME/bin:$PATH
 }
 
 base_main

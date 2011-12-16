@@ -76,6 +76,11 @@ set_terminal_options() {
 
 set_basic_options() {
     bindkey -e
+    autoload -U promptinit ; promptinit
+    autoload -U colors     ; colors
+    autoload -U predict-on
+    zle -N predict-on
+    zle -N predict-off
     zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
     autoload -U compinit ; compinit
@@ -91,9 +96,6 @@ set_basic_options() {
     setopt auto_menu
     setopt auto_param_keys
     setopt auto_resume
-    autoload -U predict-on
-    bindkey '^xp'  predict-on
-    bindkey '^x^p' predict-off
     HISTFILE=$HOME/.zsh_history
     HISTSIZE=100000
     SAVEHIST=100000

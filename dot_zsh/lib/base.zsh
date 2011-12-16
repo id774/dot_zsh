@@ -110,16 +110,6 @@ set_basic_options() {
     setopt hist_no_store
     setopt hist_expand
     function history-all { history -E 1 }
-    autoload -U promptinit ; promptinit
-    autoload -U colors     ; colors
-    if [ "$TERM" != "dumb" ]; then
-        zle -N predict-on
-        zle -N predict-off
-        PROMPT="%{$reset_color%}%{$fg[green]%}%(!.#.$) %{$reset_color%}"
-        PROMPT="%{$reset_color%}%{$fg[green]%}:%{$fg[magenta]%}%B%~%b%{$reset_color%}$PROMPT"
-        PROMPT="%{$reset_color%}%{$fg[yellow]%}%m%{$reset_color%}$PROMPT"
-        PROMPT="%{$reset_color%}%{%(?.$fg[cyan].$fg[red])%}%*%{$reset_color%} $PROMPT"
-    fi
     setopt auto_cd
     setopt auto_pushd
     setopt pushd_ignore_dups

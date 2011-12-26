@@ -18,7 +18,6 @@ set_java_path \
   /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home \
   /System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home \
   /usr/lib/jvm/java-6-openjdk \
-  /usr/lib/jvm/java-6-sun \
   /usr/java \
   /usr/java/default \
   /opt/java/jdk \

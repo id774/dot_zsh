@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 15-Dec-2011.
+# Last Change: 12-Jan-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -15,7 +15,8 @@ set_alias() {
     alias -g A='| awk'
     alias -g W='| wc'
     alias g='gvim'
-    alias v='vim'
+    alias v='vi'
+    alias vv='vi .'
     alias e='emacs -nw'
     alias em='emacs -nw'
     alias l='ls -ltra'
@@ -38,6 +39,14 @@ set_alias() {
     alias scrr='screen -U -D -RR'
     alias mv='mv -vi'
     alias rm='rm -i'
+    alias svnc='svn commit -m'
+    alias svns='svn status'
+    alias svnd='svn diff'
+    alias svnl='svn log'
+    alias gitc='git commit -a -m'
+    alias gits='git status'
+    alias gitd='git diff'
+    alias gitl='git log'
 }
 
 set_alias

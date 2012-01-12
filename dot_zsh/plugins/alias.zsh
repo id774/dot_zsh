@@ -43,11 +43,13 @@ set_alias() {
     alias svns='svn status'
     alias svnd='svn diff'
     alias svnl='svn log'
+    alias svna='svn add'
     alias svnu='svn up'
     alias gitc='git commit -a -m'
     alias gits='git status'
     alias gitd='git diff'
     alias gitl='git log'
+    alias gita='git add'
     alias gitu='git pull'
     alias gitp='git push'
 }

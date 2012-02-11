@@ -2,7 +2,8 @@ DOT_ZSH
 =======
 
 The zsh pluggable framework.
-See also http://d.hatena.ne.jp/Naruhodius/20110524/1306231835 .
+See doc/README.ja file.
+(document written in Japanese.)
 
 
 Usage
@@ -58,8 +59,6 @@ Authors
 Copyright and license
 ---------------------
 
-Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
-
-  http://www.gnu.org/copyleft/gpl.html
+See the file doc/LICENSE.
 
 

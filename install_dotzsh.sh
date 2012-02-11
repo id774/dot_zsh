@@ -7,6 +7,8 @@
 #
 #  Maintainer: id774 <idnanashi@gmail.com>
 #
+#  v0.3 2/11,2012
+#       Change default install target to /usr/local/etc/zsh.
 #  v0.2 5/23,2011
 #       Install zsh plugins to /etc/zsh/plugins.
 #  v0.1 5/20,2011
@@ -15,7 +17,8 @@
 
 setup_environment() {
     test -n "$1" && export TARGET=$1
-    test -n "$1" || export TARGET=/etc/zsh
+    test -n "$1" || export TARGET=/usr/local/etc/zsh
+    #test -n "$1" || export TARGET=/etc/zsh
     #test -n "$1" || export TARGET=$HOME/.zsh
     test -n "$2" || SUDO=sudo
     test -n "$2" && SUDO=

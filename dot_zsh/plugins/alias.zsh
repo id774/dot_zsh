@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 24-Feb-2012.
+# Last Change: 26-Feb-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -15,7 +15,7 @@ set_alias() {
     alias -g A='| awk'
     alias -g W='| wc'
     alias g='gvim'
-    alias v='vi'
+    alias v='vim'
     alias vv='vim .'
     alias e='emacs -nw'
     alias em='emacs -nw'

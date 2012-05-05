@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 26-Feb-2012.
+# Last Change: 06-May-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -41,6 +41,7 @@ set_alias() {
     alias scrr='screen -U -D -RR'
     alias mv='mv -vi'
     alias rm='rm -i'
+    alias crontab='crontab -i'
     alias svnc='svn commit -m'
     alias svns='svn status'
     alias svnd='svn diff'

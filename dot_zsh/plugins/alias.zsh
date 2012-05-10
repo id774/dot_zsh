@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 06-May-2012.
+# Last Change: 12-May-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -55,6 +55,7 @@ set_alias() {
     alias gita='git add'
     alias gitu='git pull'
     alias gitp='git push'
+    alias be='bundle exec'
 }
 
 set_alias

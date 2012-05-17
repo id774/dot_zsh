@@ -14,7 +14,7 @@ set_alias() {
     alias -g S='| sed'
     alias -g A='| awk'
     alias -g W='| wc'
-    alias g='gvim'
+    alias g='git'
     alias v='vim'
     alias vv='vim .'
     alias e='emacs -nw'

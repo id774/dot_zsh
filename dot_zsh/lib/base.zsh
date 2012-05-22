@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 1-Jan-2012.
+# Last Change: 22-May-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -147,6 +147,7 @@ set_basic_options() {
     setopt magic_equal_subst
     setopt print_eightbit
     setopt print_exit_value
+    setopt rc_quotes
     LESS=-M
     export LESS
     if type /usr/bin/lesspipe &>/dev/null

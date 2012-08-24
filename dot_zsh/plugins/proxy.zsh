@@ -4,6 +4,8 @@
 
 #export PROXY=proxy.hoge.co.jp
 #export http_proxy=http://$PROXY:8080
+#export https_proxy=http://$PROXY:8080
 #export ftp_proxy=$http_proxy
 #export HTTP_PROXY=$http_proxy
+#export HTTPS_PROXY=$http_proxy
 #export FTP_PROXY=$http_proxy

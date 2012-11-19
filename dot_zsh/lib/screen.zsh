@@ -1,16 +1,18 @@
 # screen.zsh
-# Last Change: 24-May-2011.
+# Last Change: 19-Nov-2012.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_exec_screen() {
     if [ "$TERM" != "linux" ]; then
         if [ `ps ax | grep screen | grep -v grep | wc -l` = 0 ]; then
-            exec screen -U -D -RR
+            which screen > /dev/null && \
+                exec screen -U -D -RR
         fi
 
         case "${TERM}" in
           *xterm*|rxvt|(dt|k|E)term)
-            exec screen -U -D -RR
+            which screen > /dev/null && \
+                exec screen -U -D -RR
             ;;
         esac
     fi

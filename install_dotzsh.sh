@@ -51,6 +51,8 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ruby.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/python.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/gauche.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/maven.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/incr.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
@@ -69,6 +71,8 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/ruby.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/python.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/gauche.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/maven.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/incr.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc

@@ -57,6 +57,7 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/hadoop.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/vcs_info.zsh'
 }
 
 zwc_cleanup() {
@@ -77,6 +78,7 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/hadoop.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/vcs_info.zsh.zwc
 }
 
 install_dotzsh() {

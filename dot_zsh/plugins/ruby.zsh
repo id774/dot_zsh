@@ -1,5 +1,5 @@
 # ruby.zsh
-# Last Change: 14-Dec-2011.
+# Last Change: 09-Feb-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_ruby_path() {
@@ -16,3 +16,4 @@ set_ruby_path \
   /opt/ruby/1.8.7 \
   /opt/ruby/1.9.2 \
   /opt/ruby/1.9.3
+  /opt/ruby/2.0

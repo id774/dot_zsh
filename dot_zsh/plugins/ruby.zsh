@@ -15,5 +15,5 @@ set_ruby_path() {
 set_ruby_path \
   /opt/ruby/1.8.7 \
   /opt/ruby/1.9.2 \
-  /opt/ruby/1.9.3
+  /opt/ruby/1.9.3 \
   /opt/ruby/2.0

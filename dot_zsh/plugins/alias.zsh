@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 08-Feb-2013.
+# Last Change: 20-Feb-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -44,9 +44,9 @@ set_alias() {
     alias crontab='crontab -i'
     alias svnc='svn commit -m'
     alias svns='svn status'
-    alias svnd='svn diff'
     alias svnl='svn log'
     alias svna='svn add'
+    alias svnd='svn delete'
     alias svnu='svn up'
     alias gitc='git commit -a -m'
     alias gits='git status'

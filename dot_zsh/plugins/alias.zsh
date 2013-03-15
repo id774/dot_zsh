@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 20-Feb-2013.
+# Last Change: 15-Mar-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -57,6 +57,7 @@ set_alias() {
     alias gitu='git pull'
     alias gitp='git push'
     alias be='bundle exec'
+    alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
 }
 
 set_alias

@@ -60,7 +60,7 @@ zsh についての詳細は ZSH(1) の man ページを参照のこと。
 
  一般的な GNU/Linux 及び UNIX 互換環境で動作する。
 
-次の環境で動作する。
+少なくとも次の環境で動作を確認している。
 
 - Red Hat Enterprise Linux 5 以降
 - CentOS 5 以降

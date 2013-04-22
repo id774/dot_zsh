@@ -2,14 +2,12 @@ DOT_ZSH
 =======
 
 The zsh pluggable framework.
-See doc/README.ja file.
-(document written in Japanese.)
 
 
-Usage
------
+Get Started
+-----------
 
-To get started -- checkout http://github.com/id774/dot_zsh
+clone http://github.com/id774/dot_zsh
 
 You can install dot zsh in one of two ways:
 
@@ -23,7 +21,14 @@ Or if you install in your home directory
 ~/dot_zsh/install_dotzsh.sh ~/.zsh nosudo
 ```
 
-For more info, refer to the script.
+Put .zshrc on your home directory.
+
+``` html
+~/dot_zsh/dot_zshrc ~/.zshrc
+```
+
+For more info, refer to the doc/README.ja file.
+(document written in Japanese.)
 
 
 Versioning

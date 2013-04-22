@@ -24,7 +24,7 @@ Or if you install in your home directory
 Put .zshrc on your home directory.
 
 ``` html
-~/dot_zsh/dot_zshrc ~/.zshrc
+cp ~/dot_zsh/dot_zshrc ~/.zshrc
 ```
 
 For more info, refer to the doc/README.ja file.

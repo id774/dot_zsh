@@ -44,6 +44,7 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/alias.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/amazonaws.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cryptfs.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ldlib.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/prompt.zsh'
@@ -65,6 +66,7 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/alias.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/amazonaws.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/cryptfs.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/ldlib.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/prompt.zsh.zwc

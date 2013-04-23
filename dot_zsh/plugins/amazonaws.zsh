@@ -12,5 +12,11 @@ set_aws_path() {
     done
 }
 
+export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+export EC2_HOME=/opt/aws
+export EC2_PRIVATE_KEY=$HOME/.aws/pk-XXXXXXXX.pem
+export EC2_CERT=$HOME/.aws/cert-XXXXXXXX.pem
+
 set_aws_path \
-  /opt/aws
+  $EC2_HOME

@@ -13,4 +13,4 @@ set_aws_path() {
 }
 
 set_aws_path \
-  /opt/aws/bin
+  /opt/aws

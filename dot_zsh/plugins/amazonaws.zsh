@@ -15,6 +15,7 @@ set_aws_path() {
 export EC2_HOME=/opt/aws
 # export EC2_PRIVATE_KEY=$HOME/.aws/pk-XXXXXXXX.pem
 # export EC2_CERT=$HOME/.aws/cert-XXXXXXXX.pem
+# export EC2_URL=http://ec2.ap-northeast-1.amazonaws.com
 # export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXX
 # export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 

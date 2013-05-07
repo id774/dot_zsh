@@ -38,6 +38,7 @@ set_alias() {
     alias del='rm'
     alias md='mkdir'
     alias s='screen -U'
+    alias scd='screen -U -D'
     alias scrr='screen -U -D -RR'
     alias mv='mv -vi'
     alias rm='rm -i'

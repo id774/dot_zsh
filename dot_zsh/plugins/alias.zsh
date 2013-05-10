@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 15-Mar-2013.
+# Last Change: 10-May-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -39,6 +39,7 @@ set_alias() {
     alias md='mkdir'
     alias s='screen -U'
     alias scd='screen -U -D'
+    alias scdd='screen -U -D'
     alias scrr='screen -U -D -RR'
     alias mv='mv -vi'
     alias rm='rm -i'

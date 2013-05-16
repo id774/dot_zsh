@@ -58,6 +58,7 @@ set_alias() {
     alias gita='git add'
     alias gitu='git pull'
     alias gitp='git push'
+    alias gitco='git checkout'
     alias gitcl='git config -l'
     alias gitcr='git config remote.origin.url'
     alias be='bundle exec'

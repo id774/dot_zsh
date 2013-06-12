@@ -1,9 +1,9 @@
 # hadoop.zsh
-# Last Change: 24-Jul-2012.
+# Last Change: 12-Jun-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 #export HADOOP_HOME=/usr
 #export HADOOP_ROOT=/usr/lib/hadoop
-#export HADOOP_JAR=$HADOOP_ROOT/contrib/streaming/hadoop-streaming-0.20.2-cdh3u4.jar
-#export HIVE_HOME=/opt/hive/0.9.0
+#export HADOOP_JAR=$HADOOP_ROOT/contrib/streaming/hadoop-streaming-current.jar
+#export HIVE_HOME=/opt/hive/current
 #export PATH=$HIVE_HOME/bin:$PATH

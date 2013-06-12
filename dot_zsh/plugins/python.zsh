@@ -1,5 +1,5 @@
 # python.zsh
-# Last Change: 21-Dec-2011.
+# Last Change: 12-Jun-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_python_path() {
@@ -13,5 +13,5 @@ set_python_path() {
 }
 
 set_python_path \
-  /opt/python/2.7.2 \
-  /opt/python/3.2.2
+  /opt/python/current
+

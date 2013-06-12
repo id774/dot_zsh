@@ -1,5 +1,5 @@
 # gauche.zsh
-# Last Change: 16-May-2012.
+# Last Change: 12-Jun-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gauche_path() {
@@ -13,4 +13,5 @@ set_gauche_path() {
 }
 
 set_gauche_path \
-  /opt/gauche/0.9.3.2
+  /opt/gauche/current
+

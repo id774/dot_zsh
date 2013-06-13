@@ -7,6 +7,8 @@
 #
 #  Maintainer: id774 <idnanashi@gmail.com>
 #
+#  v0.4 6/13,2013
+#       If target exist, delete it.
 #  v0.3 2/11,2012
 #       Change default install target to /usr/local/etc/zsh.
 #  v0.2 5/23,2011
@@ -44,17 +46,13 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/alias.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/apps.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/amazonaws.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cassandra.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cryptfs.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ldlib.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/prompt.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ruby.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/python.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/gauche.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/maven.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/incr.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
@@ -67,17 +65,13 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/alias.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/apps.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/amazonaws.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/cassandra.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/cryptfs.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/ldlib.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/prompt.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/ruby.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/python.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/gauche.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/maven.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/incr.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc
@@ -87,7 +81,8 @@ zwc_cleanup() {
 
 install_dotzsh() {
     setup_environment $*
-    test -d $TARGET || $SUDO mkdir -p $TARGET
+    test -d $TARGET && $SUDO rm -rf $TARGET
+    $SUDO mkdir -p $TARGET
     zsh_compile
     $SUDO cp $OPTIONS $SOURCE/dot_zsh/* $TARGET/
     zwc_cleanup

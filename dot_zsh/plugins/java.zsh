@@ -1,5 +1,5 @@
 # java.zsh
-# Last Change: 12-Jun-2013.
+# Last Change: 17-Jun-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_java_path() {
@@ -20,6 +20,7 @@ set_java_path \
   /usr/lib/jvm/java-6-openjdk \
   /usr/java \
   /usr/java/default \
+  /opt/java/jdk \
   /opt/java/jdk/current
 
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd"

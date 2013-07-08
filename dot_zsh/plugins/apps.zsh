@@ -1,5 +1,5 @@
 # apps.zsh
-# Last Change: 20-Jun-2013.
+# Last Change: 08-Jul-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_app_path() {
@@ -20,6 +20,7 @@ set_apps_path() {
 set_apps_path \
     ruby \
     python \
+    mongo \
     maven \
     gauche \
     cassandra

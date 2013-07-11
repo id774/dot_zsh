@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 16-May-2013.
+# Last Change: 11-Jul-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -62,6 +62,7 @@ set_alias() {
     alias gitcl='git config -l'
     alias gitcr='git config remote.origin.url'
     alias be='bundle exec'
+    alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
     alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
 }
 

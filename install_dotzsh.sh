@@ -42,10 +42,10 @@ set_permission() {
 }
 
 zsh_compile() {
-    zsh -c 'zcompile $SOURCE/dot_zsh/lib/R.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/load.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/R.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/alias.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/apps.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/amazonaws.zsh'
@@ -62,10 +62,10 @@ zsh_compile() {
 }
 
 zwc_cleanup() {
-    rm -f $SOURCE/dot_zsh/lib/R.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/load.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/R.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/alias.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/apps.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/amazonaws.zsh.zwc

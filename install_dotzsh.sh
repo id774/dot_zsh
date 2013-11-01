@@ -42,6 +42,7 @@ set_permission() {
 }
 
 zsh_compile() {
+    zsh -c 'zcompile $SOURCE/dot_zsh/lib/R.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/load.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
@@ -61,6 +62,7 @@ zsh_compile() {
 }
 
 zwc_cleanup() {
+    rm -f $SOURCE/dot_zsh/lib/R.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/load.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
     rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc

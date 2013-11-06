@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 11-Jul-2013.
+# Last Change: 06-Nov-2013.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -27,6 +27,7 @@ set_alias() {
     alias la='ls -a'
     alias a='ls -a'
     alias f='file'
+    alias p='less'
     alias j='cd'
     alias c='cd'
     alias cl='clear'

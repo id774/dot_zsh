@@ -20,6 +20,8 @@ set_java_path \
   /usr/lib/jvm/java-6-openjdk \
   /usr/java \
   /usr/java/default \
+  /opt/java/jre \
+  /opt/java/jre/current \
   /opt/java/jdk \
   /opt/java/jdk/current
 

@@ -2,7 +2,7 @@
 # by y.fujii <y-fujii at mimosa-pudica.net>, public domain
 #
 # incr-0.2.zsh
-# Last Change: 27-Oct-2011.
+# Last Change: 17-Jan-2014.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 autoload -U compinit
@@ -42,104 +42,104 @@ now_predict=0
 
 function limit-completion
 {
-	if ((compstate[nmatches] <= 1)); then
-		zle -M ""
-	elif ((compstate[list_lines] > 6)); then
-		compstate[list]=""
-		zle -M "too many matches."
-	fi
+    if ((compstate[nmatches] <= 1)); then
+        zle -M ""
+    elif ((compstate[list_lines] > 6)); then
+        compstate[list]=""
+        zle -M "too many matches."
+    fi
 }
 
 function correct-prediction
 {
-	if ((now_predict == 1)); then
-		if [[ "$BUFFER" != "$buffer_prd" ]] || ((CURSOR != cursor_org)); then
-			now_predict=0
-		fi
-	fi
+    if ((now_predict == 1)); then
+        if [[ "$BUFFER" != "$buffer_prd" ]] || ((CURSOR != cursor_org)); then
+            now_predict=0
+        fi
+    fi
 }
 
 function remove-prediction
 {
-	if ((now_predict == 1)); then
-		BUFFER="$buffer_org"
-		now_predict=0
-	fi
+    if ((now_predict == 1)); then
+        BUFFER="$buffer_org"
+        now_predict=0
+    fi
 }
 
 function show-prediction
 {
-	# assert(now_predict == 0)
-	if
-		((PENDING == 0)) &&
-		((CURSOR > 1)) &&
-		[[ "$PREBUFFER" == "" ]] &&
-		[[ "$BUFFER[CURSOR]" != " " ]]
-	then
-		cursor_org="$CURSOR"
-		buffer_org="$BUFFER"
-		comppostfuncs=(limit-completion)
-		zle complete-word
-		cursor_prd="$CURSOR"
-		buffer_prd="$BUFFER"
-		if [[ "$buffer_org[1,cursor_org]" == "$buffer_prd[1,cursor_org]" ]]; then
-			CURSOR="$cursor_org"
-			if [[ "$buffer_org" != "$buffer_prd" ]] || ((cursor_org != cursor_prd)); then
-				now_predict=1
-			fi
-		else
-			BUFFER="$buffer_org"
-			CURSOR="$cursor_org"
-		fi
-	else
-		zle -M ""
-	fi
+    # assert(now_predict == 0)
+    if
+        ((PENDING == 0)) &&
+        ((CURSOR > 1)) &&
+        [[ "$PREBUFFER" == "" ]] &&
+        [[ "$BUFFER[CURSOR]" != " " ]]
+    then
+        cursor_org="$CURSOR"
+        buffer_org="$BUFFER"
+        comppostfuncs=(limit-completion)
+        zle complete-word
+        cursor_prd="$CURSOR"
+        buffer_prd="$BUFFER"
+        if [[ "$buffer_org[1,cursor_org]" == "$buffer_prd[1,cursor_org]" ]]; then
+            CURSOR="$cursor_org"
+            if [[ "$buffer_org" != "$buffer_prd" ]] || ((cursor_org != cursor_prd)); then
+                now_predict=1
+            fi
+        else
+            BUFFER="$buffer_org"
+            CURSOR="$cursor_org"
+        fi
+    else
+        zle -M ""
+    fi
 }
 
 function vi-cmd-mode-incr
 {
-	correct-prediction
-	remove-prediction
-	zle vi-cmd-mode
+    correct-prediction
+    remove-prediction
+    zle vi-cmd-mode
 }
 
 function self-insert-incr
 {
-	correct-prediction
-	remove-prediction
-	if zle .self-insert; then
-		show-prediction
-	fi
+    correct-prediction
+    remove-prediction
+    if zle .self-insert; then
+        show-prediction
+    fi
 }
 
 function vi-backward-delete-char-incr
 {
-	correct-prediction
-	remove-prediction
-	if zle vi-backward-delete-char; then
-		show-prediction
-	fi
+    correct-prediction
+    remove-prediction
+    if zle vi-backward-delete-char; then
+        show-prediction
+    fi
 }
 
 function backward-delete-char-incr
 {
-	correct-prediction
-	remove-prediction
-	if zle backward-delete-char; then
-		show-prediction
-	fi
+    correct-prediction
+    remove-prediction
+    if zle backward-delete-char; then
+        show-prediction
+    fi
 }
 
 function expand-or-complete-prefix-incr
 {
-	correct-prediction
-	if ((now_predict == 1)); then
-		CURSOR="$cursor_prd"
-		now_predict=0
-		comppostfuncs=(limit-completion)
-		zle list-choices
-	else
-		remove-prediction
-		zle expand-or-complete-prefix
-	fi
+    correct-prediction
+    if ((now_predict == 1)); then
+        CURSOR="$cursor_prd"
+        now_predict=0
+        comppostfuncs=(limit-completion)
+        zle list-choices
+    else
+        remove-prediction
+        zle expand-or-complete-prefix
+    fi
 }

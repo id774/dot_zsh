@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 #
 ########################################################################
 # Install dot_zsh
@@ -7,6 +7,8 @@
 #
 #  Maintainer: id774 <idnanashi@gmail.com>
 #
+#  v0.5 1/19,2014
+#       Change shebang to sh.
 #  v0.4 6/13,2013
 #       If target exist, delete it.
 #  v0.3 2/11,2012

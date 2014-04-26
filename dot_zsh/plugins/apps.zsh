@@ -23,5 +23,6 @@ set_apps_path \
     mongo \
     maven \
     gauche \
+    protobuf \
     cassandra
 

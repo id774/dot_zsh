@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 06-Nov-2013.
+# Last Change: 15-May-2014.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_alias() {
@@ -51,7 +51,7 @@ set_alias() {
     alias svna='svn add'
     alias svnd='svn delete'
     alias svnu='svn up'
-    alias gitc='git commit -a -m'
+    alias gitc='git commit -a -v -m'
     alias gits='git status'
     alias gitb='git branch'
     alias gitd='git diff'

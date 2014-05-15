@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 22-May-2012.
+# Last Change: 15-May-2014.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -81,7 +81,6 @@ set_basic_options() {
     autoload -U predict-on
     zle -N predict-on
     zle -N predict-off
-    export EDITOR=vi
     zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
     autoload -U compinit ; compinit

@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 31-Jul-2014.
+# Last Change: 02-Aug-2014.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -83,10 +83,6 @@ set_alias() {
     alias be='bundle exec'
     alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
     alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
-    alias -s pl=perl
-    alias -s py=python
-    alias -s rb=ruby
-    alias -s hs=runhaskell
     alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
     alias -s {c,cpp}=runcpp
 }

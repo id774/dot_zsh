@@ -54,6 +54,7 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cryptfs.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ldlib.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/pager.zsh'
+    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/pip.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/prompt.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
@@ -75,6 +76,7 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/cryptfs.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/ldlib.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/pager.zsh.zwc
+    rm -f $SOURCE/dot_zsh/plugins/pip.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/prompt.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc

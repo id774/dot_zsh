@@ -28,5 +28,5 @@ function _update_vcs_info_msg() {
     [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
 add-zsh-hook precmd _update_vcs_info_msg
-RPROMPT="%1(v|%F{cyan}%1v%f|%F{magenta}[%n])"
+RPROMPT="%1(v|%F{cyan}%1v%f|[%n])"
 setopt transient_rprompt

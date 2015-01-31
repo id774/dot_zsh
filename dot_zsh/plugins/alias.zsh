@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 04-Aug-2014.
+# Last Change: 31-Jan-2015.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -18,7 +18,7 @@ function extract() {
   esac
 }
 
-function runcpp () { g++ -std=c++11 $1 && shift && ./a.out $@ }
+function runcpp () { g++ -std=c++0x $1 && shift && ./a.out $@ }
 
 set_alias() {
     alias pd='popd'

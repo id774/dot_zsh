@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 31-Jan-2015.
+# Last Change: 02-Apr-2015.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -38,6 +38,8 @@ set_alias() {
     alias p='vim -R'
     alias e='emacs -nw'
     alias em='emacs -nw'
+    alias hist='history -Di'
+    alias history='history -Di'
     alias l='ls -ltra'
     alias ll='ls -lZtra'
     alias d='ls -ltr'

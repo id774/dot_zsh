@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 15-May-2014.
+# Last Change: 02-Apr-2015.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -111,6 +111,7 @@ set_basic_options() {
     setopt hist_save_no_dups
     setopt hist_no_store
     setopt hist_expand
+    function hist-edit { vim $HISTFILE }
     function history-all { history -E 1 }
     setopt auto_cd
     setopt auto_pushd

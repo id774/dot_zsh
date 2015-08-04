@@ -58,7 +58,6 @@ zsh_compile() {
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/prompt.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/incr.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
     zsh -c 'zcompile $SOURCE/dot_zsh/plugins/hadoop.zsh'
@@ -80,7 +79,6 @@ zwc_cleanup() {
     rm -f $SOURCE/dot_zsh/plugins/prompt.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/incr.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc
     rm -f $SOURCE/dot_zsh/plugins/hadoop.zsh.zwc

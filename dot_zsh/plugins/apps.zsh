@@ -1,5 +1,5 @@
 # apps.zsh
-# Last Change: 08-Jul-2013.
+# Last Change: 18-Apr-2016.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_app_path() {
@@ -18,6 +18,7 @@ set_apps_path() {
 }
 
 set_apps_path \
+    emacs \
     ruby \
     python \
     mongo \

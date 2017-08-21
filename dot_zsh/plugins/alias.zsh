@@ -62,6 +62,8 @@ set_alias() {
     alias scd='screen -U -D'
     alias scdd='screen -U -D'
     alias scrr='screen -U -D -RR'
+    alias scls='screen -ls'
+    alias scxr='screen -x -rU'
     alias mv='mv -vi'
     alias rm='rm -i'
     alias crontab='crontab -i'

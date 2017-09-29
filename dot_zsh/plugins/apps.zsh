@@ -1,5 +1,5 @@
 # apps.zsh
-# Last Change: 18-Apr-2016.
+# Last Change: 29-Sep-2017.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_app_path() {
@@ -24,6 +24,7 @@ set_apps_path \
     mongo \
     maven \
     gauche \
+    go \
     protobuf \
     cassandra
 

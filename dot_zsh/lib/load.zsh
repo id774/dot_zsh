@@ -1,5 +1,5 @@
 # load.zsh
-# Last Change: 21-Aug-2017.
+# Last Change: 08-Nov-2017.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_screen() {
@@ -34,12 +34,6 @@ load_plugins() {
     fi
 }
 
-load_local_settings() {
-    if [ -f $HOME/.zshrc_local ]; then
-        source $HOME/.zshrc_local
-    fi
-}
-
 load_base() {
     if [ -f $HOME/.zsh/lib/base.zsh ]; then
         source $HOME/.zsh/lib/base.zsh
@@ -52,7 +46,6 @@ load_base() {
 
 load_main() {
     load_base
-    load_local_settings
     load_plugins
     test -d $HOME/bin && export PATH=$HOME/bin:$PATH
     test -f $HOME/.run_screen_on_startup && call_screen

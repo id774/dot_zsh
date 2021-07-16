@@ -4,4 +4,4 @@
 
 export EDITOR=vim
 export LESS=-qR
-export GIT_PAGER="nkf -s | LESSCHARSET=utf-8 less -R"
+export GIT_PAGER="less -cm"

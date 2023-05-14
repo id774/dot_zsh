@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 13-May-2023.
+# Last Change: 14-May-2023.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -49,11 +49,13 @@ set_alias() {
     alias la='ls -a'
     alias a='ls -a'
     alias f='file'
-    alias j='ssh-add'
+    alias j='cd'
+    alias jj='ssh-add'
     alias c='cd'
     alias cl='clear'
     alias cls='clear'
     alias k='clear'
+    alias kk='cltmp'
     alias copy='cp'
     alias move='mv'
     alias ren='mv'

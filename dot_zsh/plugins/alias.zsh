@@ -56,6 +56,7 @@ set_alias() {
     alias cls='clear'
     alias k='clear'
     alias kk='cltmp'
+    alias x='exit'
     alias q='sudo pkill -9'
     alias qq='sudo kill -9'
     alias copy='cp'

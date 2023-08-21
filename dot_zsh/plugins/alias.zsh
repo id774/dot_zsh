@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 16-May-2023.
+# Last Change: 22-Aug-2023.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -73,7 +73,6 @@ set_alias() {
     alias scls='screen -ls'
     alias scxr='screen -x -rU'
     alias mv='mv -vi'
-    alias rm='rm -i'
     alias crontab='crontab -i'
     alias svnc='svn commit -m'
     alias svns='svn status'
@@ -97,6 +96,20 @@ set_alias() {
     alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
     alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
     alias -s {c,cpp}=runcpp
+
+    case $OSTYPE in
+      *darwin*)
+        if type trash &> /dev/null
+        then
+          alias rm='trash'
+        else
+          alias rm='rm -i'
+        fi
+        ;;
+      *)
+        alias rm='rm -i'
+        ;;
+    esac
 }
 
 set_alias

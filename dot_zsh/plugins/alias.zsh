@@ -97,19 +97,23 @@ set_alias() {
     alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
     alias -s {c,cpp}=runcpp
 
-    case $OSTYPE in
-      *darwin*)
-        if type trash &> /dev/null
-        then
-          alias rm='trash'
-        else
+    if [ "$UID" -eq 0 ]; then
+      alias rm='rm -i'
+    else
+      case $OSTYPE in
+        *darwin*)
+          if type trash &> /dev/null
+          then
+            alias rm='trash'
+          else
+            alias rm='rm -i'
+          fi
+          ;;
+        *)
           alias rm='rm -i'
-        fi
-        ;;
-      *)
-        alias rm='rm -i'
-        ;;
-    esac
+          ;;
+      esac
+    fi
 }
 
 set_alias

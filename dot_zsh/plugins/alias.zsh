@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 11-Aug-2024.
+# Last Change: 15-Nov-2024.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -46,6 +46,7 @@ set_alias() {
     alias dir='ls -l'
     alias la='ls -la'
     alias a='ls -a'
+    alias lt='ls -t'
     alias f='file'
     alias j='cd'
     alias jj='clear && cd'

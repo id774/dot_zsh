@@ -47,6 +47,7 @@ set_alias() {
     alias la='ls -la'
     alias a='ls -a'
     alias lt='ls -t'
+    alias lr='ls -tr'
     alias f='file'
     alias j='cd'
     alias jj='clear && cd'

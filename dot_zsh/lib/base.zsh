@@ -160,7 +160,6 @@ set_basic_options() {
     limit coredumpsize 0
     export G_FILENAME_ENCODING=@locale
     export TIME_STYLE=long-iso
-    export RUBYOPT=rubygems
 }
 
 set_tmp_path() {

@@ -99,9 +99,9 @@ set_alias() {
           alias d='ls -Tltr'
           alias dir='ls -Tl'
           alias la='ls -Tla'
-          alias a='ls -Ta'
-          alias lt='ls -Tt'
-          alias lr='ls -Ttr'
+          alias a='ls -a'
+          alias lt='ls -t'
+          alias lr='ls -tr'
           alias ll='ls -Tltra'
           alias dl='ls -Tltr'
           if type trash &> /dev/null

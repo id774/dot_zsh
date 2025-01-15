@@ -1,5 +1,5 @@
 # java.zsh
-# Last Change: 17-Jun-2013.
+# Last Change: 16-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_java_path() {
@@ -15,10 +15,16 @@ set_java_path() {
 }
 
 set_java_path \
-  /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home \
-  /System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home \
+  /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home \
+  /Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home \
+  /Library/Java/JavaVirtualMachines/jdk-8.jdk/Contents/Home \
+  /usr/lib/jvm/java-17-openjdk-amd64 \
+  /usr/lib/jvm/java-11-openjdk-amd64 \
+  /usr/lib/jvm/java-8-openjdk-amd64 \
+  /usr/lib/jvm/java-17-openjdk \
+  /usr/lib/jvm/java-11-openjdk \
+  /usr/lib/jvm/java-1.8.0-openjdk \
   /usr/lib/jvm/java-6-openjdk \
-  /usr/java \
   /usr/java/default \
   /opt/java/jre \
   /opt/java/jre/current \

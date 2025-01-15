@@ -15,17 +15,17 @@ set_java_path() {
 }
 
 set_java_path \
-  /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home \
-  /Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home \
-  /Library/Java/JavaVirtualMachines/jdk-8.jdk/Contents/Home \
-  /usr/lib/jvm/java-17-openjdk-amd64 \
-  /usr/lib/jvm/java-11-openjdk-amd64 \
-  /usr/lib/jvm/java-8-openjdk-amd64 \
-  /usr/lib/jvm/java-17-openjdk \
-  /usr/lib/jvm/java-11-openjdk \
-  /usr/lib/jvm/java-1.8.0-openjdk \
-  /usr/lib/jvm/java-6-openjdk \
   /usr/java/default \
+  /Library/Java/JavaVirtualMachines/jdk-8.jdk/Contents/Home \
+  /Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home \
+  /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home \
+  /usr/lib/jvm/java-6-openjdk \
+  /usr/lib/jvm/java-8-openjdk-amd64 \
+  /usr/lib/jvm/java-1.8.0-openjdk \
+  /usr/lib/jvm/java-11-openjdk-amd64 \
+  /usr/lib/jvm/java-11-openjdk \
+  /usr/lib/jvm/java-17-openjdk-amd64 \
+  /usr/lib/jvm/java-17-openjdk \
   /opt/java/jre \
   /opt/java/jre/current \
   /opt/java/jdk \

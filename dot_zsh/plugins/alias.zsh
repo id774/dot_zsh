@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 15-Nov-2024.
+# Last Change: 16-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -41,13 +41,6 @@ set_alias() {
     alias his='history -Di -30'
     alias hist='history -Di -100'
     alias history='history -Di'
-    alias l='ls -ltra'
-    alias d='ls -ltr'
-    alias dir='ls -l'
-    alias la='ls -la'
-    alias a='ls -a'
-    alias lt='ls -t'
-    alias lr='ls -tr'
     alias f='file'
     alias j='cd'
     alias jj='clear && cd'
@@ -102,8 +95,15 @@ set_alias() {
     else
       case $OSTYPE in
         *darwin*)
-          alias ll='ls -ltra'
-          alias dl='ls -ltr'
+          alias l='ls -Tltra'
+          alias d='ls -Tltr'
+          alias dir='ls -Tl'
+          alias la='ls -Tla'
+          alias a='ls -Ta'
+          alias lt='ls -Tt'
+          alias lr='ls -Ttr'
+          alias ll='ls -Tltra'
+          alias dl='ls -Tltr'
           if type trash &> /dev/null
           then
             alias rm='trash'
@@ -112,6 +112,13 @@ set_alias() {
           fi
           ;;
         *)
+          alias l='ls -ltra'
+          alias d='ls -ltr'
+          alias dir='ls -l'
+          alias la='ls -la'
+          alias a='ls -a'
+          alias lt='ls -t'
+          alias lr='ls -tr'
           alias ll='ls -lZtra'
           alias dl='ls -lZtr'
           alias rm='rm -i'

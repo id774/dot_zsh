@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 02-Apr-2015.
+# Last Change: 16-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -159,6 +159,7 @@ set_basic_options() {
     ulimit -s unlimited
     limit coredumpsize 0
     export G_FILENAME_ENCODING=@locale
+    export TIME_STYLE=long-iso
     export RUBYOPT=rubygems
 }
 

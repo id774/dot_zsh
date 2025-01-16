@@ -95,15 +95,27 @@ set_alias() {
     else
       case $OSTYPE in
         *darwin*)
-          alias l='ls -Tltra'
-          alias d='ls -Tltr'
-          alias dir='ls -Tl'
-          alias la='ls -Tla'
-          alias a='ls -a'
-          alias lt='ls -t'
-          alias lr='ls -tr'
-          alias ll='ls -Tltra'
-          alias dl='ls -Tltr'
+          if type gls &> /dev/null; then
+            alias l='gls -ltra'
+            alias d='gls -ltr'
+            alias dir='gls -l'
+            alias la='gls -la'
+            alias a='gls -a'
+            alias lt='gls -t'
+            alias lr='gls -tr'
+            alias ll='gls -ltra'
+            alias dl='gls -ltr'
+          else
+            alias l='ls -Tltra'
+            alias d='ls -Tltr'
+            alias dir='ls -Tl'
+            alias la='ls -Tla'
+            alias a='ls -a'
+            alias lt='ls -t'
+            alias lr='ls -tr'
+            alias ll='ls -Tltra'
+            alias dl='ls -Tltr'
+          fi
           if type trash &> /dev/null
           then
             alias rm='trash'

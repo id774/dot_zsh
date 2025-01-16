@@ -90,11 +90,20 @@ set_alias() {
     alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
     alias -s {c,cpp}=runcpp
 
-    if [ "$UID" -eq 0 ]; then
-      alias rm='rm -i'
-    else
-      case $OSTYPE in
-        *darwin*)
+    case $OSTYPE in
+      *darwin*)
+        if [ "$UID" -eq 0 ]; then
+          alias l='ls -Tltra'
+          alias d='ls -Tltr'
+          alias dir='ls -Tl'
+          alias la='ls -Tla'
+          alias a='ls -a'
+          alias lt='ls -t'
+          alias lr='ls -tr'
+          alias ll='ls -Tltra'
+          alias dl='ls -Tltr'
+          alias rm='rm -i'
+        else
           if type gls &> /dev/null; then
             alias l='gls -ltra'
             alias d='gls -ltr'
@@ -116,27 +125,26 @@ set_alias() {
             alias ll='ls -Tltra'
             alias dl='ls -Tltr'
           fi
-          if type trash &> /dev/null
-          then
+          if type trash &> /dev/null; then
             alias rm='trash'
           else
             alias rm='rm -i'
           fi
-          ;;
-        *)
-          alias l='ls -ltra'
-          alias d='ls -ltr'
-          alias dir='ls -l'
-          alias la='ls -la'
-          alias a='ls -a'
-          alias lt='ls -t'
-          alias lr='ls -tr'
-          alias ll='ls -lZtra'
-          alias dl='ls -lZtr'
-          alias rm='rm -i'
-          ;;
-      esac
-    fi
+        fi
+        ;;
+      *)
+        alias l='ls -ltra'
+        alias d='ls -ltr'
+        alias dir='ls -l'
+        alias la='ls -la'
+        alias a='ls -a'
+        alias lt='ls -t'
+        alias lr='ls -tr'
+        alias ll='ls -lZtra'
+        alias dl='ls -lZtr'
+        alias rm='rm -i'
+        ;;
+    esac
 }
 
 set_alias

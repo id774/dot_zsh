@@ -1,9 +1,9 @@
 # screen.zsh
-# Last Change: 19-Nov-2012.
+# Last Change: 18-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_exec_screen() {
-    if [ "$TERM" != "linux" ]; then
+    if [ "$TERM" != "linux" ] && [ "$TERM" != "xterm-256color" ]; then
         if [ `ps ax | grep screen | grep -v grep | wc -l` = 0 ]; then
             which screen > /dev/null 2>&1 && \
                 exec screen -U -D -RR

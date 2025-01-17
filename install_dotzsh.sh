@@ -106,7 +106,9 @@ install_dotzsh() {
     echo "Copying files from $SOURCE/dot_zsh/ to $TARGET"
     $SUDO cp -R "$SOURCE/dot_zsh/lib" "$TARGET/"
     $SUDO cp -R "$SOURCE/dot_zsh/plugins" "$TARGET/"
-    $SUDO cp "$SOURCE/dot_zsh/dot_zshrc" "$TARGET/"
+    $SUDO cp "$SOURCE/dot_zshrc" "$HOME/.zshrc"
+    zsh -c 'zcompile $HOME/.zshrc'
+
 
     # Clean up temporary .zwc files
     zwc_cleanup

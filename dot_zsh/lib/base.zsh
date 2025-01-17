@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 16-Jan-2025.
+# Last Change: 17-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -21,15 +21,13 @@ set_solaris_env() {
 }
 
 set_darwin_env() {
-    alias cp='rsync -avz'
     alias finder='open .'
-    alias gvim='open -a Vim'
     alias top='top -o cpu'
+    alias emacs='open -a Emacs'
     alias fx='open -a Firefox'
+    alias firefox='open -a Firefox'
     alias tb='open -a Thunderbird'
-    if [ -f /usr/local/bin/fcd.sh ]; then
-        alias fcd='source /usr/local/bin/fcd.sh'
-    fi
+    alias thunderbird='open -a Thunderbird'
     if [ "$TERM" != "dumb" ]; then
         alias ls='ls -G'
         alias dir='ls -G'

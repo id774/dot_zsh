@@ -66,6 +66,7 @@ set_alias() {
     alias scxr='screen -x -rU'
     alias mv='mv -vi'
     alias crontab='crontab -i'
+    alias sshx256="TERM=xterm-256color ssh"
     alias be='bundle exec'
     alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
     alias emacs-compile='emacs --batch -Q -f batch-byte-compile'

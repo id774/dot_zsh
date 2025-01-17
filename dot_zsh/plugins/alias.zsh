@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 17-Jan-2025.
+# Last Change: 18-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -36,8 +36,6 @@ set_alias() {
     alias v='vim'
     alias vv='vim .'
     alias p='vim -R'
-    alias e='emacs -nw'
-    alias em='emacs -nw'
     alias his='history -Di -30'
     alias hist='history -Di -100'
     alias history='history -Di'
@@ -62,28 +60,12 @@ set_alias() {
     alias sc='screen -U'
     alias scd='screen -U -D'
     alias scdd='screen -U -D'
+    alias scr='screen -U -D -RR'
     alias scrr='screen -U -D -RR'
     alias scls='screen -ls'
     alias scxr='screen -x -rU'
     alias mv='mv -vi'
     alias crontab='crontab -i'
-    alias svnc='svn commit -m'
-    alias svns='svn status'
-    alias svnl='svn log'
-    alias svna='svn add'
-    alias svnd='svn delete'
-    alias svnu='svn up'
-    alias gitc='git commit -a -v -m'
-    alias gits='git status'
-    alias gitb='git branch'
-    alias gitd='git diff'
-    alias gitl='git log'
-    alias gita='git add'
-    alias gitu='git pull'
-    alias gitp='git push'
-    alias gitco='git checkout'
-    alias gitcl='git config -l'
-    alias gitcr='git config remote.origin.url'
     alias be='bundle exec'
     alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
     alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
@@ -153,6 +135,17 @@ set_alias() {
           else
             alias rm='rm -i'
           fi
+          alias finder='open .'
+          alias top='top -o cpu'
+          alias e='open -a Emacs'
+          alias em='open -a Emacs'
+          alias emacs='open -a Emacs'
+          alias fx='open -a Firefox'
+          alias firefox='open -a Firefox'
+          alias tb='open -a Thunderbird'
+          alias thunderbird='open -a Thunderbird'
+          alias ch='open -a Google\ Chrome'
+          alias chrome='open -a Google\ Chrome'
         fi
         ;;
       *)
@@ -166,6 +159,8 @@ set_alias() {
         alias ll='ls -lZtra'
         alias dl='ls -lZtr'
         alias rm='rm -i'
+        alias e='emacs -nw'
+        alias em='emacs -nw'
         ;;
     esac
 }

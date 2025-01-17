@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 17-Jan-2025.
+# Last Change: 18-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_gnu_env() {
@@ -21,19 +21,12 @@ set_solaris_env() {
 }
 
 set_darwin_env() {
-    alias finder='open .'
-    alias top='top -o cpu'
-    alias emacs='open -a Emacs'
-    alias fx='open -a Firefox'
-    alias firefox='open -a Firefox'
-    alias tb='open -a Thunderbird'
-    alias thunderbird='open -a Thunderbird'
     if [ "$TERM" != "dumb" ]; then
         alias ls='ls -G'
         alias dir='ls -G'
         alias vdir='ls -G'
     fi
-    export PATH=/opt/sbin:/opt/bin:/opt/ruby/bin:/opt/python/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/usr/X11/bin
+    export PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/usr/X11/bin
     export MANPATH=/usr/local/share/man:/usr/share/man:/opt/local/man:/usr/X11/man
 }
 

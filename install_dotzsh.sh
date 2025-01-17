@@ -23,11 +23,20 @@
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo]: If specified, the script runs without sudo.
-#  - Ensure that the SOURCE environment variable points to the directory
+#  - Ensure that the DOT_ZSH_SOURCE environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
 #
 ########################################################################
+
+# Set the source directory dynamically based on the script's location
+export DOT_ZSH_SOURCE=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
+
+# Ensure the source directory exists
+if [ ! -d "$DOT_ZSH_SOURCE/dot_zsh/plugins" ]; then
+    echo "Error: $DOT_ZSH_SOURCE/dot_zsh/plugins directory does not exist." >&2
+    exit 1
+fi
 
 # Set up the environment and initialize variables
 setup_environment() {
@@ -69,11 +78,11 @@ set_permission() {
 # Compile zsh scripts into .zwc files
 zsh_compile() {
     echo "Compiling zsh scripts..."
-    for file in $SOURCE/dot_zsh/lib/*.zsh; do
+    for file in "$DOT_ZSH_SOURCE/dot_zsh/lib/"*.zsh; do
         echo "Compiling $file"
         zsh -c "zcompile $file"
     done
-    for plugin in $SOURCE/dot_zsh/plugins/*.zsh; do
+    for plugin in "$DOT_ZSH_SOURCE/dot_zsh/plugins/"*.zsh; do
         echo "Compiling $plugin"
         zsh -c "zcompile $plugin"
     done
@@ -82,8 +91,8 @@ zsh_compile() {
 # Clean up compiled .zwc files
 zwc_cleanup() {
     echo "Cleaning up .zwc files..."
-    rm -f $SOURCE/dot_zsh/lib/*.zwc
-    rm -f $SOURCE/dot_zsh/plugins/*.zwc
+    rm -f "$DOT_ZSH_SOURCE/dot_zsh/lib/"*.zwc
+    rm -f "$DOT_ZSH_SOURCE/dot_zsh/plugins/"*.zwc
 }
 
 # Install dot_zsh configuration
@@ -103,12 +112,11 @@ install_dotzsh() {
 
     # Compile zsh scripts and copy files
     zsh_compile
-    echo "Copying files from $SOURCE/dot_zsh/ to $TARGET"
-    $SUDO cp -R "$SOURCE/dot_zsh/lib" "$TARGET/"
-    $SUDO cp -R "$SOURCE/dot_zsh/plugins" "$TARGET/"
-    $SUDO cp "$SOURCE/dot_zshrc" "$HOME/.zshrc"
+    echo "Copying files from $DOT_ZSH_SOURCE/dot_zsh/ to $TARGET"
+    $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/lib" "$TARGET/"
+    $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/plugins" "$TARGET/"
+    $SUDO cp "$DOT_ZSH_SOURCE/dot_zshrc" "$HOME/.zshrc"
     zsh -c 'zcompile $HOME/.zshrc'
-
 
     # Clean up temporary .zwc files
     zwc_cleanup
@@ -117,13 +125,6 @@ install_dotzsh() {
     set_permission "$@"
     echo "Installation complete!"
 }
-
-# Set the source directory and ensure it exists
-export SOURCE=$HOME/dot_zsh
-if [ ! -d $SOURCE/dot_zsh/plugins ]; then
-    echo "Error: $SOURCE/dot_zsh/plugins directory does not exist." >&2
-    exit 1
-fi
 
 # Execute the installation
 install_dotzsh "$@"

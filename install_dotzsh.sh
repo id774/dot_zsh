@@ -1,34 +1,47 @@
 #!/bin/sh
-#
+
 ########################################################################
-# Install dot_zsh
-#  $1 = path
-#  $2 = nosudo
+# install_dotzsh.sh: Install dot_zsh Configuration
 #
-#  Maintainer: id774 <idnanashi@gmail.com>
+#  Description:
+#  This script installs the dot_zsh configuration files to the specified
+#  target directory. It compiles zsh scripts into .zwc files, sets the
+#  appropriate permissions, and optionally removes existing configurations.
 #
-#  v0.5 1/19,2014
-#       Change shebang to sh.
-#  v0.4 6/13,2013
-#       If target exist, delete it.
-#  v0.3 2/11,2012
-#       Change default install target to /usr/local/etc/zsh.
-#  v0.2 5/23,2011
-#       Install zsh plugins to /etc/zsh/plugins.
-#  v0.1 5/20,2011
-#       First.
+#  Author: id774 (More info: http://id774.net)
+#  Source Code: https://github.com/id774/scripts
+#  License: LGPLv3 (Details: https://www.gnu.org/licenses/lgpl-3.0.html)
+#  Contact: idnanashi@gmail.com
+#
+#  Version History:
+#  v1.0 2025-01-17
+#       Initial release. Updated documentation and refactored for readability.
+#
+#  Usage:
+#  ./install_dotzsh.sh [target_path] [nosudo]
+#
+#  Notes:
+#  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
+#  - [nosudo]: If specified, the script runs without sudo.
+#  - Ensure that the SOURCE environment variable points to the directory
+#    containing the dot_zsh files before running the script.
+#  - This script is not POSIX compliant and is designed specifically for zsh environments.
+#
 ########################################################################
 
+# Set up the environment and initialize variables
 setup_environment() {
-    test -n "$1" && export TARGET=$1
-    test -n "$1" || export TARGET=/usr/local/etc/zsh
-    #test -n "$1" || export TARGET=/etc/zsh
-    #test -n "$1" || export TARGET=$HOME/.zsh
-    test -n "$2" || SUDO=sudo
-    test -n "$2" && SUDO=
+    # Set the installation target
+    test -n "$1" && export TARGET=$1 || export TARGET=/usr/local/etc/zsh
+    echo "Installation target: $TARGET"
 
-    case $OSTYPE in
-      *darwin*)
+    # Determine whether to use sudo
+    test -n "$2" && SUDO= || SUDO=sudo
+    echo "Using sudo: ${SUDO:-no}"
+
+    # Set options and owner based on the operating system
+    case $(uname) in
+      Darwin)
         OPTIONS=-Rv
         OWNER=root:wheel
         ;;
@@ -37,68 +50,76 @@ setup_environment() {
         OWNER=root:root
         ;;
     esac
+    echo "Copy options: $OPTIONS, Owner: $OWNER"
 }
 
+# Set file permissions and ownership
 set_permission() {
-    $SUDO chown -R $OWNER $TARGET
+    if [ -n "$2" ]; then
+        # If nosudo is specified, set ownership to the current user and group
+        echo "Setting ownership to current user and group..."
+        chown -R "$(id -un):$(id -gn)" "$TARGET"
+    else
+        # Use sudo to set ownership to the appropriate system user and group
+        echo "Setting ownership to $OWNER..."
+        $SUDO chown -R $OWNER "$TARGET"
+    fi
 }
 
+# Compile zsh scripts into .zwc files
 zsh_compile() {
-    zsh -c 'zcompile $SOURCE/dot_zsh/lib/load.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/lib/base.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/lib/screen.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/R.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/alias.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/apps.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/amazonaws.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/cryptfs.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ldlib.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/pager.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/pip.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/prompt.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/proxy.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/python.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/ruby.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/java.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/title.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/mysql.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/hadoop.zsh'
-    zsh -c 'zcompile $SOURCE/dot_zsh/plugins/vcs_info.zsh'
+    echo "Compiling zsh scripts..."
+    for file in $SOURCE/dot_zsh/lib/*.zsh; do
+        echo "Compiling $file"
+        zsh -c "zcompile $file"
+    done
+    for plugin in $SOURCE/dot_zsh/plugins/*.zsh; do
+        echo "Compiling $plugin"
+        zsh -c "zcompile $plugin"
+    done
 }
 
+# Clean up compiled .zwc files
 zwc_cleanup() {
-    rm -f $SOURCE/dot_zsh/lib/load.zsh.zwc
-    rm -f $SOURCE/dot_zsh/lib/base.zsh.zwc
-    rm -f $SOURCE/dot_zsh/lib/screen.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/R.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/alias.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/apps.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/amazonaws.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/cryptfs.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/ldlib.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/pager.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/pip.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/prompt.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/proxy.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/python.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/ruby.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/java.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/title.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/mysql.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/hadoop.zsh.zwc
-    rm -f $SOURCE/dot_zsh/plugins/vcs_info.zsh.zwc
+    echo "Cleaning up .zwc files..."
+    rm -f $SOURCE/dot_zsh/lib/*.zwc
+    rm -f $SOURCE/dot_zsh/plugins/*.zwc
 }
 
+# Install dot_zsh configuration
 install_dotzsh() {
-    setup_environment $*
-    test -d $TARGET && $SUDO rm -rf $TARGET
-    $SUDO mkdir -p $TARGET
+    echo "Starting installation..."
+    setup_environment "$@"
+
+    # Remove existing target directory if it exists
+    if [ -d "$TARGET" ]; then
+        echo "Removing existing directory: $TARGET"
+        $SUDO rm -rf "$TARGET"
+    fi
+
+    # Create the target directory
+    echo "Creating target directory: $TARGET"
+    $SUDO mkdir -p "$TARGET"
+
+    # Compile zsh scripts and copy files
     zsh_compile
-    $SUDO cp $OPTIONS $SOURCE/dot_zsh/* $TARGET/
+    echo "Copying files from $SOURCE/dot_zsh/ to $TARGET"
+    $SUDO cp -R "$SOURCE/dot_zsh/" "$TARGET"
+
+    # Clean up temporary .zwc files
     zwc_cleanup
-    test -n "$2" || set_permission
+
+    # Set permissions appropriately
+    set_permission "$@"
+    echo "Installation complete!"
 }
 
+# Set the source directory and ensure it exists
 export SOURCE=$HOME/dot_zsh
-test -d $SOURCE/dot_zsh/plugins || exit 1
-install_dotzsh $*
+if [ ! -d $SOURCE/dot_zsh/plugins ]; then
+    echo "Error: $SOURCE/dot_zsh/plugins directory does not exist." >&2
+    exit 1
+fi
+
+# Execute the installation
+install_dotzsh "$@"

@@ -66,6 +66,7 @@ set_alias() {
     alias scxr='screen -x -rU'
     alias mv='mv -vi'
     alias crontab='crontab -i'
+    alias sshx="TERM=xterm-256color ssh"
     alias sshx256="TERM=xterm-256color ssh"
     alias be='bundle exec'
     alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'

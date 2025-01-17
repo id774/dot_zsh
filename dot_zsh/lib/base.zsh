@@ -2,6 +2,10 @@
 # Last Change: 18-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
+append_to_path_if_exists() {
+    [ -d "$1" ] && export PATH="$1:$PATH"
+}
+
 set_gnu_env() {
     alias cp='cp -avi'
     if [ "$TERM" != "dumb" ]; then
@@ -13,11 +17,15 @@ set_gnu_env() {
 }
 
 set_linux_env() {
-    export PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games
+    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games"
+    append_to_path_if_exists /opt/sbin
+    append_to_path_if_exists /opt/bin
 }
 
 set_solaris_env() {
-    export PATH=/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin
+    export PATH="/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin"
+    append_to_path_if_exists /opt/sbin
+    append_to_path_if_exists /opt/bin
 }
 
 set_darwin_env() {
@@ -26,8 +34,14 @@ set_darwin_env() {
         alias dir='ls -G'
         alias vdir='ls -G'
     fi
-    export PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/usr/X11/bin
-    export MANPATH=/usr/local/share/man:/usr/share/man:/opt/local/man:/usr/X11/man
+
+    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11/bin"
+    append_to_path_if_exists /opt/sbin
+    append_to_path_if_exists /opt/bin
+    append_to_path_if_exists /opt/local/sbin
+    append_to_path_if_exists /opt/local/bin
+
+    export MANPATH="/usr/local/share/man:/usr/share/man:/opt/local/man:/usr/X11/man"
 }
 
 set_os_env() {

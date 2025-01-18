@@ -24,7 +24,7 @@ show_window_title() {
                         cmd[1]=$cmd[2]
                     fi
                     ;;
-                ls|clear)
+                ls|gls|clear)
                     echo -n "k$ZSH_NAME\\"
                     return
                     ;;

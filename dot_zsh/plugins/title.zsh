@@ -1,5 +1,5 @@
 # title.zsh
-# Last Change: 25-May-2011.
+# Last Change: 18-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 show_window_title() {

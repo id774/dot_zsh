@@ -29,6 +29,12 @@
 #
 ########################################################################
 
+# Check if zsh is installed
+if ! command -v zsh > /dev/null 2>&1; then
+    echo "Error: zsh is not installed. Please install zsh before running this script." >&2
+    exit 1
+fi
+
 # Set the source directory dynamically based on the script's location
 export DOT_ZSH_SOURCE=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
 

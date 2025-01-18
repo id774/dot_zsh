@@ -88,8 +88,8 @@ cp ~/dot_zsh/dot_zshrc ~/.zshrc
 ## 5. Default Behavior
 
 DOT_ZSH:
-- Automatically launches GNU Screen at startup.
-- Displays the last executed command in the window title (configured in `lib/screen.zsh`).
+- Optionally launches GNU Screen at startup if the file `$HOME/.run_screen_on_startup` exists.
+- Updates the terminal window title in GNU Screen sessions, configured via `plugins/title.zsh`.
 
 ---
 

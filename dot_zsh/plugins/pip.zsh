@@ -1,3 +1,7 @@
+# pip.zsh
+# Last Change: 01-Sep-2014.
+# Maintainer:  id774 <idnanashi@gmail.com>
+
 function _pip_completion {
   local words cword
   read -Ac words

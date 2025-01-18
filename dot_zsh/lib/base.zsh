@@ -153,13 +153,6 @@ set_basic_options() {
     setopt print_eightbit
     setopt print_exit_value
     setopt rc_quotes
-    LESS=-M
-    export LESS
-    if type /usr/bin/lesspipe &>/dev/null
-    then
-      LESSOPEN="| /usr/bin/lesspipe '%s'"
-      LESSCLOSE="/usr/bin/lesspipe '%s' '%s'"
-    fi
     umask 022
     ulimit -s unlimited
     limit coredumpsize 0

@@ -70,7 +70,6 @@ set_alias() {
     alias sshx256="TERM=xterm-256color ssh"
     alias be='bundle exec'
     alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
-    alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
     alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
     alias -s {c,cpp}=runcpp
 
@@ -147,6 +146,10 @@ set_alias() {
           alias thunderbird='open -a Thunderbird'
           alias ch='open -a Google\ Chrome'
           alias chrome='open -a Google\ Chrome'
+          if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+            alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
+            alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
+          fi
         fi
         ;;
       *)
@@ -162,6 +165,7 @@ set_alias() {
         alias rm='rm -i'
         alias e='emacs -nw'
         alias em='emacs -nw'
+        alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
         ;;
     esac
 }

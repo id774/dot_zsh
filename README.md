@@ -6,16 +6,16 @@ A pluggable framework for the Z shell (zsh) that simplifies configuration manage
 
 ## Contents
 
-1. Overview
-2. Directory Structure
-3. Supported Environments
-4. Installation
-5. Default Behavior
-6. Customization
-7. Versioning
-8. Contribution
-9. License
-10. Authors
+1. [Overview](#1-overview)
+2. [Directory Structure](#2-directory-structure)
+3. [Supported Environments](#3-supported-environments)
+4. [Installation](#4-installation)
+5. [Default Behavior](#5-default-behavior)
+6. [Customization](#6-customization)
+7. [Versioning](#7-versioning)
+8. [Contribution](#8-contribution)
+9. [License](#9-license)
+10. [Authors](#10-authors)
 
 ---
 

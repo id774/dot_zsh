@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 18-Jan-2025.
+# Last Change: 20-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -141,7 +141,6 @@ set_alias() {
           alias top='top -o cpu'
           alias e='open -a Emacs'
           alias em='open -a Emacs'
-          alias emacs='open -a Emacs'
           alias fx='open -a Firefox'
           alias firefox='open -a Firefox'
           alias tb='open -a Thunderbird'

@@ -114,7 +114,6 @@ set_alias() {
             alias mv='gmv -i'
             alias rm='grm -i'
             alias cut='gcut'
-            alias xargs='gxargs'
             alias wc='gwc'
             alias tee='gtee'
             alias uniq='guniq'

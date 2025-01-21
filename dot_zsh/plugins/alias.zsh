@@ -100,7 +100,6 @@ set_alias() {
             alias ls='gls --color=auto'
             alias du='gdu'
             alias df='gdf'
-            alias stat='gstat'
             alias sort='gsort'
             alias touch='gtouch'
             alias id='gid'

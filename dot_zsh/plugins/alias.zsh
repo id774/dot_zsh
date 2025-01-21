@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 20-Jan-2025.
+# Last Change: 21-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -102,7 +102,6 @@ set_alias() {
             alias df='gdf'
             alias stat='gstat'
             alias sort='gsort'
-            alias find='gfind'
             alias touch='gtouch'
             alias id='gid'
             alias date='gdate'
@@ -129,6 +128,12 @@ set_alias() {
             alias lr='ls -tr'
             alias ll='ls -Tltra'
             alias dl='ls -Tltr'
+          fi
+          if type gfind &> /dev/null; then
+            alias find='gfind'
+          fi
+          if type gxargs &> /dev/null; then
+            alias xargs='gxargs'
           fi
           if type trash &> /dev/null; then
             alias rm='trash'

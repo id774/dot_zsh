@@ -66,6 +66,7 @@ set_alias() {
     alias scxr='screen -x -rU'
     alias cp='cp -avi'
     alias mv='mv -vi'
+    alias rm='rm -i'
     alias crontab='crontab -i'
     alias sshx="TERM=xterm-256color ssh"
     alias sshx256="TERM=xterm-256color ssh"
@@ -137,8 +138,6 @@ set_alias() {
           fi
           if type trash &> /dev/null; then
             alias rm='trash'
-          else
-            alias rm='rm -i'
           fi
           alias finder='open .'
           alias top='top -o cpu'
@@ -166,7 +165,6 @@ set_alias() {
         alias lr='ls -tr'
         alias ll='ls -lZtra'
         alias dl='ls -lZtr'
-        alias rm='rm -i'
         alias e='emacs -nw'
         alias em='emacs -nw'
         alias emacs-compile='emacs --batch -Q -f batch-byte-compile'

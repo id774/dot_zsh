@@ -140,12 +140,19 @@ set_alias() {
           fi
           alias finder='open .'
           alias top='top -o cpu'
-          alias fx='open -a Firefox'
-          alias firefox='open -a Firefox'
-          alias tb='open -a Thunderbird'
-          alias thunderbird='open -a Thunderbird'
-          alias ch='open -a Google\ Chrome'
-          alias chrome='open -a Google\ Chrome'
+          if [ -d "/Applications/Firefox.app" ]; then
+            alias fx='open -a Firefox'
+            alias firefox='open -a Firefox'
+          fi
+          if [ -d "/Applications/Thunderbird.app" ]; then
+            alias tb='open -a Thunderbird'
+            alias th='open -a Thunderbird'
+            alias thunderbird='open -a Thunderbird'
+          fi
+          if [ -d "/Applications/Google Chrome.app" ]; then
+            alias ch='open -a Google\ Chrome'
+            alias chrome='open -a Google\ Chrome'
+          fi
           if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
             alias e='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
             alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'

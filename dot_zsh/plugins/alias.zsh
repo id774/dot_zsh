@@ -148,8 +148,8 @@ set_alias() {
           alias ch='open -a Google\ Chrome'
           alias chrome='open -a Google\ Chrome'
           if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-            alias e='/Applications/Emacs.app/Contents/MacOS/Emacs' -nw
-            alias em='/Applications/Emacs.app/Contents/MacOS/Emacs' -nw
+            alias e='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+            alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
             alias emacs='open -a Emacs'
             alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
           fi

@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 22-Jan-2025.
+# Last Change: 23-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -16,15 +16,13 @@ set_gnu_env() {
 }
 
 set_linux_env() {
-    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games"
+    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
     append_to_path_if_exists /opt/sbin
     append_to_path_if_exists /opt/bin
 }
 
 set_solaris_env() {
-    export PATH="/usr/gnu/bin:/usr/bin:/usr/X11/bin:/usr/sbin:/sbin"
-    append_to_path_if_exists /opt/sbin
-    append_to_path_if_exists /opt/bin
+    append_to_path_if_exists /usr/gnu/bin
 }
 
 set_darwin_env() {
@@ -33,17 +31,23 @@ set_darwin_env() {
         alias dir='ls -G'
         alias vdir='ls -G'
     fi
+    export MANPATH="/usr/share/man"
 
-    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11/bin"
+    if [ -d "/usr/local/share/man" ]; then
+        export MANPATH="/usr/local/share/man:$MANPATH"
+    fi
+    if [ -d "/opt/homebrew/share/man" ]; then
+        export MANPATH="/opt/homebrew/share/man:$MANPATH"
+    fi
+}
+
+set_os_env() {
+    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
     append_to_path_if_exists /opt/sbin
     append_to_path_if_exists /opt/bin
     append_to_path_if_exists /opt/local/sbin
     append_to_path_if_exists /opt/local/bin
 
-    export MANPATH="/usr/local/share/man:/usr/share/man:/opt/local/man:/usr/X11/man"
-}
-
-set_os_env() {
     case $OSTYPE in
       *darwin*)
         set_darwin_env
@@ -54,7 +58,6 @@ set_os_env() {
         ;;
       *)
         set_gnu_env
-        set_linux_env
         ;;
     esac
 }

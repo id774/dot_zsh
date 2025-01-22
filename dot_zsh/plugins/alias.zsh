@@ -141,8 +141,6 @@ set_alias() {
           fi
           alias finder='open .'
           alias top='top -o cpu'
-          alias e='open -a Emacs'
-          alias em='open -a Emacs'
           alias fx='open -a Firefox'
           alias firefox='open -a Firefox'
           alias tb='open -a Thunderbird'
@@ -150,7 +148,9 @@ set_alias() {
           alias ch='open -a Google\ Chrome'
           alias chrome='open -a Google\ Chrome'
           if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-            alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
+            alias e='/Applications/Emacs.app/Contents/MacOS/Emacs' -nw
+            alias em='/Applications/Emacs.app/Contents/MacOS/Emacs' -nw
+            alias emacs='open -a Emacs'
             alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
           fi
         fi

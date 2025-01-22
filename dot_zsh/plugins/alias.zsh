@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 21-Jan-2025.
+# Last Change: 22-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -64,6 +64,7 @@ set_alias() {
     alias scrr='screen -U -D -RR'
     alias scls='screen -ls'
     alias scxr='screen -x -rU'
+    alias cp='cp -avi'
     alias mv='mv -vi'
     alias crontab='crontab -i'
     alias sshx="TERM=xterm-256color ssh"
@@ -108,8 +109,8 @@ set_alias() {
             alias dirname='gdirname'
             alias head='ghead'
             alias tail='gtail'
-            alias cp='gcp -i'
-            alias mv='gmv -i'
+            alias cp='gcp -avi'
+            alias mv='gmv -vi'
             alias rm='grm -i'
             alias cut='gcut'
             alias wc='gwc'

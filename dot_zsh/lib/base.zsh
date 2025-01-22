@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 18-Jan-2025.
+# Last Change: 22-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -7,7 +7,6 @@ append_to_path_if_exists() {
 }
 
 set_gnu_env() {
-    alias cp='cp -avi'
     if [ "$TERM" != "dumb" ]; then
         eval "`dircolors -b`"
         alias ls='ls --color=auto'

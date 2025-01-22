@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 22-Jan-2025.
+# Last Change: 23-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -87,7 +87,6 @@ set_alias() {
           alias lr='ls -tr'
           alias ll='ls -Tltra'
           alias dl='ls -Tltr'
-          alias rm='rm -i'
         else
           if type gls &> /dev/null; then
             alias l='gls --color=auto -ltra'

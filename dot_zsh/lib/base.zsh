@@ -151,7 +151,7 @@ set_basic_options() {
     setopt rc_quotes
     umask 022
     ulimit -s unlimited
-    limit coredumpsize 0
+    ulimit -c 0
     export G_FILENAME_ENCODING=@locale
     export TIME_STYLE=long-iso
 }

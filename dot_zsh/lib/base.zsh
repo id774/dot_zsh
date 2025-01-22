@@ -15,12 +15,6 @@ set_gnu_env() {
     fi
 }
 
-set_linux_env() {
-    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
-    append_to_path_if_exists /opt/sbin
-    append_to_path_if_exists /opt/bin
-}
-
 set_solaris_env() {
     append_to_path_if_exists /usr/gnu/bin
 }

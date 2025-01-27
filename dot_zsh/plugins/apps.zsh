@@ -1,30 +1,31 @@
 # apps.zsh
-# Last Change: 29-Sep-2017.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
+normalize_path() {
+    echo "${1:-}" | sed 's:/*$::'
+}
+
 set_app_path() {
-    if [ -d $1/bin ]; then
-        export PATH=$1/bin:$PATH
+    dir=$(normalize_path "$1")
+    bin_dir="$dir/bin"
+    case "$dir" in
+        *" "*) return ;;
+    esac
+    if [ -d "$bin_dir" ]; then
+        export PATH="$bin_dir:$PATH"
     fi
 }
 
 set_apps_path() {
-    while [ $# -gt 0 ]
-    do
-        set_app_path /opt/$1
-        set_app_path /opt/$1/current
-        shift
+    for dir in /opt/*; do
+        case "$dir" in
+            *" "*) continue ;;
+        esac
+        [ -d "$dir" ] || continue
+        set_app_path "$dir"
+        set_app_path "$dir/current"
     done
 }
 
-set_apps_path \
-    emacs \
-    ruby \
-    python \
-    mongo \
-    maven \
-    gauche \
-    go \
-    protobuf \
-    cassandra
-
+set_apps_path

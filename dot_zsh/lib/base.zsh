@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 27-Jan-2025.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -20,7 +20,6 @@ set_solaris_env() {
 }
 
 set_darwin_env() {
-    append_to_path_if_exists /opt/homebrew/bin
     if [ "$TERM" != "dumb" ]; then
         alias ls='ls -G'
         alias dir='ls -G'
@@ -41,7 +40,6 @@ set_os_env() {
     append_to_path_if_exists /opt/sbin
     append_to_path_if_exists /opt/bin
     append_to_path_if_exists /opt/local/sbin
-    append_to_path_if_exists /opt/local/bin
 
     case $OSTYPE in
       *darwin*)

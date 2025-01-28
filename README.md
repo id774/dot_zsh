@@ -58,6 +58,9 @@ DOT_ZSH is confirmed to work on:
 - Solaris 10 or later
 - macOS 10.5 or later
 
+Supported zsh versions:
+- zsh 4.2 and later (including future releases)
+
 It should also work on most GNU/Linux and UNIX-compatible environments.
 
 ---

@@ -6,25 +6,11 @@ append_to_path_if_exists() {
     [ -d "$1" ] && export PATH="$1:$PATH"
 }
 
-set_gnu_env() {
-    if [ "$TERM" != "dumb" ]; then
-        eval "`dircolors -b`"
-        alias ls='ls --color=auto'
-        alias dir='ls --color=auto --format=vertical'
-        alias vdir='ls --color=auto --format=long'
-    fi
-}
-
 set_solaris_env() {
     append_to_path_if_exists /usr/gnu/bin
 }
 
 set_darwin_env() {
-    if [ "$TERM" != "dumb" ]; then
-        alias ls='ls -G'
-        alias dir='ls -G'
-        alias vdir='ls -G'
-    fi
     export MANPATH="/usr/share/man"
 
     if [ -d "/usr/local/share/man" ]; then
@@ -46,24 +32,14 @@ set_os_env() {
             set_darwin_env
             ;;
         *solaris*)
-            set_gnu_env;
             set_solaris_env
             ;;
         *)
-            set_gnu_env
             ;;
     esac
 }
 
 set_terminal_options() {
-    case "${TERM}" in
-        *xterm*|rxvt|(dt|k|E)term)
-            precmd() {
-                echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-            }
-            ;;
-    esac
-
     case "${TERM}" in
         linux)
            export LANG=C
@@ -155,47 +131,18 @@ set_basic_options() {
     export TIME_STYLE=long-iso
 }
 
-set_tmp_path() {
-    TMP=${1:-/tmp}
-    if [ -d "$1" ]; then
-        TMP="$1"
-    fi
-    export TMP
-    export TMPDIR=$TMP
-    export TEMPDIR=$TMP
-}
-
-set_scripts_path() {
-    if [ -d "$1" ]; then
-        export PATH="$PATH:$1"
-    fi
-}
-
-set_private_path() {
-    if [ -d "$1" ]; then
-        export PATH="$PATH:$1"
-    fi
-}
-
 base_main() {
     set_basic_options
     set_terminal_options
     set_os_env
-    set_tmp_path "$HOME/.tmp"
-    set_private_path "$HOME/private/scripts"
-    set_scripts_path "$HOME/scripts"
 }
 
 base_main
 
 unset append_to_path_if_exists
-unset set_gnu_env
 unset set_solaris_env
 unset set_darwin_env
 unset set_os_env
 unset set_terminal_options
 unset set_basic_options
-unset set_tmp_path
-unset set_scripts_path
-unset set_private_path
 unset base_main

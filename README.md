@@ -89,7 +89,6 @@ cp ~/dot_zsh/dot_zshrc ~/.zshrc
 
 DOT_ZSH:
 - Optionally launches GNU Screen at startup if the file `$HOME/.run_screen_on_startup` exists.
-- Updates the terminal window title in GNU Screen sessions, configured via `plugins/title.zsh`.
 - Aliases are primarily set in `plugins/alias.zsh`.
 - For environments requiring a proxy, configure `plugins/proxy.zsh`. Proxy settings are commented out by default.
 

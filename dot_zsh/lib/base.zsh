@@ -6,21 +6,6 @@ append_to_path_if_exists() {
     [ -d "$1" ] && export PATH="$1:$PATH"
 }
 
-set_solaris_env() {
-    append_to_path_if_exists /usr/gnu/bin
-}
-
-set_darwin_env() {
-    export MANPATH="/usr/share/man"
-
-    if [ -d "/usr/local/share/man" ]; then
-        export MANPATH="/usr/local/share/man:$MANPATH"
-    fi
-    if [ -d "/opt/homebrew/share/man" ]; then
-        export MANPATH="/opt/homebrew/share/man:$MANPATH"
-    fi
-}
-
 set_os_env() {
     export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
     append_to_path_if_exists /opt/sbin
@@ -28,13 +13,8 @@ set_os_env() {
     append_to_path_if_exists /opt/local/sbin
 
     case $OSTYPE in
-        *darwin*)
-            set_darwin_env
-            ;;
         *solaris*)
-            set_solaris_env
-            ;;
-        *)
+            append_to_path_if_exists /usr/gnu/bin
             ;;
     esac
 }
@@ -140,8 +120,6 @@ base_main() {
 base_main
 
 unset append_to_path_if_exists
-unset set_solaris_env
-unset set_darwin_env
 unset set_os_env
 unset set_terminal_options
 unset set_basic_options

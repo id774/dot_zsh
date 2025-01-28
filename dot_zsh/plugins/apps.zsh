@@ -26,6 +26,7 @@ set_apps_path() {
         set_app_path "$dir"
         set_app_path "$dir/current"
     done
+    unset dir bin_dir
 }
 
 set_apps_path

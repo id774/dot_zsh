@@ -1,5 +1,5 @@
 # screen.zsh
-# Last Change: 18-Jan-2025.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 call_exec_screen() {

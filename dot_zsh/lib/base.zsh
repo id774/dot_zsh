@@ -42,35 +42,35 @@ set_os_env() {
     append_to_path_if_exists /opt/local/sbin
 
     case $OSTYPE in
-      *darwin*)
-        set_darwin_env
-        ;;
-      *solaris*)
-        set_gnu_env
-        set_solaris_env
-        ;;
-      *)
-        set_gnu_env
-        ;;
+        *darwin*)
+            set_darwin_env
+            ;;
+        *solaris*)
+            set_gnu_env;
+            set_solaris_env
+            ;;
+        *)
+            set_gnu_env
+            ;;
     esac
 }
 
 set_terminal_options() {
     case "${TERM}" in
-      *xterm*|rxvt|(dt|k|E)term)
-        precmd() {
-          echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-        }
-        ;;
+        *xterm*|rxvt|(dt|k|E)term)
+            precmd() {
+                echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+            }
+            ;;
     esac
 
     case "${TERM}" in
-      linux)
-        export LANG=C
-        ;;
-      *)
-        export LANG=ja_JP.UTF-8
-        ;;
+        linux)
+           export LANG=C
+           ;;
+        *)
+           export LANG=ja_JP.UTF-8
+           ;;
     esac
 }
 
@@ -156,26 +156,24 @@ set_basic_options() {
 }
 
 set_tmp_path() {
-    if [ -d $1 ]; then
-        export TMP=$1
-    else
-        export TMP=/tmp
+    TMP=${1:-/tmp}
+    if [ -d "$1" ]; then
+        TMP="$1"
     fi
+    export TMP
     export TMPDIR=$TMP
     export TEMPDIR=$TMP
 }
 
 set_scripts_path() {
-    if [ -d $1 ]; then
-        export SCRIPTS=$1
-        export PATH=$PATH:$SCRIPTS
+    if [ -d "$1" ]; then
+        export PATH="$PATH:$1"
     fi
 }
 
 set_private_path() {
-    if [ -d $1 ]; then
-        export PRIVATE=$1
-        export PATH=$PATH:$PRIVATE
+    if [ -d "$1" ]; then
+        export PATH="$PATH:$1"
     fi
 }
 
@@ -183,9 +181,21 @@ base_main() {
     set_basic_options
     set_terminal_options
     set_os_env
-    set_tmp_path $HOME/.tmp
-    set_private_path $HOME/private/scripts
-    set_scripts_path $HOME/scripts
+    set_tmp_path "$HOME/.tmp"
+    set_private_path "$HOME/private/scripts"
+    set_scripts_path "$HOME/scripts"
 }
 
 base_main
+
+unset append_to_path_if_exists
+unset set_gnu_env
+unset set_solaris_env
+unset set_darwin_env
+unset set_os_env
+unset set_terminal_options
+unset set_basic_options
+unset set_tmp_path
+unset set_scripts_path
+unset set_private_path
+unset base_main

@@ -19,3 +19,4 @@ call_exec_screen() {
 }
 
 call_exec_screen
+unset call_exec_screen

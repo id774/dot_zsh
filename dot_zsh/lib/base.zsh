@@ -8,15 +8,10 @@ append_to_path_if_exists() {
 
 set_os_env() {
     export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
-    append_to_path_if_exists /opt/sbin
+    append_to_path_if_exists /usr/gnu/bin
     append_to_path_if_exists /opt/bin
+    append_to_path_if_exists /opt/sbin
     append_to_path_if_exists /opt/local/sbin
-
-    case $OSTYPE in
-        *solaris*)
-            append_to_path_if_exists /usr/gnu/bin
-            ;;
-    esac
 }
 
 set_terminal_options() {

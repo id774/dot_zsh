@@ -1,5 +1,5 @@
 # vcs_info.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 08-Oct-2014.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 autoload -Uz add-zsh-hook
@@ -31,4 +31,3 @@ function _update_vcs_info_msg() {
 add-zsh-hook precmd _update_vcs_info_msg
 RPROMPT="%1(v|%F{cyan}%1v%f|%F{magenta}[%n]%f)"
 setopt transient_rprompt
-unset -f _update_vcs_info_msg

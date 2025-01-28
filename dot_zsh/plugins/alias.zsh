@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 23-Jan-2025.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -77,6 +77,11 @@ set_alias() {
 
     case $OSTYPE in
       *darwin*)
+        if [ "$TERM" != "dumb" ]; then
+            alias ls='ls -G'
+            alias dir='ls -G'
+            alias vdir='ls -G'
+        fi
         if [ "$UID" -eq 0 ]; then
           alias l='ls -Tltra'
           alias d='ls -Tltr'
@@ -162,6 +167,12 @@ set_alias() {
         fi
         ;;
       *)
+        if [ "$TERM" != "dumb" ]; then
+            eval "$(dircolors -b)"
+            alias ls='ls --color=auto'
+            alias dir='ls --color=auto --format=vertical'
+            alias vdir='ls --color=auto --format=long'
+        fi
         alias l='ls -ltra'
         alias d='ls -ltr'
         alias dir='ls -l'
@@ -179,3 +190,4 @@ set_alias() {
 }
 
 set_alias
+unset set_alias

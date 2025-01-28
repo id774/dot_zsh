@@ -9,4 +9,4 @@ set_r_path() {
 }
 
 set_r_path /usr/lib/R
-unset set_r_path
+unset -f set_r_path

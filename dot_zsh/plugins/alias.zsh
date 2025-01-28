@@ -190,4 +190,4 @@ set_alias() {
 }
 
 set_alias
-unset set_alias
+unset -f set_alias

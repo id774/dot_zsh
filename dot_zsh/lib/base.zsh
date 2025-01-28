@@ -119,8 +119,8 @@ base_main() {
 
 base_main
 
-unset append_to_path_if_exists
-unset set_os_env
-unset set_terminal_options
-unset set_basic_options
-unset base_main
+unset -f append_to_path_if_exists
+unset -f set_os_env
+unset -f set_terminal_options
+unset -f set_basic_options
+unset -f base_main

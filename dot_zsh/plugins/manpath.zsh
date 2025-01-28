@@ -19,4 +19,4 @@ case $OSTYPE in
         ;;
 esac
 
-unset set_manpath
+unset -f set_manpath

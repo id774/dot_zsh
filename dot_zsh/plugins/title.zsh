@@ -46,4 +46,4 @@ show_window_title() {
 }
 
 show_window_title
-unset show_window_title
+unset -f show_window_title

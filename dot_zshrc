@@ -13,4 +13,5 @@ main() {
 }
 
 main
+unset -f main
 test -f $HOME/.zshrc_local && source $HOME/.zshrc_local

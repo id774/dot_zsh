@@ -32,4 +32,4 @@ set_java_path \
   /opt/java/jdk/current
 
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd"
-unset set_java_path
+unset -f set_java_path

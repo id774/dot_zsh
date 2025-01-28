@@ -13,4 +13,4 @@ set_tmp_path() {
 }
 
 set_tmp_path "$HOME/.tmp"
-unset set_tmp_path
+unset -f set_tmp_path

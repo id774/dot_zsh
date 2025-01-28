@@ -30,6 +30,6 @@ set_apps_path() {
 
 set_apps_path
 
-unset normalize_path
-unset set_app_path
-unset set_apps_path
+unset -f normalize_path
+unset -f set_app_path
+unset -f set_apps_path

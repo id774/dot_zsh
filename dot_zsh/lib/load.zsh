@@ -47,7 +47,7 @@ load_main() {
 load_main "$@"
 
 unset ZSH_PLUGIN
-unset call_screen
-unset load_plugins
-unset load_base
-unset load_main
+unset -f call_screen
+unset -f load_plugins
+unset -f load_base
+unset -f load_main

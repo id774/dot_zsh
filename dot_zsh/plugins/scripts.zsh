@@ -19,5 +19,5 @@ set_private_path() {
 set_private_path "$HOME/private/scripts"
 set_scripts_path "$HOME/scripts"
 
-unset set_scripts_path
-unset set_private_path
+unset -f set_scripts_path
+unset -f set_private_path

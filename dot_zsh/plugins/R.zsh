@@ -1,5 +1,5 @@
 # R.zsh
-# Last Change: 28-Oct-2013.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_r_path() {
@@ -9,3 +9,4 @@ set_r_path() {
 }
 
 set_r_path /usr/lib/R
+unset set_r_path

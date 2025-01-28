@@ -1,5 +1,5 @@
 # java.zsh
-# Last Change: 16-Jan-2025.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_java_path() {
@@ -32,3 +32,4 @@ set_java_path \
   /opt/java/jdk/current
 
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd"
+unset set_java_path

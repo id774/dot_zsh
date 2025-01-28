@@ -1,5 +1,5 @@
 # title.zsh
-# Last Change: 18-Jan-2025.
+# Last Change: 28-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 show_window_title() {
@@ -46,3 +46,4 @@ show_window_title() {
 }
 
 show_window_title
+unset show_window_title

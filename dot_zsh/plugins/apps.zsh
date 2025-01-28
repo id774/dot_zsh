@@ -29,3 +29,7 @@ set_apps_path() {
 }
 
 set_apps_path
+
+unset normalize_path
+unset set_app_path
+unset set_apps_path

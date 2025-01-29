@@ -41,7 +41,6 @@ show_window_title() {
                 esac
 
                 typeset -A jt
-                local key value
                 for key in ${(k)jobtexts}; do
                     jt[$key]="${jobtexts[$key]}"
                 done

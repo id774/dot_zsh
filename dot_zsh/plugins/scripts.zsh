@@ -1,23 +1,26 @@
 # scripts.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 29-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-set_scripts_path() {
-    if [ -d "$1" ]; then
-        export SCRIPTS="$1"
-        export PATH="$PATH:$1"
-    fi
+append_to_path_if_exists() {
+    [ -d "$1" ] && export PATH="$PATH:$1"
 }
 
 set_private_path() {
-    if [ -d "$1" ]; then
-        export PRIVATE="$1"
-        export PATH="$PATH:$1"
-    fi
+    export PRIVATE="$1"
+    append_to_path_if_exists "$1"
+}
+
+set_scripts_path() {
+    export SCRIPTS="$1"
+    append_to_path_if_exists "$1"
 }
 
 set_private_path "$HOME/private/scripts"
 set_scripts_path "$HOME/scripts"
+append_to_path_if_exists "$HOME/.local/bin"
+append_to_path_if_exists "$HOME/bin"
 
-unset -f set_scripts_path
+unset -f append_to_path_if_exists
 unset -f set_private_path
+unset -f set_scripts_path

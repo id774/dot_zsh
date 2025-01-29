@@ -19,7 +19,6 @@ set_java_path \
   /Library/Java/JavaVirtualMachines/jdk-8.jdk/Contents/Home \
   /Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home \
   /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home \
-  /usr/lib/jvm/java-6-openjdk \
   /usr/lib/jvm/java-8-openjdk-i386 \
   /usr/lib/jvm/java-8-openjdk-amd64 \
   /usr/lib/jvm/java-8-openjdk \

@@ -1,5 +1,5 @@
 # apps.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 29-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 normalize_path() {
@@ -29,7 +29,9 @@ set_apps_path() {
     unset dir bin_dir
 }
 
-set_apps_path
+if [ "$(id -u)" -ne 0 ]; then
+    set_apps_path
+fi
 
 unset -f normalize_path
 unset -f set_app_path

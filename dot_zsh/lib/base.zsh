@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 29-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -7,11 +7,22 @@ append_to_path_if_exists() {
 }
 
 set_os_env() {
-    export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
-    append_to_path_if_exists /usr/gnu/bin
-    append_to_path_if_exists /opt/bin
-    append_to_path_if_exists /opt/sbin
-    append_to_path_if_exists /opt/local/sbin
+    case "$(uname)" in
+        Darwin)
+            export PATH="/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin"
+            [ "$(id -u)" -ne 0 ] && append_to_path_if_exists "/usr/local/bin"
+            ;;
+        *)
+            export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+            ;;
+    esac
+
+    if [ "$(id -u)" -ne 0 ]; then
+        append_to_path_if_exists /usr/gnu/bin
+        append_to_path_if_exists /opt/bin
+        append_to_path_if_exists /opt/sbin
+        append_to_path_if_exists /opt/local/sbin
+    fi
 }
 
 set_terminal_options() {

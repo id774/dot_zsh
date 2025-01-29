@@ -6,7 +6,9 @@ set_tmp_path() {
     if [ -z "${TMP-}" ]; then
         TMP="${1}"
         [ -d "$TMP" ] || TMP="${2}"
-        export TMP TMPDIR="$TMP" TEMPDIR="$TMP"
+        export TMP
+        export TMPDIR="$TMP"
+        export TEMPDIR="$TMP"
     fi
 }
 

@@ -16,10 +16,12 @@ set_scripts_path() {
     append_to_path_if_exists "$1"
 }
 
-set_private_path "$HOME/private/scripts"
-set_scripts_path "$HOME/scripts"
-append_to_path_if_exists "$HOME/.local/bin"
-append_to_path_if_exists "$HOME/bin"
+if [ "$(id -u)" -ne 0 ]; then
+    set_private_path "$HOME/private/scripts"
+    set_scripts_path "$HOME/scripts"
+    append_to_path_if_exists "$HOME/.local/bin"
+    append_to_path_if_exists "$HOME/bin"
+fi
 
 unset -f append_to_path_if_exists
 unset -f set_private_path

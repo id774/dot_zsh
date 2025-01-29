@@ -1,5 +1,5 @@
 # extract.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 30-Jan-2025.
 # Maintainer: id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -26,3 +26,5 @@ function extract() {
         *) echo "extract: Unsupported file type: $1"; return 2;;
     esac
 }
+
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,7z,rar}=extract

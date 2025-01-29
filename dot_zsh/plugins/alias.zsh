@@ -1,10 +1,9 @@
 # alias.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 30-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
-alias gd='dirs -v; echo -n "select number: ";
-read newdir; cd +"$newdir" '
+alias gd='dirs -v; echo -n "select number: "; read newdir; [ -n "$newdir" ] && cd +"$newdir" || echo "Invalid selection"'
 alias sudo='sudo '
 alias -g L='| less'
 alias -g H='| head'
@@ -19,7 +18,7 @@ alias vv='vim .'
 alias p='vim -R'
 alias his='history -Di -30'
 alias hist='history -Di -100'
-alias history='history -Di'
+alias histfull='history -Di -1000'
 alias f='file'
 alias j='cd'
 alias jj='clear && cd'
@@ -53,118 +52,115 @@ alias sshx="TERM=xterm-256color ssh"
 alias sshx256="TERM=xterm-256color ssh"
 alias be='bundle exec'
 alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
-alias -s {c,cpp}=runcpp
 
-case $OSTYPE in
-  *darwin*)
-    if [ "$TERM" != "dumb" ]; then
-        alias ls='ls -G'
-        alias dir='ls -G'
-        alias vdir='ls -G'
-    fi
-    if [ "$UID" -eq 0 ]; then
-      alias l='ls -Tltra'
-      alias d='ls -Tltr'
-      alias dir='ls -Tl'
-      alias la='ls -Tla'
-      alias a='ls -a'
-      alias lt='ls -t'
-      alias lr='ls -tr'
-      alias ll='ls -Tltra'
-      alias dl='ls -Tltr'
-    else
-      if type gls &> /dev/null; then
-        alias l='gls --color=auto -ltra'
-        alias d='gls --color=auto -ltr'
-        alias dir='gls --color=auto -l'
-        alias la='gls --color=auto -la'
-        alias a='gls --color=auto -a'
-        alias lt='gls --color=auto -t'
-        alias lr='gls --color=auto -tr'
-        alias ll='gls --color=auto -ltra'
-        alias dl='gls --color=auto -ltr'
-        alias ls='gls --color=auto'
-        alias du='gdu'
-        alias df='gdf'
-        alias sort='gsort'
-        alias touch='gtouch'
-        alias id='gid'
-        alias date='gdate'
-        alias basename='gbasename'
-        alias dirname='gdirname'
-        alias head='ghead'
-        alias tail='gtail'
-        alias cp='gcp -avi'
-        alias mv='gmv -vi'
-        alias rm='grm -i'
-        alias cut='gcut'
-        alias wc='gwc'
-        alias tee='gtee'
-        alias uniq='guniq'
-        alias shuf='gshuf'
-        alias split='gsplit'
-      else
-        alias l='ls -Tltra'
-        alias d='ls -Tltr'
-        alias dir='ls -Tl'
-        alias la='ls -Tla'
+case "$(uname)" in
+    Darwin)
+        if [ "$TERM" != "dumb" ]; then
+            alias ls='ls -G'
+            alias dir='ls -G'
+            alias vdir='ls -G'
+        fi
+        if [ "$UID" -eq 0 ]; then
+            alias l='ls -Tltra'
+            alias d='ls -Tltr'
+            alias dir='ls -Tl'
+            alias la='ls -Tla'
+            alias a='ls -a'
+            alias lt='ls -t'
+            alias lr='ls -tr'
+            alias ll='ls -Tltra'
+            alias dl='ls -Tltr'
+        else
+            if type gls >/dev/null 2>&1; then
+                alias l='gls --color=auto -ltra'
+                alias d='gls --color=auto -ltr'
+                alias dir='gls --color=auto -l'
+                alias la='gls --color=auto -la'
+                alias a='gls --color=auto -a'
+                alias lt='gls --color=auto -t'
+                alias lr='gls --color=auto -tr'
+                alias ll='gls --color=auto -ltra'
+                alias dl='gls --color=auto -ltr'
+                alias ls='gls --color=auto'
+                alias du='gdu'
+                alias df='gdf'
+                alias sort='gsort'
+                alias touch='gtouch'
+                alias id='gid'
+                alias date='gdate'
+                alias basename='gbasename'
+                alias dirname='gdirname'
+                alias head='ghead'
+                alias tail='gtail'
+                alias cp='gcp -avi'
+                alias mv='gmv -vi'
+                alias rm='grm -i'
+                alias cut='gcut'
+                alias wc='gwc'
+                alias tee='gtee'
+                alias uniq='guniq'
+                alias shuf='gshuf'
+                alias split='gsplit'
+            else
+                alias l='ls -Tltra'
+                alias d='ls -Tltr'
+                alias dir='ls -Tl'
+                alias la='ls -Tla'
+                alias a='ls -a'
+                alias lt='ls -t'
+                alias lr='ls -tr'
+                alias ll='ls -Tltra'
+                alias dl='ls -Tltr'
+            fi
+            [ -x "$(command -v gfind)" ] && alias find='gfind'
+            [ -x "$(command -v gxargs)" ] && alias xargs='gxargs'
+            [ -x "$(command -v trash)" ] && alias rm='trash'
+
+            alias finder='open .'
+            alias top='top -o cpu'
+
+            [ -d "/Applications/Firefox.app" ] && {
+                alias fx='open -a Firefox'
+                alias firefox='open -a Firefox'
+            }
+
+            [ -d "/Applications/Thunderbird.app" ] && {
+                alias tb='open -a Thunderbird'
+                alias th='open -a Thunderbird'
+                alias thunderbird='open -a Thunderbird'
+            }
+
+            [ -d "/Applications/Google Chrome.app" ] && {
+                alias ch='open -a Google\ Chrome'
+                alias chrome='open -a Google\ Chrome'
+            }
+
+            if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+                alias e='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+                alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+                alias emacs='open -a Emacs'
+                alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
+            fi
+        fi
+        ;;
+    *)
+        if [ "$TERM" != "dumb" ]; then
+            eval "$(dircolors -b)"
+            alias ls='ls --color=auto'
+            alias dir='ls --color=auto --format=vertical'
+            alias vdir='ls --color=auto --format=long'
+        fi
+        alias l='ls -ltra'
+        alias d='ls -ltr'
+        alias dir='ls -l'
+        alias la='ls -la'
         alias a='ls -a'
         alias lt='ls -t'
         alias lr='ls -tr'
-        alias ll='ls -Tltra'
-        alias dl='ls -Tltr'
-      fi
-      if type gfind &> /dev/null; then
-        alias find='gfind'
-      fi
-      if type gxargs &> /dev/null; then
-        alias xargs='gxargs'
-      fi
-      if type trash &> /dev/null; then
-        alias rm='trash'
-      fi
-      alias finder='open .'
-      alias top='top -o cpu'
-      if [ -d "/Applications/Firefox.app" ]; then
-        alias fx='open -a Firefox'
-        alias firefox='open -a Firefox'
-      fi
-      if [ -d "/Applications/Thunderbird.app" ]; then
-        alias tb='open -a Thunderbird'
-        alias th='open -a Thunderbird'
-        alias thunderbird='open -a Thunderbird'
-      fi
-      if [ -d "/Applications/Google Chrome.app" ]; then
-        alias ch='open -a Google\ Chrome'
-        alias chrome='open -a Google\ Chrome'
-      fi
-      if [ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-        alias e='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-        alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-        alias emacs='open -a Emacs'
-        alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
-      fi
-    fi
-    ;;
-  *)
-    if [ "$TERM" != "dumb" ]; then
-        eval "$(dircolors -b)"
-        alias ls='ls --color=auto'
-        alias dir='ls --color=auto --format=vertical'
-        alias vdir='ls --color=auto --format=long'
-    fi
-    alias l='ls -ltra'
-    alias d='ls -ltr'
-    alias dir='ls -l'
-    alias la='ls -la'
-    alias a='ls -a'
-    alias lt='ls -t'
-    alias lr='ls -tr'
-    alias ll='ls -lZtra'
-    alias dl='ls -lZtr'
-    alias e='emacs -nw'
-    alias em='emacs -nw'
-    alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
-    ;;
+        alias ll='ls -lZtra'
+        alias dl='ls -lZtr'
+        alias e='emacs -nw'
+        alias em='emacs -nw'
+        alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
+        ;;
 esac

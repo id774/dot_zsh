@@ -1,5 +1,5 @@
 # runcpp.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 30-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function runcpp() {
@@ -20,3 +20,5 @@ function runcpp() {
     shift
     ./"$exe" "$@"
 }
+
+alias -s {c,cpp}=runcpp

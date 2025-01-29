@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 29-Jan-2025.
+# Last Change: 30-Jan-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -9,11 +9,11 @@ append_to_path_if_exists() {
 set_os_env() {
     case "$(uname)" in
         Darwin)
-            export PATH="/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin"
+            export PATH="/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
             [ "$(id -u)" -ne 0 ] && append_to_path_if_exists "/usr/local/bin"
             ;;
         *)
-            export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+            export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             ;;
     esac
 

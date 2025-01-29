@@ -56,14 +56,14 @@ setup_environment() {
 
     # Set options and owner based on the operating system
     case $(uname) in
-      Darwin)
-        OPTIONS=-Rv
-        OWNER=root:wheel
-        ;;
-      *)
-        OPTIONS=-Rvd
-        OWNER=root:root
-        ;;
+        Darwin)
+            OPTIONS=-Rv
+            OWNER=root:wheel
+            ;;
+        *)
+            OPTIONS=-Rvd
+            OWNER=root:root
+            ;;
     esac
     echo "Copy options: $OPTIONS, Owner: $OWNER"
 }

@@ -73,8 +73,6 @@ set_basic_options() {
     setopt hist_save_no_dups
     setopt hist_no_store
     setopt hist_expand
-    function hist-edit { vim $HISTFILE }
-    function history-all { history -E 1 }
     setopt auto_cd
     setopt auto_pushd
     setopt pushd_ignore_dups

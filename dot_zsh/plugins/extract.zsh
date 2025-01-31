@@ -1,6 +1,6 @@
 # extract.zsh
 # Last Change: 30-Jan-2025.
-# Maintainer: id774 <idnanashi@gmail.com>
+# Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
     if [ -z "$1" ] || [ ! -f "$1" ]; then

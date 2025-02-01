@@ -3,7 +3,15 @@
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 ZSH_ROOT=""
-for ZSH_SEARCH_PATH in "$HOME/.zsh" "/usr/local/etc/zsh" "/etc/zsh"; do
+for ZSH_SEARCH_PATH in \
+    "$HOME/.zsh" \
+    "$HOME/.config/zsh" \
+    "$HOME/.local/share/zsh" \
+    "/usr/local/etc/zsh" \
+    "/usr/local/share/zsh" \
+    "/etc/zsh" \
+    "/usr/share/zsh" \
+    "/opt/zsh"; do
     if [ -d "$ZSH_SEARCH_PATH" ]; then
         ZSH_ROOT="$ZSH_SEARCH_PATH"
         break

@@ -1,5 +1,5 @@
 # vcs_info.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 autoload -Uz add-zsh-hook
@@ -12,7 +12,6 @@ zstyle ':vcs_info:*' formats '(%s)-[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
 zstyle ':vcs_info:(svn):*' branchformat '%b:r%r'
 
-autoload -Uz is-at-least
 if is-at-least 4.3.10; then
     zstyle ':vcs_info:git:*' check-for-changes true
     zstyle ':vcs_info:git:*' stagedstr "+"

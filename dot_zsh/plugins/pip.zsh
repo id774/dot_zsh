@@ -2,8 +2,6 @@
 # Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-autoload -Uz is-at-least
-
 function _pip_completion {
     local words cword
     if is-at-least 5.0; then

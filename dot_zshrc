@@ -14,7 +14,7 @@ main() {
         "/opt/zsh"; do
         if [ -f "$ZSH_SEARCH_PATH/lib/load.zsh" ]; then
             export ZSH_ROOT="$ZSH_SEARCH_PATH"
-            source "$ZSH_ROOT/lib/load.zsh"
+            . "$ZSH_ROOT/lib/load.zsh"
             break
         fi
     done
@@ -23,4 +23,4 @@ main() {
 main
 unset -f main
 unset ZSH_SEARCH_PATH
-test -f "$HOME/.zshrc_local" && source "$HOME/.zshrc_local"
+test -f "$HOME/.zshrc_local" && . "$HOME/.zshrc_local"

@@ -70,7 +70,7 @@ case "$(uname)" in
             alias ll='ls -Tltra'
             alias dl='ls -Tltr'
         else
-            if type gls >/dev/null 2>&1; then
+            if command -v gls >/dev/null 2>&1; then
                 alias l='gls --color=auto -ltra'
                 alias d='gls --color=auto -ltr'
                 alias dir='gls --color=auto -l'

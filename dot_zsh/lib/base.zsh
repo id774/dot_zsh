@@ -46,25 +46,15 @@ set_basic_options() {
     fi
     zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-    if is-at-least 4.2; then
-        zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
-    fi
+    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
 
-    if is-at-least 4.2; then
-        autoload -U promptinit ; promptinit
-        autoload -U colors     ; colors
-        autoload -U predict-on
-    else
-        autoload promptinit ; promptinit
-        autoload colors     ; colors
-        autoload predict-on
-    fi
+    autoload -U promptinit ; promptinit
+    autoload -U colors     ; colors
+    autoload -U predict-on
 
-    if is-at-least 4.2; then
-        autoload -U compinit
-        compinit
-        [[ -n $(command -v compaudit) ]] && compaudit
-    fi
+    autoload -U compinit
+    compinit
+    [[ -n $(command -v compaudit) ]] && compaudit
 
     zle -N predict-on
     zle -N predict-off

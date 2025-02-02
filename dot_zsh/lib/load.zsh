@@ -2,22 +2,6 @@
 # Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-ZSH_ROOT=""
-for ZSH_SEARCH_PATH in \
-    "$HOME/.zsh" \
-    "$HOME/.config/zsh" \
-    "$HOME/.local/share/zsh" \
-    "/usr/local/etc/zsh" \
-    "/usr/local/share/zsh" \
-    "/etc/zsh" \
-    "/usr/share/zsh" \
-    "/opt/zsh"; do
-    if [ -f "$ZSH_SEARCH_PATH/lib/load.zsh" ]; then
-        ZSH_ROOT="$ZSH_SEARCH_PATH"
-        break
-    fi
-done
-
 [ -z "$ZSH_ROOT" ] && return
 
 call_screen() {
@@ -44,9 +28,7 @@ load_main() {
 
 load_main "$@"
 
-unset ZSH_ROOT
 unset ZSH_PLUGIN
-unset ZSH_SEARCH_PATH
 unset -f call_screen
 unset -f load_plugins
 unset -f load_base

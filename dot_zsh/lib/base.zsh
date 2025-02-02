@@ -62,12 +62,8 @@ set_basic_options() {
 
     if is-at-least 4.2; then
         autoload -U compinit
-        if command -v compaudit >/dev/null 2>&1; then
-            compinit
-        fi
-    else
-        autoload compinit
         compinit
+        [[ -n $(command -v compaudit) ]] && compaudit
     fi
 
     zle -N predict-on

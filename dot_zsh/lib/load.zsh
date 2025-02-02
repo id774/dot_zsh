@@ -1,5 +1,5 @@
 # load.zsh
-# Last Change: 01-Feb-2025.
+# Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 ZSH_ROOT=""
@@ -12,7 +12,7 @@ for ZSH_SEARCH_PATH in \
     "/etc/zsh" \
     "/usr/share/zsh" \
     "/opt/zsh"; do
-    if [ -d "$ZSH_SEARCH_PATH" ]; then
+    if [ -f "$ZSH_SEARCH_PATH/lib/load.zsh" ]; then
         ZSH_ROOT="$ZSH_SEARCH_PATH"
         break
     fi

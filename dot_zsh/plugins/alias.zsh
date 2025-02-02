@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -146,7 +146,6 @@ case "$(uname)" in
         ;;
     *)
         if [ "$TERM" != "dumb" ]; then
-            eval "$(dircolors -b)"
             alias ls='ls --color=auto'
             alias dir='ls --color=auto --format=vertical'
             alias vdir='ls --color=auto --format=long'

@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 02-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -38,14 +38,41 @@ set_terminal_options() {
 
 set_basic_options() {
     bindkey -e
-    autoload -U promptinit ; promptinit
-    autoload -U colors     ; colors
-    autoload -U predict-on
+
+    autoload -Uz is-at-least
+
+    if [[ -z ${LS_COLORS} ]]; then
+        LS_COLORS=$(dircolors -b 2>/dev/null | grep 'LS_COLORS=' | cut -d= -f2-)
+    fi
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+    if is-at-least 4.2; then
+        zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
+    fi
+
+    if is-at-least 4.2; then
+        autoload -U promptinit ; promptinit
+        autoload -U colors     ; colors
+        autoload -U predict-on
+    else
+        autoload promptinit ; promptinit
+        autoload colors     ; colors
+        autoload predict-on
+    fi
+
+    if is-at-least 4.2; then
+        autoload -U compinit
+        if command -v compaudit >/dev/null 2>&1; then
+            compinit
+        fi
+    else
+        autoload compinit
+        compinit
+    fi
+
     zle -N predict-on
     zle -N predict-off
-    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
-    autoload -U compinit ; compinit
+
     zstyle ':completion:*:default' menu select=1
     zstyle ':completion:*:processes' command 'ps x'
     setopt list_packed

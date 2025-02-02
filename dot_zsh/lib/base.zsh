@@ -41,11 +41,11 @@ set_basic_options() {
 
     autoload -Uz is-at-least
 
-    if [[ -z ${LS_COLORS} ]]; then
+    if [[ -z ${LS_COLORS} ]] && command -v dircolors >/dev/null 2>&1; then
         LS_COLORS=$(dircolors -b 2>/dev/null | grep 'LS_COLORS=' | cut -d= -f2-)
     fi
-    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
 
     autoload -U promptinit ; promptinit
@@ -71,6 +71,7 @@ set_basic_options() {
     setopt auto_menu
     setopt auto_param_keys
     setopt auto_resume
+
     HISTFILE=$HOME/.zsh_history
     HISTSIZE=100000
     SAVEHIST=100000
@@ -86,6 +87,7 @@ set_basic_options() {
     setopt hist_save_no_dups
     setopt hist_no_store
     setopt hist_expand
+
     setopt auto_cd
     setopt auto_pushd
     setopt pushd_ignore_dups
@@ -99,9 +101,11 @@ set_basic_options() {
     setopt numeric_glob_sort
     setopt path_dirs
     setopt auto_name_dirs
+
     unsetopt flow_control
     setopt no_flow_control
     setopt hash_cmds
+
     setopt ignore_eof
     setopt bsd_echo
     setopt no_hup
@@ -109,6 +113,7 @@ set_basic_options() {
     setopt notify
     setopt long_list_jobs
     setopt mail_warning
+
     setopt multios
     setopt short_loops
     setopt always_last_prompt
@@ -121,6 +126,7 @@ set_basic_options() {
     setopt print_eightbit
     setopt print_exit_value
     setopt rc_quotes
+
     umask 022
     ulimit -s unlimited
     ulimit -c 0

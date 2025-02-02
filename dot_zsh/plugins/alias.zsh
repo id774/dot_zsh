@@ -51,7 +51,6 @@ alias rm='rm -i'
 alias crontab='crontab -i'
 alias sshx="TERM=xterm-256color ssh"
 alias sshx256="TERM=xterm-256color ssh"
-alias sqlite3='sqlite3 -header -csv -nullvalue "NULL"'
 
 case "$(uname)" in
     Darwin)

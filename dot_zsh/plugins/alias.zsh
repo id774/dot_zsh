@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 02-Feb-2025.
+# Last Change: 22-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -13,6 +13,13 @@ alias -g S='| sed'
 alias -g A='| awk'
 alias -g W='| wc'
 alias g='git'
+alias gs='git status'
+alias gl='git log'
+alias gd='git diff'
+alias gu='git pull'
+alias gp='git push'
+alias ga='git add --all'
+alias gc='git commit -a -v -m'
 alias v='vim'
 alias vv='vim .'
 alias p='vim -R'

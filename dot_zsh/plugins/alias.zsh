@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 22-Feb-2025.
+# Last Change: 25-Feb-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -14,7 +14,6 @@ alias -g W='| wc'
 alias g='git'
 alias gs='git status'
 alias gst='git status'
-alias go='git commit -a -v -m'
 alias gci='git commit -v'
 alias ga='git add'
 alias gaa='git add --all'

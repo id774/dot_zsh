@@ -14,6 +14,8 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Version History:
+#  v1.1 2025-03-05
+#       Added sudo privilege check when --sudo option is specified.
 #  v1.0 2025-01-17
 #       Initial release. Updated documentation and refactored for readability.
 #
@@ -44,6 +46,14 @@ if [ ! -d "$DOT_ZSH_SOURCE/dot_zsh/plugins" ]; then
     exit 1
 fi
 
+# Check if the user has sudo privileges (password may be required)
+check_sudo() {
+    if ! sudo -v 2>/dev/null; then
+        echo "Error: This script requires sudo privileges. Please run as a user with sudo access."
+        exit 1
+    fi
+}
+
 # Set up the environment and initialize variables
 setup_environment() {
     # Set the installation target
@@ -53,6 +63,11 @@ setup_environment() {
     # Determine whether to use sudo
     test -n "$2" && SUDO= || SUDO=sudo
     echo "Using sudo: ${SUDO:-no}"
+
+    # Check sudo privileges if sudo is needed
+    if [ "$SUDO" = "sudo" ]; then
+        check_sudo
+    fi
 
     # Set options and owner based on the operating system
     case $(uname) in

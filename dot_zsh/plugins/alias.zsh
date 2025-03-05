@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 25-Feb-2025.
+# Last Change: 06-Mar-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -50,13 +50,13 @@ alias q='sudo pkill -9'
 alias qq='sudo kill -9'
 alias cp='cp -avi'
 alias mv='mv -vi'
-alias rm='rm -i'
+alias rm='rm -vi'
 alias copy='cp -avi'
 alias move='mv -vi'
 alias ren='mv -vi'
-alias del='rm -i'
-alias md='mkdir'
-alias rd='rmdir'
+alias del='rm -vi'
+alias md='mkdir -v'
+alias rd='rmdir -v'
 alias sc='dirs -v; echo -n "select number: "; read newdir; [ -n "$newdir" ] && cd +"$newdir" || echo "Invalid selection"'
 alias s='screen -U'
 alias scd='screen -U -D'
@@ -86,6 +86,7 @@ case "$(uname)" in
             alias lr='ls -tr'
             alias ll='ls -Tltra'
             alias dl='ls -Tltr'
+            alias rm='rm -i'
         else
             if command -v gls >/dev/null 2>&1; then
                 alias l='gls --color=auto -ltra'
@@ -110,7 +111,9 @@ case "$(uname)" in
                 alias tail='gtail'
                 alias cp='gcp -avi'
                 alias mv='gmv -vi'
-                alias rm='grm -i'
+                alias rm='grm -vi'
+                alias mkdir='gmkdir -v'
+                alias rmdir='grmdir -v'
                 alias cut='gcut'
                 alias wc='gwc'
                 alias tee='gtee'
@@ -127,6 +130,7 @@ case "$(uname)" in
                 alias lr='ls -tr'
                 alias ll='ls -Tltra'
                 alias dl='ls -Tltr'
+                alias rm='rm -i'
             fi
             [ -x "$(command -v gfind)" ] && alias find='gfind'
             [ -x "$(command -v gxargs)" ] && alias xargs='gxargs'

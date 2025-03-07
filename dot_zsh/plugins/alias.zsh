@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 06-Mar-2025.
+# Last Change: 07-Mar-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -112,8 +112,10 @@ case "$(uname)" in
                 alias mv='gmv -vi'
                 alias rm='grm -i'
                 alias del='grm -vi'
-                alias mkdir='gmkdir -v'
-                alias rmdir='grmdir -v'
+                alias mkdir='gmkdir'
+                alias rmdir='grmdir'
+                alias md='gmkdir -v'
+                alias rd='grmdir -v'
                 alias cut='gcut'
                 alias wc='gwc'
                 alias tee='gtee'

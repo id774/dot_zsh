@@ -33,6 +33,22 @@
 #
 ########################################################################
 
+# Display help message
+show_help() {
+    cat <<EOF
+Usage: $(basename "$0") [target_path] [nosudo]
+
+Options:
+  -h, --help    Show this help message and exit.
+
+Description:
+  This script installs the dot_zsh configuration files to the specified
+  target directory, compiles zsh scripts into .zwc files, sets appropriate
+  permissions, and optionally removes existing configurations.
+EOF
+    exit 0
+}
+
 # Function to check required commands
 check_commands() {
     for cmd in "$@"; do
@@ -73,10 +89,6 @@ setup_environment() {
     fi
     echo "Using sudo: ${SUDO:-no}"
 
-    if [ "$SUDO" = "sudo" ]; then
-        check_sudo
-    fi
-
     case "$(uname)" in
         Darwin)
             OPTIONS=-Rv
@@ -87,6 +99,12 @@ setup_environment() {
             OWNER=root:root
             ;;
     esac
+
+    if [ "$SUDO" = "sudo" ]; then
+        check_sudo
+    else
+        OWNER="$(id -un):$(id -gn)"
+    fi
     echo "Copy options: $OPTIONS, Owner: $OWNER"
 }
 
@@ -94,10 +112,10 @@ setup_environment() {
 set_permission() {
     if [ -n "$2" ]; then
         echo "Setting ownership to current user and group..."
-        chown -R "$(id -un):$(id -gn)" "$TARGET"
+        chown -R "$OWNER" "$TARGET"
     else
         echo "Setting ownership to $OWNER..."
-        $SUDO chown -R $OWNER "$TARGET"
+        $SUDO chown -R "$OWNER" "$TARGET"
     fi
 }
 
@@ -152,7 +170,17 @@ install_dotzsh() {
 
 # Main function to execute the script
 main() {
-    check_commands zsh
+    # Parse command-line arguments
+    for arg in "$@"; do
+        case "$arg" in
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+        esac
+    done
+
+    check_commands zsh cp mkdir chmod chown ln
     install_dotzsh "$@"
 }
 

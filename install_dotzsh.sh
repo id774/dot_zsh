@@ -14,6 +14,8 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Version History:
+#  v1.2 2025-03-17
+#       Standardized documentation format and added system checks.
 #  v1.1 2025-03-05
 #       Added sudo privilege check when --sudo option is specified.
 #  v1.0 2025-01-17
@@ -31,46 +33,51 @@
 #
 ########################################################################
 
-# Check if zsh is installed
-if ! command -v zsh > /dev/null 2>&1; then
-    echo "Error: zsh is not installed. Please install zsh before running this script." >&2
-    exit 1
-fi
-
-# Set the source directory dynamically based on the script's location
-export DOT_ZSH_SOURCE=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
-
-# Ensure the source directory exists
-if [ ! -d "$DOT_ZSH_SOURCE/dot_zsh/plugins" ]; then
-    echo "Error: $DOT_ZSH_SOURCE/dot_zsh/plugins directory does not exist." >&2
-    exit 1
-fi
+# Function to check required commands
+check_commands() {
+    for cmd in "$@"; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            echo "Error: Command '$cmd' is not installed. Please install $cmd and try again." >&2
+            exit 127
+        elif ! [ -x "$(command -v "$cmd")" ]; then
+            echo "Error: Command '$cmd' is not executable. Please check the permissions." >&2
+            exit 126
+        fi
+    done
+}
 
 # Check if the user has sudo privileges (password may be required)
 check_sudo() {
     if ! sudo -v 2>/dev/null; then
-        echo "Error: This script requires sudo privileges. Please run as a user with sudo access."
+        echo "Error: This script requires sudo privileges. Please run as a user with sudo access." >&2
         exit 1
     fi
 }
 
 # Set up the environment and initialize variables
 setup_environment() {
-    # Set the installation target
-    test -n "$1" && export TARGET=$1 || export TARGET=/usr/local/etc/zsh
+    export DOT_ZSH_SOURCE=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
+
+    if [ ! -d "$DOT_ZSH_SOURCE/dot_zsh/plugins" ]; then
+        echo "Error: $DOT_ZSH_SOURCE/dot_zsh/plugins directory does not exist." >&2
+        exit 1
+    fi
+
+    TARGET=${1:-/usr/local/etc/zsh}
     echo "Installation target: $TARGET"
 
-    # Determine whether to use sudo
-    test -n "$2" && SUDO= || SUDO=sudo
+    if [ -n "$2" ]; then
+        SUDO=""
+    else
+        SUDO="sudo"
+    fi
     echo "Using sudo: ${SUDO:-no}"
 
-    # Check sudo privileges if sudo is needed
     if [ "$SUDO" = "sudo" ]; then
         check_sudo
     fi
 
-    # Set options and owner based on the operating system
-    case $(uname) in
+    case "$(uname)" in
         Darwin)
             OPTIONS=-Rv
             OWNER=root:wheel
@@ -86,11 +93,9 @@ setup_environment() {
 # Set file permissions and ownership
 set_permission() {
     if [ -n "$2" ]; then
-        # If nosudo is specified, set ownership to the current user and group
         echo "Setting ownership to current user and group..."
         chown -R "$(id -un):$(id -gn)" "$TARGET"
     else
-        # Use sudo to set ownership to the appropriate system user and group
         echo "Setting ownership to $OWNER..."
         $SUDO chown -R $OWNER "$TARGET"
     fi
@@ -116,36 +121,40 @@ zwc_cleanup() {
     rm -f "$DOT_ZSH_SOURCE/dot_zsh/plugins/"*.zwc
 }
 
-# Install dot_zsh configuration
-install_dotzsh() {
-    echo "Starting installation..."
-    setup_environment "$@"
+# Install configuration files to the target directory
+install_files() {
+    echo "Installing files from $DOT_ZSH_SOURCE/dot_zsh/ to $TARGET"
 
-    # Remove existing target directory if it exists
     if [ -d "$TARGET" ]; then
         echo "Removing existing directory: $TARGET"
         $SUDO rm -rf "$TARGET"
     fi
 
-    # Create the target directory
     echo "Creating target directory: $TARGET"
     $SUDO mkdir -p "$TARGET"
 
-    # Compile zsh scripts and copy files
-    zsh_compile
-    echo "Copying files from $DOT_ZSH_SOURCE/dot_zsh/ to $TARGET"
     $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/lib" "$TARGET/"
     $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/plugins" "$TARGET/"
     $SUDO cp "$DOT_ZSH_SOURCE/dot_zshrc" "$HOME/.zshrc"
     zsh -c 'zcompile $HOME/.zshrc'
+}
 
-    # Clean up temporary .zwc files
+# Install dot_zsh configuration
+install_dotzsh() {
+    echo "Starting installation..."
+    setup_environment "$@"
+    zsh_compile
+    install_files
     zwc_cleanup
-
-    # Set permissions appropriately
     set_permission "$@"
     echo "Installation complete!"
 }
 
-# Execute the installation
-install_dotzsh "$@"
+# Main function to execute the script
+main() {
+    check_commands zsh
+    install_dotzsh "$@"
+}
+
+# Execute main function
+main "$@"

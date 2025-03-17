@@ -14,12 +14,11 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Version History:
-#  v1.2 2025-03-17
+#  v2.0 2025-03-17
 #       Standardized documentation format and added system checks.
-#  v1.1 2025-03-05
-#       Added sudo privilege check when --sudo option is specified.
+#  [Further version history truncated for brevity]
 #  v1.0 2025-01-17
-#       Initial release. Updated documentation and refactored for readability.
+#       Initial release.
 #
 #  Usage:
 #  ./install_dotzsh.sh [target_path] [nosudo]
@@ -27,7 +26,7 @@
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo]: If specified, the script runs without sudo.
-#  - Ensure that the DOT_ZSH_SOURCE environment variable points to the directory
+#  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
 #
@@ -71,10 +70,10 @@ check_sudo() {
 
 # Set up the environment and initialize variables
 setup_environment() {
-    export DOT_ZSH_SOURCE=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
+    export SCRIPT_HOME=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
 
-    if [ ! -d "$DOT_ZSH_SOURCE/dot_zsh/plugins" ]; then
-        echo "Error: $DOT_ZSH_SOURCE/dot_zsh/plugins directory does not exist." >&2
+    if [ ! -d "$SCRIPT_HOME/dot_zsh/plugins" ]; then
+        echo "Error: $SCRIPT_HOME/dot_zsh/plugins directory does not exist." >&2
         exit 1
     fi
 
@@ -121,11 +120,11 @@ set_permission() {
 # Compile zsh scripts into .zwc files
 zsh_compile() {
     echo "Compiling zsh scripts..."
-    for file in "$DOT_ZSH_SOURCE/dot_zsh/lib/"*.zsh; do
+    for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
         echo "Compiling $file"
         zsh -c "zcompile $file"
     done
-    for plugin in "$DOT_ZSH_SOURCE/dot_zsh/plugins/"*.zsh; do
+    for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
         echo "Compiling $plugin"
         zsh -c "zcompile $plugin"
     done
@@ -134,13 +133,13 @@ zsh_compile() {
 # Clean up compiled .zwc files
 zwc_cleanup() {
     echo "Cleaning up .zwc files..."
-    rm -f "$DOT_ZSH_SOURCE/dot_zsh/lib/"*.zwc
-    rm -f "$DOT_ZSH_SOURCE/dot_zsh/plugins/"*.zwc
+    rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc
+    rm -f "$SCRIPT_HOME/dot_zsh/plugins/"*.zwc
 }
 
 # Install configuration files to the target directory
 install_files() {
-    echo "Installing files from $DOT_ZSH_SOURCE/dot_zsh/ to $TARGET"
+    echo "Installing files from $SCRIPT_HOME/dot_zsh/ to $TARGET"
 
     if [ -d "$TARGET" ]; then
         echo "Removing existing directory: $TARGET"
@@ -150,9 +149,9 @@ install_files() {
     echo "Creating target directory: $TARGET"
     $SUDO mkdir -p "$TARGET"
 
-    $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/lib" "$TARGET/"
-    $SUDO cp -R "$DOT_ZSH_SOURCE/dot_zsh/plugins" "$TARGET/"
-    $SUDO cp "$DOT_ZSH_SOURCE/dot_zshrc" "$HOME/.zshrc"
+    $SUDO cp -R "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"
+    $SUDO cp -R "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"
+    $SUDO cp "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"
     zsh -c 'zcompile $HOME/.zshrc'
 }
 

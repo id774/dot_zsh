@@ -9,7 +9,7 @@
 #  appropriate permissions, and optionally removes existing configurations.
 #
 #  Author: id774 (More info: http://id774.net)
-#  Source Code: https://github.com/id774/scripts
+#  Source Code: https://github.com/id774/dot_zsh
 #  License: LGPLv3 (Details: https://www.gnu.org/licenses/lgpl-3.0.html)
 #  Contact: idnanashi@gmail.com
 #

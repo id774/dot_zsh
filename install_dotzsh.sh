@@ -178,7 +178,7 @@ main() {
         esac
     done
 
-    check_commands zsh cp mkdir chmod chown ln id dirname
+    check_commands zsh cp mkdir chmod chown rm id dirname
     install_dotzsh "$@"
 }
 

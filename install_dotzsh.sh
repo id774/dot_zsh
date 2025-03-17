@@ -18,7 +18,9 @@
 #       Standardized documentation format and added system checks.
 #  [Further version history truncated for brevity]
 #  v1.0 2025-01-17
-#       Initial release.
+#       Initial stable release.
+#  v0.1 2011-05-20
+#       First release.
 #
 #  Usage:
 #  ./install_dotzsh.sh [target_path] [nosudo]

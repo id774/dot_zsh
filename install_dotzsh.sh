@@ -46,7 +46,6 @@ Description:
   target directory, compiles zsh scripts into .zwc files, sets appropriate
   permissions, and optionally removes existing configurations.
 EOF
-    exit 0
 }
 
 # Function to check required commands

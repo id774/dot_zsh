@@ -152,9 +152,9 @@ install_files() {
     echo "Creating target directory: $TARGET"
     $SUDO mkdir -p "$TARGET"
 
-    $SUDO cp -R "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"
-    $SUDO cp -R "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"
-    $SUDO cp "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"
+    $SUDO cp -Rv "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"
+    $SUDO cp -Rv "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"
+    $SUDO cp -v "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"
     zsh -c 'zcompile $HOME/.zshrc'
 }
 

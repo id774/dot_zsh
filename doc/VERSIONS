@@ -5,6 +5,7 @@ v25.03 (Release Date: TBD)
 --------------------------
 - Major overhaul of installation scripts.
 - Fine-tuned alias configurations.
+- Adjusted HISTSIZE and SAVEHIST to 10000 for better performance.
 
 v25.02 (2025-02-25)
 -------------------

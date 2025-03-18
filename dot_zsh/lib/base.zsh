@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 02-Feb-2025.
+# Last Change: 18-Mar-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -73,8 +73,8 @@ set_basic_options() {
     setopt auto_resume
 
     HISTFILE=$HOME/.zsh_history
-    HISTSIZE=100000
-    SAVEHIST=100000
+    HISTSIZE=10000
+    SAVEHIST=10000
     setopt extended_history
     setopt append_history
     setopt inc_append_history

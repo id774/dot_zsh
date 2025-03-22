@@ -14,6 +14,8 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Version History:
+#  v2.1 2025-03-22
+#       Unify usage information by extracting help text from header comments.
 #  v2.0 2025-03-17
 #       Standardized documentation format and added system checks.
 #  [Further version history truncated for brevity]
@@ -23,8 +25,11 @@
 #       First release.
 #
 #  Usage:
-#  ./install_dotzsh.sh [target_path] [nosudo]
+#      ./install_dotzsh.sh [target_path] [nosudo]
 #
+#  Options:
+#      -h, --help    Show this help message and exit.
+
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo]: If specified, the script runs without sudo.
@@ -34,19 +39,15 @@
 #
 ########################################################################
 
-# Display help message
-show_help() {
-    cat <<EOF
-Usage: $(basename "$0") [target_path] [nosudo]
-
-Options:
-  -h, --help    Show this help message and exit.
-
-Description:
-  This script installs the dot_zsh configuration files to the specified
-  target directory, compiles zsh scripts into .zwc files, sets appropriate
-  permissions, and optionally removes existing configurations.
-EOF
+# Display script usage information
+usage() {
+    awk '
+        BEGIN { in_usage = 0 }
+        /^#  Usage:/ { in_usage = 1; print substr($0, 4); next }
+        /^#{10}/ { if (in_usage) exit }
+        in_usage && /^#/ { print substr($0, 4) }
+    ' "$0"
+    exit 0
 }
 
 # Function to check required commands
@@ -171,15 +172,9 @@ install_dotzsh() {
 
 # Main function to execute the script
 main() {
-    # Parse command-line arguments
-    for arg in "$@"; do
-        case "$arg" in
-            -h|--help)
-                show_help
-                exit 0
-                ;;
-        esac
-    done
+    case "$1" in
+        -h|--help) usage ;;
+    esac
 
     check_commands zsh cp mkdir chmod chown rm id dirname
     install_dotzsh "$@"

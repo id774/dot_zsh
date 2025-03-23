@@ -29,7 +29,7 @@
 #
 #  Options:
 #      -h, --help    Show this help message and exit.
-
+#
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo]: If specified, the script runs without sudo.

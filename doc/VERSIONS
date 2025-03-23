@@ -1,8 +1,8 @@
 VERSION History
 ===============
 
-v25.03 (Release Date: TBD)
---------------------------
+v25.03 (2025-03-23)
+-------------------
 - Major overhaul of installation scripts.
 - Fine-tuned alias configurations.
 - Adjusted HISTSIZE and SAVEHIST to 10000 for better performance.

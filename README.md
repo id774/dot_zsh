@@ -15,7 +15,6 @@ A pluggable framework for the Z shell (zsh) that simplifies configuration manage
 7. [Versioning](#7-versioning)
 8. [Contribution](#8-contribution)
 9. [License](#9-license)
-10. [Authors](#10-authors)
 
 ---
 
@@ -138,13 +137,7 @@ Please ensure your code is well-structured and documented.
 
 ## 9. License
 
-This project is licensed under the [GNU Lesser General Public License v3 (LGPLv3)](https://www.gnu.org/licenses/lgpl-3.0.html).
-You are free to use, modify, and distribute this project under the terms of the license.
+This repository is dual licensed under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html) or the [LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your option.
+For full details, please refer to the [LICENSE](doc/LICENSE) file.
 
----
-
-## 10. Authors
-
-**774**
-- [Website](http://id774.net)
-- [GitHub](http://github.com/id774)
+Thank you for using and contributing to this repository!

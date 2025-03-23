@@ -6,6 +6,7 @@ v25.03 (Release Date: TBD)
 - Major overhaul of installation scripts.
 - Fine-tuned alias configurations.
 - Adjusted HISTSIZE and SAVEHIST to 10000 for better performance.
+- Switched the repository license from LGPLv3 to a dual license under GPLv3 or LGPLv3, and updated related documentation.
 
 v25.02 (2025-02-25)
 -------------------

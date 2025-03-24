@@ -1,10 +1,11 @@
 # title.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 25-Mar-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 show_window_title() {
     case "$TERM" in
         screen*|tmux*)
+            print -n "\ekzsh\e\\"
             chpwd() { echo -n "_$(dirs)\\" }
             preexec() {
                 emulate -L zsh

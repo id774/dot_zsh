@@ -182,13 +182,13 @@ install_files() {
 
 # Install dot_zsh configuration
 install_dotzsh() {
-    echo "[INFO] Starting installation..."
+    echo "[INFO] Starting dot_zsh installation..."
     setup_environment "$@"
     zsh_compile
     install_files
     zwc_cleanup
     set_permission "$@"
-    echo "[INFO] Installation complete!"
+    echo "[INFO] Installation completed successfully."
 }
 
 # Main function to execute the script

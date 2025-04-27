@@ -1,6 +1,11 @@
 VERSION History
 ===============
 
+v25.04 (Release Date: TBD)
+--------------------------
+- Improved install_dotzsh.sh by adding strict error checking for filesystem operations.
+- Unified log output format by introducing [INFO] and [ERROR] tags.
+
 v25.03.1 (2025-03-28)
 ---------------------
 - Set initial window title to zsh in screen or tmux environments.

@@ -14,6 +14,9 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Version History:
+#  v2.2 2025-04-27
+#       Add strict error checking for all critical filesystem operations
+#       and unify log output with [INFO] and [ERROR] tags.
 #  v2.1 2025-03-22
 #       Unify usage information by extracting help text from header comments.
 #  v2.0 2025-03-17
@@ -55,10 +58,10 @@ check_commands() {
     for cmd in "$@"; do
         cmd_path=$(command -v "$cmd" 2>/dev/null)
         if [ -z "$cmd_path" ]; then
-            echo "Error: Command '$cmd' is not installed. Please install $cmd and try again." >&2
+            echo "[ERROR] Command '$cmd' is not installed. Please install $cmd and try again." >&2
             exit 127
         elif [ ! -x "$cmd_path" ]; then
-            echo "Error: Command '$cmd' is not executable. Please check the permissions." >&2
+            echo "[ERROR] Command '$cmd' is not executable. Please check the permissions." >&2
             exit 126
         fi
     done
@@ -67,7 +70,7 @@ check_commands() {
 # Check if the user has sudo privileges (password may be required)
 check_sudo() {
     if ! sudo -v 2>/dev/null; then
-        echo "Error: This script requires sudo privileges. Please run as a user with sudo access." >&2
+        echo "[ERROR] This script requires sudo privileges. Please run as a user with sudo access." >&2
         exit 1
     fi
 }
@@ -77,19 +80,19 @@ setup_environment() {
     export SCRIPT_HOME=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
 
     if [ ! -d "$SCRIPT_HOME/dot_zsh/plugins" ]; then
-        echo "Error: $SCRIPT_HOME/dot_zsh/plugins directory does not exist." >&2
+        echo "[ERROR] $SCRIPT_HOME/dot_zsh/plugins directory does not exist." >&2
         exit 1
     fi
 
     TARGET=${1:-/usr/local/etc/zsh}
-    echo "Installation target: $TARGET"
+    echo "[INFO] Installation target: $TARGET"
 
     if [ -n "$2" ]; then
         SUDO=""
     else
         SUDO="sudo"
     fi
-    echo "Using sudo: ${SUDO:-no}"
+    echo "[INFO] Using sudo: ${SUDO:-no}"
 
     case "$(uname)" in
         Darwin)
@@ -107,67 +110,85 @@ setup_environment() {
     else
         OWNER="$(id -un):$(id -gn)"
     fi
-    echo "Copy options: $OPTIONS, Owner: $OWNER"
+    echo "[INFO] Copy options: $OPTIONS, Owner: $OWNER"
 }
 
 # Set file permissions and ownership
 set_permission() {
     if [ -n "$2" ]; then
-        echo "Setting ownership to current user and group..."
+        echo "[INFO] Setting ownership to current user and group..."
         chown -R "$OWNER" "$TARGET"
     else
-        echo "Setting ownership to $OWNER..."
+        echo "[INFO] Setting ownership to $OWNER..."
         $SUDO chown -R "$OWNER" "$TARGET"
     fi
 }
 
 # Compile zsh scripts into .zwc files
 zsh_compile() {
-    echo "Compiling zsh scripts..."
+    echo "[INFO] Compiling zsh scripts..."
     for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
-        echo "Compiling $file"
+        echo "[INFO] Compiling $file"
         zsh -c "zcompile $file"
     done
     for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
-        echo "Compiling $plugin"
+        echo "[INFO] Compiling $plugin"
         zsh -c "zcompile $plugin"
     done
 }
 
 # Clean up compiled .zwc files
 zwc_cleanup() {
-    echo "Cleaning up .zwc files..."
+    echo "[INFO] Cleaning up .zwc files..."
     rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc
     rm -f "$SCRIPT_HOME/dot_zsh/plugins/"*.zwc
 }
 
 # Install configuration files to the target directory
 install_files() {
-    echo "Installing files from $SCRIPT_HOME/dot_zsh/ to $TARGET"
+    echo "[INFO] Installing files from $SCRIPT_HOME/dot_zsh/ to $TARGET"
 
     if [ -d "$TARGET" ]; then
-        echo "Removing existing directory: $TARGET"
-        $SUDO rm -rf "$TARGET"
+        echo "[INFO] Removing existing directory: $TARGET"
+        if ! $SUDO rm -rf "$TARGET"; then
+            echo "[ERROR] Failed to remove existing $TARGET" >&2
+            exit 1
+        fi
     fi
 
-    echo "Creating target directory: $TARGET"
-    $SUDO mkdir -p "$TARGET"
+    echo "[INFO] Creating target directory: $TARGET"
+    if ! $SUDO mkdir -p "$TARGET"; then
+        echo "[ERROR] Failed to create target directory $TARGET" >&2
+        exit 1
+    fi
 
-    $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"
-    $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"
-    $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"
+    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"; then
+        echo "[ERROR] Failed to copy lib" >&2
+        exit 1
+    fi
+
+    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"; then
+        echo "[ERROR] Failed to copy plugins" >&2
+        exit 1
+    fi
+
+    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
+        echo "[ERROR] Failed to copy .zshrc" >&2
+        exit 1
+    fi
+
     zsh -c 'zcompile $HOME/.zshrc'
 }
 
 # Install dot_zsh configuration
 install_dotzsh() {
-    echo "Starting installation..."
+    echo "[INFO] Starting installation..."
     setup_environment "$@"
     zsh_compile
     install_files
     zwc_cleanup
     set_permission "$@"
-    echo "Installation complete!"
+    echo "[INFO] Installation complete!"
 }
 
 # Main function to execute the script

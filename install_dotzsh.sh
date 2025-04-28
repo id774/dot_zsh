@@ -128,11 +128,11 @@ set_permission() {
 zsh_compile() {
     echo "[INFO] Compiling zsh scripts..."
     for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
-        echo "[INFO] Compiling $file"
+        echo "[INFO] Compiling: $file"
         zsh -c "zcompile $file"
     done
     for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
-        echo "[INFO] Compiling $plugin"
+        echo "[INFO] Compiling: $plugin"
         zsh -c "zcompile $plugin"
     done
 }
@@ -146,34 +146,34 @@ zwc_cleanup() {
 
 # Install configuration files to the target directory
 install_files() {
-    echo "[INFO] Installing files from $SCRIPT_HOME/dot_zsh/ to $TARGET"
+    echo "[INFO] Installing files from $SCRIPT_HOME/dot_zsh/ to $TARGET."
 
     if [ -d "$TARGET" ]; then
         echo "[INFO] Removing existing directory: $TARGET"
         if ! $SUDO rm -rf "$TARGET"; then
-            echo "[ERROR] Failed to remove existing $TARGET" >&2
+            echo "[ERROR] Failed to remove existing $TARGET." >&2
             exit 1
         fi
     fi
 
     echo "[INFO] Creating target directory: $TARGET"
     if ! $SUDO mkdir -p "$TARGET"; then
-        echo "[ERROR] Failed to create target directory $TARGET" >&2
+        echo "[ERROR] Failed to create target directory $TARGET." >&2
         exit 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"; then
-        echo "[ERROR] Failed to copy lib" >&2
+        echo "[ERROR] Failed to copy lib." >&2
         exit 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"; then
-        echo "[ERROR] Failed to copy plugins" >&2
+        echo "[ERROR] Failed to copy plugins." >&2
         exit 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
-        echo "[ERROR] Failed to copy .zshrc" >&2
+        echo "[ERROR] Failed to copy .zshrc." >&2
         exit 1
     fi
 

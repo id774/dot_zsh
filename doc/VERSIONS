@@ -1,8 +1,8 @@
 VERSION History
 ===============
 
-v25.04 (Release Date: TBD)
---------------------------
+v25.04 (2025-04-29)
+-------------------
 - Improved install_dotzsh.sh by adding strict error checking for filesystem operations.
 - Unified log output format by introducing [INFO] and [ERROR] tags.
 

@@ -200,7 +200,9 @@ main() {
 
     check_commands zsh cp mkdir chmod chown rm id dirname
     install_dotzsh "$@"
+    return 0
 }
 
 # Execute main function
 main "$@"
+exit $?

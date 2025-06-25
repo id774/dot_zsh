@@ -1,6 +1,11 @@
 VERSION History
 ===============
 
+v25.06 (2025-06-26)
+-------------------
+- Update installer scripts to display full header block as help message.
+- Improve installer script reliability by explicitly returning exit codes in main functions.
+
 v25.04 (2025-04-29)
 -------------------
 - Improved install_dotzsh.sh by adding strict error checking for filesystem operations.

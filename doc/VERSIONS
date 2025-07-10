@@ -1,6 +1,10 @@
 VERSION History
 ===============
 
+v25.07 (Release Date: TBD)
+--------------------------
+- Move usage instructions above version history and improve section structure in installer script.
+
 v25.06 (2025-06-26)
 -------------------
 - Update installer scripts to display full header block as help message.

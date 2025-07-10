@@ -13,6 +13,19 @@
 #  License: The GPL version 3, or LGPL version 3 (Dual License).
 #  Contact: idnanashi@gmail.com
 #
+#  Usage:
+#      ./install_dotzsh.sh [target_path] [nosudo]
+#
+#  Options:
+#      -h, --help    Show this help message and exit.
+#
+#  Notes:
+#  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
+#  - [nosudo]: If specified, the script runs without sudo.
+#  - Ensure that the SCRIPT_HOME environment variable points to the directory
+#    containing the dot_zsh files before running the script.
+#  - This script is not POSIX compliant and is designed specifically for zsh environments.
+#
 #  Version History:
 #  v2.3 2025-06-23
 #       Unified usage output to display full script header and support common help/version options.
@@ -28,19 +41,6 @@
 #       Initial stable release.
 #  v0.1 2011-05-20
 #       First release.
-#
-#  Usage:
-#      ./install_dotzsh.sh [target_path] [nosudo]
-#
-#  Options:
-#      -h, --help    Show this help message and exit.
-#
-#  Notes:
-#  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
-#  - [nosudo]: If specified, the script runs without sudo.
-#  - Ensure that the SCRIPT_HOME environment variable points to the directory
-#    containing the dot_zsh files before running the script.
-#  - This script is not POSIX compliant and is designed specifically for zsh environments.
 #
 ########################################################################
 

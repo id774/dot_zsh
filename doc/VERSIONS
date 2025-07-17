@@ -3,6 +3,7 @@ VERSION History
 
 v25.07 (Release Date: TBD)
 --------------------------
+- Standardize shell script comments to start with verbs instead of using 'Function to' phrasing.
 - Move usage instructions above version history and improve section structure in installer script.
 
 v25.06 (2025-06-26)

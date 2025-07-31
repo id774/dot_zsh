@@ -15,9 +15,11 @@
 #
 #  Usage:
 #      ./install_dotzsh.sh [target_path] [nosudo]
+#      ./install_dotzsh.sh --uninstall [target_path] [nosudo]
 #
 #  Options:
-#      -h, --help    Show this help message and exit.
+#      -h, --help       Show this help message and exit.
+#      --uninstall      Remove installed dot_zsh configuration and .zshrc files.
 #
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
@@ -25,8 +27,11 @@
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
+#  - The --uninstall option removes $TARGET and ~/.zshrc / ~/.zshrc.zwc.
 #
 #  Version History:
+#  v2.4 2025-07-31
+#       Add --uninstall option to remove installed files including ~/.zshrc and .zwc files.
 #  v2.3 2025-06-23
 #       Unified usage output to display full script header and support common help/version options.
 #  v2.2 2025-04-27
@@ -54,7 +59,7 @@ usage() {
     exit 0
 }
 
-# Check required commands
+# Check if required commands are available and executable
 check_commands() {
     for cmd in "$@"; do
         cmd_path=$(command -v "$cmd" 2>/dev/null)
@@ -192,10 +197,43 @@ install_dotzsh() {
     echo "[INFO] Installation completed successfully."
 }
 
+# Uninstall dot_zsh configuration
+uninstall_dotzsh() {
+    echo "[INFO] Starting dot_zsh uninstallation..."
+    setup_environment "$@"
+
+    if [ -f "$HOME/.zshrc" ]; then
+        echo "[INFO] Removing $HOME/.zshrc"
+        if ! rm -f "$HOME/.zshrc"; then
+            echo "[ERROR] Failed to remove $HOME/.zshrc." >&2
+        fi
+    fi
+
+    if [ -f "$HOME/.zshrc.zwc" ]; then
+        echo "[INFO] Removing $HOME/.zshrc.zwc"
+        if ! rm -f "$HOME/.zshrc.zwc"; then
+            echo "[ERROR] Failed to remove $HOME/.zshrc.zwc." >&2
+        fi
+    fi
+
+    if [ -d "$TARGET" ]; then
+        echo "[INFO] Removing target directory: $TARGET"
+        if ! $SUDO rm -rf "$TARGET"; then
+            echo "[ERROR] Failed to remove directory $TARGET." >&2
+            exit 1
+        fi
+    else
+        echo "[INFO] Target directory $TARGET does not exist. Skipping."
+    fi
+
+    echo "[INFO] Uninstallation completed successfully."
+}
+
 # Main entry point of the script
 main() {
     case "$1" in
         -h|--help|-v|--version) usage ;;
+        --uninstall) shift; uninstall_dotzsh "$@"; exit $? ;;
     esac
 
     check_commands zsh cp mkdir chmod chown rm id dirname

@@ -229,15 +229,26 @@ uninstall_dotzsh() {
     echo "[INFO] Uninstallation completed successfully."
 }
 
+# Perform installation steps
+install() {
+    check_commands zsh cp mkdir chmod chown rm id dirname
+    install_dotzsh "$@"
+}
+
 # Main entry point of the script
 main() {
     case "$1" in
-        -h|--help|-v|--version) usage ;;
-        --uninstall) shift; uninstall_dotzsh "$@"; exit $? ;;
+        -h|--help|-v|--version)
+            usage
+            ;;
+        --uninstall)
+            shift
+            uninstall_dotzsh "$@"
+            ;;
+        *)
+            install "$@"
+            ;;
     esac
-
-    check_commands zsh cp mkdir chmod chown rm id dirname
-    install_dotzsh "$@"
     return 0
 }
 

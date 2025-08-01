@@ -198,7 +198,7 @@ install_dotzsh() {
 }
 
 # Uninstall dot_zsh configuration
-uninstall_dotzsh() {
+uninstall() {
     echo "[INFO] Starting dot_zsh uninstallation..."
     setup_environment "$@"
 
@@ -243,7 +243,7 @@ main() {
             ;;
         -u|--uninstall)
             shift
-            uninstall_dotzsh "$@"
+            uninstall "$@"
             ;;
         *)
             install "$@"

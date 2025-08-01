@@ -19,7 +19,7 @@
 #
 #  Options:
 #      -h, --help       Show this help message and exit.
-#      --uninstall      Remove installed dot_zsh configuration and .zshrc files.
+#      -u, --uninstall  Remove installed dot_zsh configuration and .zshrc files.
 #
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
@@ -241,7 +241,7 @@ main() {
         -h|--help|-v|--version)
             usage
             ;;
-        --uninstall)
+        -u|--uninstall)
             shift
             uninstall_dotzsh "$@"
             ;;

@@ -30,7 +30,7 @@
 #  - The --uninstall option removes $TARGET and ~/.zshrc / ~/.zshrc.zwc.
 #
 #  Version History:
-#  v2.4 2025-07-31
+#  v3.0 2025-08-01
 #       Add --uninstall option to remove installed files including ~/.zshrc and .zwc files.
 #  v2.3 2025-06-23
 #       Unified usage output to display full script header and support common help/version options.

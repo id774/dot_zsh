@@ -85,6 +85,23 @@ After installation, copy `dot_zshrc` to your home directory:
 cp ~/dot_zsh/dot_zshrc ~/.zshrc
 ```
 
+### Uninstallation:
+To remove DOT_ZSH, including the installed configuration files and compiled `.zwc` bytecode, run:
+
+```bash
+~/dot_zsh/install_dotzsh.sh --uninstall
+```
+
+You can also specify the same `[target_path]` and `[nosudo]` options used during installation, if needed:
+
+```bash
+~/dot_zsh/install_dotzsh.sh --uninstall ~/.zsh nosudo
+```
+
+This will remove:
+- The target directory (e.g., `/usr/local/etc/zsh` or `~/.zsh`)
+- `~/.zshrc` and `~/.zshrc.zwc` in your home directory
+
 ---
 
 ## 5. Default Behavior

@@ -245,7 +245,7 @@ main() {
             shift
             uninstall "$@"
             ;;
-        *)
+        ""|*)
             install "$@"
             ;;
     esac

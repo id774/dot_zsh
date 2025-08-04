@@ -206,7 +206,7 @@ uninstall() {
     if [ "$TARGET" != "$DEFAULT_TARGET" ]; then
         echo "[WARN] Skipping deletion of non-default TARGET: $TARGET" >&2
         echo "[WARN] Only $DEFAULT_TARGET will be deleted during --uninstall." >&2
-        return
+        exit 1
     fi
 
     if [ -f "$HOME/.zshrc" ]; then

@@ -4,7 +4,7 @@ VERSION History
 v25.08 (Release Date: TBD)
 --------------------------
 - Add --uninstall option for installer to remove all installed components.
-- Add alias m=mail in alias.
+- Add alias mapping from m to mail in alias list.
 
 v25.07 (2025-07-22)
 -------------------

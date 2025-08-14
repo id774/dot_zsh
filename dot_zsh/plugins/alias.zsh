@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 10-Aug-2025.
+# Last Change: 14-Aug-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -31,7 +31,8 @@ alias v='vim'
 alias vv='vim .'
 alias p='vim -R'
 alias pp='vim -R .'
-alias his='history -Di -30'
+alias h='history -Di -30'
+alias his='history -Di -50'
 alias hist='history -Di -100'
 alias hist-all='history -Di 1'
 alias hist-edit='vim $HISTFILE'

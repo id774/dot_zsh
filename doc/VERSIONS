@@ -40,8 +40,6 @@ v25.02 (2025-02-25)
 - Enhanced error handling and logging mechanisms.
 - Standardized environment setup for better compatibility.
 
-v0.1 (2011-05-24)
------------------
-- Initial creation by forking from an existing script collection.
-- Established the foundation for shell script utilities.
-- Included basic functionality for shell environment setup.
+First Commit (2011-05-24)
+-------------------------
+- Commemorating the first commit and push, marking the inception of the project.

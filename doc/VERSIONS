@@ -5,6 +5,7 @@ v25.08 (Release Date: TBD)
 --------------------------
 - Add --uninstall option for installer to remove all installed components.
 - Add alias mapping from m to mail in alias list.
+- Add alias h for last 30 history entries and change his to show last 50.
 
 v25.07 (2025-07-22)
 -------------------

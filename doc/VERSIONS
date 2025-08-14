@@ -40,6 +40,10 @@ v25.02 (2025-02-25)
 - Enhanced error handling and logging mechanisms.
 - Standardized environment setup for better compatibility.
 
+v11.12 (2011-12-31)
+-------------------
+- First official release.
+
 First Commit (2011-05-24)
 -------------------------
 - Commemorating the first commit and push, marking the inception of the project.

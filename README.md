@@ -139,6 +139,8 @@ Files in these user-level directories take precedence over the system-level file
 DOT_ZSH uses the `<year>.<month>` versioning format starting from version `11.12`.
 Example: `24.12`
 
+For detailed version history, please refer to the [VERSIONS](doc/VERSIONS) file.
+
 ---
 
 ## 8. Contribution

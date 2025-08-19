@@ -1,8 +1,8 @@
 dot_zsh Repository Version History
 ==================================
 
-v25.08 (Release Date: TBD)
---------------------------
+v25.08 (2025-08-20)
+-------------------
 - Add --uninstall option for installer to remove all installed components.
 - Add alias mapping from m to mail in alias list.
 - Add alias h for last 30 history entries and change his to show last 50.

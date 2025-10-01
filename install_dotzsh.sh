@@ -30,6 +30,8 @@
 #  - The --uninstall option removes $TARGET and ~/.zshrc / ~/.zshrc.zwc.
 #
 #  Version History:
+#  v3.1 2025-10-01
+#       Remove unused chmod from command dependency check.
 #  v3.0 2025-08-01
 #       Add --uninstall option to remove installed files including ~/.zshrc and .zwc files.
 #  v2.3 2025-06-23
@@ -233,7 +235,7 @@ uninstall() {
 
 # Perform installation steps
 install() {
-    check_commands zsh cp mkdir chmod chown rm id dirname
+    check_commands zsh cp mkdir chown rm id dirname
     install_dotzsh "$@"
 }
 

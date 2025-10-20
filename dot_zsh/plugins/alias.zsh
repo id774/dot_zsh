@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 14-Aug-2025.
+# Last Change: 20-Oct-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -59,6 +59,7 @@ alias del='rm -vi'
 alias md='mkdir -v'
 alias rd='rmdir -v'
 alias m='mail'
+alias mm='cltmp && mail'
 alias sc='dirs -v; echo -n "select number: "; read newdir; [ -n "$newdir" ] && cd +"$newdir" || echo "Invalid selection"'
 alias s='screen -U'
 alias scd='screen -U -D'

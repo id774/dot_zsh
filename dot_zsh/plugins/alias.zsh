@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 20-Oct-2025.
+# Last Change: 21-Oct-2025.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -39,6 +39,7 @@ alias hist-edit='vim $HISTFILE'
 alias f='file'
 alias j='cd'
 alias jj='clear && cd'
+alias jjj='clear && cd && cltmp && mail'
 alias jk='ssh-add'
 alias c='cd'
 alias cl='clear'
@@ -60,6 +61,7 @@ alias md='mkdir -v'
 alias rd='rmdir -v'
 alias m='mail'
 alias mm='cltmp && mail'
+alias mmm='clear && cd && cltmp && mail'
 alias sc='dirs -v; echo -n "select number: "; read newdir; [ -n "$newdir" ] && cd +"$newdir" || echo "Invalid selection"'
 alias s='screen -U'
 alias scd='screen -U -D'

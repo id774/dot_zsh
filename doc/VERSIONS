@@ -1,8 +1,8 @@
 dot_zsh Repository Version History
 ==================================
 
-v25.10 (Release Date: TBD)
---------------------------
+v25.10 (2025-10-24)
+-------------------
 - Remove unused chmod from command dependency check in install_dotzsh.sh.
 - Standardize all shell scripts by removing trailing exit status lines (exit $?) for POSIX-safe reuse.
 - Add alias mm to run cltmp before mail.

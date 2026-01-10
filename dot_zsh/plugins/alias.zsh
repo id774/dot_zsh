@@ -1,16 +1,9 @@
 # alias.zsh
-# Last Change: 21-Oct-2025.
+# Last Change: 10-Jan-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
 alias sudo='sudo '
-alias -g L='| less'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g S='| sed'
-alias -g A='| awk'
-alias -g W='| wc'
 alias g='git'
 alias gs='git status'
 alias gst='git status'

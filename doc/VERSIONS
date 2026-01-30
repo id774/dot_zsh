@@ -1,6 +1,10 @@
 dot_zsh Repository Version History
 ==================================
 
+v26.01 (2026-01-30)
+-------------------
+- Remove single-letter global pipe aliases to prevent unintended command expansion.
+
 v25.10 (2025-10-24)
 -------------------
 - Remove unused chmod from command dependency check in install_dotzsh.sh.

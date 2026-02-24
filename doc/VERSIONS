@@ -1,6 +1,10 @@
 dot_zsh Repository Version History
 ==================================
 
+v26.02 (Release Date: TBD)
+--------------------------
+- Prevent zsh nomatch errors when /opt is empty by using local nullglob and directory check.
+
 v26.01 (2026-01-30)
 -------------------
 - Remove single-letter global pipe aliases to prevent unintended command expansion.

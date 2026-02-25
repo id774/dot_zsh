@@ -4,6 +4,7 @@ dot_zsh Repository Version History
 v26.02 (Release Date: TBD)
 --------------------------
 - Prevent zsh nomatch errors when /opt is empty by using local nullglob and directory check.
+- Integrate erase_history into sysadmin scripts environment.
 
 v26.01 (2026-01-30)
 -------------------

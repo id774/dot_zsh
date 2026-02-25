@@ -1,5 +1,5 @@
 # apps.zsh
-# Last Change: 24-Feb-2026.
+# Last Change: 25-Feb-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 normalize_path() {
@@ -18,9 +18,9 @@ set_app_path() {
 }
 
 set_apps_path() {
-    setopt localoptions nullglob
-
     [ -d /opt ] || return
+
+    setopt localoptions nullglob
 
     for dir in /opt/*; do
         case "$dir" in

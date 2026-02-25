@@ -31,6 +31,7 @@ alias hist-all='history -Di 1'
 alias hist-edit='vim $HISTFILE'
 alias eh='erase_history'
 alias hh='erase_history'
+export ERASE_HISTORY_SELF_NAMES=eh,hh
 alias f='file'
 alias j='cd'
 alias jj='clear && cd'

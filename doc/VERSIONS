@@ -1,6 +1,10 @@
 dot_zsh Repository Version History
 ==================================
 
+v26.05 (Release Date: TBD)
+--------------------------
+- Add du aliases for depth-limited and apparent-size usage checks.
+
 v26.02 (2026-02-27)
 -------------------
 - Prevent zsh nomatch errors when /opt is empty by using local nullglob and directory check.

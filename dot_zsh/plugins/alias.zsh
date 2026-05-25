@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 25-Feb-2026.
+# Last Change: 25-May-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -101,6 +101,11 @@ case "$(uname)" in
                 alias dl='gls --color=auto -ltr'
                 alias ls='gls --color=auto'
                 alias du='gdu'
+                alias duh='gdu -h'
+                alias dum='gdu --max-depth=1'
+                alias dua='gdu --apparent-size --max-depth=1'
+                alias duhm='gdu -h --max-depth=1'
+                alias duha='gdu -h --apparent-size --max-depth=1'
                 alias df='gdf'
                 alias sort='gsort'
                 alias touch='gtouch'
@@ -181,6 +186,11 @@ case "$(uname)" in
         alias lr='ls -tr'
         alias ll='ls -lZtra'
         alias dl='ls -lZtr'
+        alias duh='du -h'
+        alias dum='du --max-depth=1'
+        alias dua='du --apparent-size --max-depth=1'
+        alias duhm='du -h --max-depth=1'
+        alias duha='du -h --apparent-size --max-depth=1'
         alias e='emacs -nw'
         alias em='emacs -nw'
         alias emacs-compile='emacs --batch -Q -f batch-byte-compile'

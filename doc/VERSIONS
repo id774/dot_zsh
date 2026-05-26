@@ -1,8 +1,8 @@
 dot_zsh Repository Version History
 ==================================
 
-v26.05 (Release Date: TBD)
---------------------------
+v26.05 (2026-05-26)
+-------------------
 - Add du aliases for depth-limited and apparent-size usage checks.
 
 v26.02 (2026-02-27)

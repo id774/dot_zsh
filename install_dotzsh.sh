@@ -15,7 +15,7 @@
 #
 #  Usage:
 #      ./install_dotzsh.sh [target_path] [nosudo]
-#      ./install_dotzsh.sh --uninstall [target_path] [nosudo]
+#      ./install_dotzsh.sh --uninstall [nosudo]
 #
 #  Options:
 #      -h, --help       Show this help message and exit.
@@ -27,9 +27,13 @@
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
-#  - The --uninstall option removes $TARGET and ~/.zshrc / ~/.zshrc.zwc.
+#  - The --uninstall option always removes the default target /usr/local/etc/zsh
+#    (a custom [target_path] is ignored) along with ~/.zshrc / ~/.zshrc.zwc.
 #
 #  Version History:
+#  v3.3 2026-07-12
+#       Clarify in usage/help that --uninstall always targets the default
+#       path and ignores a custom [target_path].
 #  v3.2 2026-07-11
 #       Replace the awk {n,} interval expression in usage() with a portable
 #       equivalent, since mawk on some systems matches it incorrectly.

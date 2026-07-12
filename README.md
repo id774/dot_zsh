@@ -92,14 +92,16 @@ To remove DOT_ZSH, including the installed configuration files and compiled `.zw
 ~/dot_zsh/install_dotzsh.sh --uninstall
 ```
 
-You can also specify the same `[target_path]` and `[nosudo]` options used during installation, if needed:
+You can also specify `[nosudo]` as with installation, if needed:
 
 ```bash
-~/dot_zsh/install_dotzsh.sh --uninstall ~/.zsh nosudo
+~/dot_zsh/install_dotzsh.sh --uninstall nosudo
 ```
 
+Note: `--uninstall` always targets the default directory (`/usr/local/etc/zsh`); a custom `[target_path]` is not accepted here.
+
 This will remove:
-- The target directory (e.g., `/usr/local/etc/zsh` or `~/.zsh`)
+- The default target directory (`/usr/local/etc/zsh`)
 - `~/.zshrc` and `~/.zshrc.zwc` in your home directory
 
 ---

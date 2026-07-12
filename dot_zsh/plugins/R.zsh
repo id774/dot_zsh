@@ -1,10 +1,10 @@
 # R.zsh
-# Last Change: 28-Jan-2025.
+# Last Change: 12-Jul-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_r_path() {
-    if [ -d $1 ]; then
-        export R_HOME=$1
+    if [ -d "$1" ]; then
+        export R_HOME="$1"
     fi
 }
 

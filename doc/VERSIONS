@@ -5,6 +5,7 @@ v26.07 (Release Date: TBD)
 --------------------------
 - Replace awk {n,} interval expression in usage() with a portable equivalent for mawk compatibility.
 - Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
+- Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
 
 v26.05 (2026-05-26)
 -------------------

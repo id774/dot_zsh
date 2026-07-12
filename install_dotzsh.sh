@@ -34,6 +34,9 @@
 #  v3.3 2026-07-12
 #       Clarify in usage/help that --uninstall always targets the default
 #       path and ignores a custom [target_path].
+#       Pass paths to zsh -c zcompile as a positional parameter instead of
+#       interpolating them into the command string, to avoid word-splitting
+#       on paths containing spaces.
 #  v3.2 2026-07-11
 #       Replace the awk {n,} interval expression in usage() with a portable
 #       equivalent, since mawk on some systems matches it incorrectly.
@@ -144,11 +147,11 @@ zsh_compile() {
     echo "[INFO] Compiling zsh scripts..."
     for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
         echo "[INFO] Compiling: $file"
-        zsh -c "zcompile $file"
+        zsh -c 'zcompile "$1"' _ "$file"
     done
     for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
         echo "[INFO] Compiling: $plugin"
-        zsh -c "zcompile $plugin"
+        zsh -c 'zcompile "$1"' _ "$plugin"
     done
 }
 
@@ -192,7 +195,7 @@ install_files() {
         exit 1
     fi
 
-    zsh -c 'zcompile $HOME/.zshrc'
+    zsh -c 'zcompile "$1"' _ "$HOME/.zshrc"
 }
 
 # Install dot_zsh configuration

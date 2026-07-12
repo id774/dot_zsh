@@ -7,6 +7,7 @@ v26.07 (Release Date: TBD)
 - Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
 - Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
 - Quote $1 in java.zsh's set_java_path to prevent word-splitting on paths containing spaces.
+- Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
 
 v26.05 (2026-05-26)
 -------------------

@@ -8,6 +8,7 @@ v26.07 (Release Date: TBD)
 - Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
 - Quote $1 in java.zsh's set_java_path to prevent word-splitting on paths containing spaces.
 - Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
+- Quote $JAVA_HOME in java.zsh's PATH and CLASSPATH exports to prevent word-splitting on paths containing spaces.
 
 v26.05 (2026-05-26)
 -------------------

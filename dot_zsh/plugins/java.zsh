@@ -7,8 +7,8 @@ set_java_path() {
     do
         if [ -d "$1/bin" ]; then
             export JAVA_HOME="$1"
-            export PATH=$JAVA_HOME/bin:$PATH
-            export CLASSPATH=.:$JAVA_HOME/lib/tools.jar
+            export PATH="$JAVA_HOME/bin:$PATH"
+            export CLASSPATH=".:$JAVA_HOME/lib/tools.jar"
         fi
         shift
     done

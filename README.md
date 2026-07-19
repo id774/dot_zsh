@@ -98,7 +98,8 @@ You can also specify `[nosudo]` as with installation, if needed:
 ~/dot_zsh/install_dotzsh.sh --uninstall nosudo
 ```
 
-Note: `--uninstall` always targets the default directory (`/usr/local/etc/zsh`); a custom `[target_path]` is not accepted here.
+For safety, `--uninstall` removes only `/usr/local/etc/zsh`.
+Custom installation targets are not removed automatically.
 
 This will remove:
 - The default target directory (`/usr/local/etc/zsh`)

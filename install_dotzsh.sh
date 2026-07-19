@@ -27,8 +27,9 @@
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
-#  - The --uninstall option always removes the default target /usr/local/etc/zsh
-#    (a custom [target_path] is ignored) along with ~/.zshrc / ~/.zshrc.zwc.
+#  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent accidental deletion.
+#  - Do not remove custom installation targets automatically.
+#  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
 #
 #  Version History:
 #  v3.4 2026-07-19

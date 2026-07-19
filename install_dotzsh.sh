@@ -211,7 +211,8 @@ install_dotzsh() {
     zwc_cleanup
     set_permission "$@"
     if [ -n "$1" ]; then
-        echo "[INFO] To use this target, set ZSH_ROOT before .zshrc loads: $TARGET"
+        echo "[INFO] To use this target, add the following line to ~/.zshenv:"
+        echo "[INFO] export ZSH_ROOT=\"$TARGET\""
     fi
     echo "[INFO] Installation completed successfully."
 }

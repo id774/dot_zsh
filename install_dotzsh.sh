@@ -31,6 +31,9 @@
 #    (a custom [target_path] is ignored) along with ~/.zshrc / ~/.zshrc.zwc.
 #
 #  Version History:
+#  v3.4 2026-07-19
+#       Guide custom-target users to set ZSH_ROOT before .zshrc loads.
+#       Honor preset ZSH_ROOT values in the installed .zshrc.
 #  v3.3 2026-07-12
 #       Clarify in usage/help that --uninstall always targets the default
 #       path and ignores a custom [target_path].
@@ -206,6 +209,9 @@ install_dotzsh() {
     install_files
     zwc_cleanup
     set_permission "$@"
+    if [ -n "$1" ]; then
+        echo "[INFO] To use this target, set ZSH_ROOT before .zshrc loads: $TARGET"
+    fi
     echo "[INFO] Installation completed successfully."
 }
 

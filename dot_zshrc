@@ -3,6 +3,11 @@
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 main() {
+    if [ -n "$ZSH_ROOT" ] && [ -f "$ZSH_ROOT/lib/load.zsh" ]; then
+        . "$ZSH_ROOT/lib/load.zsh"
+        return
+    fi
+
     for ZSH_SEARCH_PATH in \
         "$HOME/.zsh" \
         "$HOME/.config/zsh" \

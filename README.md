@@ -80,6 +80,11 @@ This installs DOT_ZSH to `/usr/local/etc/zsh`. Root privileges (via `sudo`) are 
 ```
 This installs DOT_ZSH to `~/.zsh`, bypassing the need for `sudo`.
 
+When specifying a custom target, add `ZSH_ROOT` to `~/.zshenv`:
+```bash
+export ZSH_ROOT="$HOME/.zsh"
+```
+
 After installation, copy `dot_zshrc` to your home directory:
 ```bash
 cp ~/dot_zsh/dot_zshrc ~/.zshrc

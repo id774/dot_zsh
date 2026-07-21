@@ -10,6 +10,7 @@ v26.07 (Release Date: TBD)
 - Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
 - Quote $JAVA_HOME in java.zsh's PATH and CLASSPATH exports to prevent word-splitting on paths containing spaces.
 - Honor a preset ZSH_ROOT and guide custom-target users after installation.
+- Stop installation and return an error when a critical command fails.
 
 v26.05 (2026-05-26)
 -------------------

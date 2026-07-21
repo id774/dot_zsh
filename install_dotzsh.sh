@@ -32,6 +32,8 @@
 #  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
 #
 #  Version History:
+#  v3.5 2026-07-21
+#       Stop installation and report an error when a critical command fails.
 #  v3.4 2026-07-19
 #       Guide custom-target users to set ZSH_ROOT before .zshrc loads.
 #       Honor preset ZSH_ROOT values in the installed .zshrc.
@@ -139,10 +141,16 @@ setup_environment() {
 set_permission() {
     if [ -n "$2" ]; then
         echo "[INFO] Setting ownership to current user and group..."
-        chown -R "$OWNER" "$TARGET"
+        if ! chown -R "$OWNER" "$TARGET"; then
+            echo "[ERROR] Failed to set ownership on $TARGET." >&2
+            return 1
+        fi
     else
         echo "[INFO] Setting ownership to $OWNER..."
-        $SUDO chown -R "$OWNER" "$TARGET"
+        if ! $SUDO chown -R "$OWNER" "$TARGET"; then
+            echo "[ERROR] Failed to set ownership on $TARGET." >&2
+            return 1
+        fi
     fi
 }
 
@@ -151,19 +159,28 @@ zsh_compile() {
     echo "[INFO] Compiling zsh scripts..."
     for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
         echo "[INFO] Compiling: $file"
-        zsh -c 'zcompile "$1"' _ "$file"
+        if ! zsh -c 'zcompile "$1"' _ "$file"; then
+            echo "[ERROR] Failed to compile $file." >&2
+            return 1
+        fi
     done
     for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
         echo "[INFO] Compiling: $plugin"
-        zsh -c 'zcompile "$1"' _ "$plugin"
+        if ! zsh -c 'zcompile "$1"' _ "$plugin"; then
+            echo "[ERROR] Failed to compile $plugin." >&2
+            return 1
+        fi
     done
 }
 
 # Clean up compiled .zwc files
 zwc_cleanup() {
     echo "[INFO] Cleaning up .zwc files..."
-    rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc
-    rm -f "$SCRIPT_HOME/dot_zsh/plugins/"*.zwc
+    if ! rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc \
+        "$SCRIPT_HOME/dot_zsh/plugins/"*.zwc; then
+        echo "[ERROR] Failed to clean up .zwc files." >&2
+        return 1
+    fi
 }
 
 # Install configuration files to the target directory
@@ -174,42 +191,51 @@ install_files() {
         echo "[INFO] Removing existing directory: $TARGET"
         if ! $SUDO rm -rf "$TARGET"; then
             echo "[ERROR] Failed to remove existing $TARGET." >&2
-            exit 1
+            return 1
         fi
     fi
 
     echo "[INFO] Creating target directory: $TARGET"
     if ! $SUDO mkdir -p "$TARGET"; then
         echo "[ERROR] Failed to create target directory $TARGET." >&2
-        exit 1
+        return 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"; then
         echo "[ERROR] Failed to copy lib." >&2
-        exit 1
+        return 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"; then
         echo "[ERROR] Failed to copy plugins." >&2
-        exit 1
+        return 1
     fi
 
     if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
         echo "[ERROR] Failed to copy .zshrc." >&2
-        exit 1
+        return 1
     fi
 
-    zsh -c 'zcompile "$1"' _ "$HOME/.zshrc"
+    if ! zsh -c 'zcompile "$1"' _ "$HOME/.zshrc"; then
+        echo "[ERROR] Failed to compile $HOME/.zshrc." >&2
+        return 1
+    fi
 }
 
 # Install dot_zsh configuration
 install_dotzsh() {
     echo "[INFO] Starting dot_zsh installation..."
     setup_environment "$@"
-    zsh_compile
-    install_files
-    zwc_cleanup
-    set_permission "$@"
+    if ! zsh_compile; then
+        zwc_cleanup
+        return 1
+    fi
+    if ! install_files; then
+        zwc_cleanup
+        return 1
+    fi
+    zwc_cleanup || return 1
+    set_permission "$@" || return 1
     if [ -n "$1" ]; then
         echo "[INFO] To use this target, add the following line to ~/.zshenv:"
         echo "[INFO] export ZSH_ROOT=\"$TARGET\""
@@ -271,7 +297,6 @@ main() {
             install "$@"
             ;;
     esac
-    return 0
 }
 
 # Execute main function

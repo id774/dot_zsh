@@ -85,6 +85,20 @@ When specifying a custom target, add `ZSH_ROOT` to `~/.zshenv`:
 export ZSH_ROOT="$HOME/.zsh"
 ```
 
+### How `ZSH_ROOT` Is Resolved:
+`~/.zshrc` locates the configuration tree as follows:
+
+1. If `ZSH_ROOT` is already set and `$ZSH_ROOT/lib/load.zsh` exists, that tree is
+   used and no search is performed.
+2. Otherwise the first of these directories containing `lib/load.zsh` is used,
+   and `ZSH_ROOT` is exported to point at it:
+   `~/.zsh`, `~/.config/zsh`, `~/.local/share/zsh`, `/usr/local/etc/zsh`,
+   `/usr/local/share/zsh`, `/etc/zsh`, `/usr/share/zsh`, `/opt/zsh`.
+
+Because a preset `ZSH_ROOT` skips the search entirely, pointing it at a
+system-wide install will bypass a `~/.zsh` tree that would otherwise take
+precedence.
+
 After installation, copy `dot_zshrc` to your home directory:
 ```bash
 cp ~/dot_zsh/dot_zshrc ~/.zshrc
@@ -110,6 +124,8 @@ This will remove:
 - The default target directory (`/usr/local/etc/zsh`)
 - `~/.zshrc` and `~/.zshrc.zwc` in your home directory
 
+`~/.zshrc_local` is not removed.
+
 ---
 
 ## 5. Default Behavior
@@ -118,27 +134,38 @@ DOT_ZSH:
 - Optionally launches GNU Screen at startup if the file `$HOME/.run_screen_on_startup` exists.
 - Aliases are primarily set in `plugins/alias.zsh`.
 - For environments requiring a proxy, configure `plugins/proxy.zsh`. Proxy settings are commented out by default.
+- Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists. See [Customization](#6-customization).
 
 ---
 
 ## 6. Customization
 
-DOT_ZSH allows user-specific customization by overriding the default configuration.
+### Machine-Local Settings:
+If `~/.zshrc_local` exists, it is sourced at the end of `~/.zshrc`. This is the
+recommended place for host-specific settings: the installer never overwrites it,
+and `--uninstall` leaves it in place.
 
-### User-Level Core Customization:
-Create a `.zsh/lib` directory in your home directory to override core files:
+### User-Level Configuration Tree:
+DOT_ZSH loads exactly one configuration tree, selected as described in
+[Installation](#4-installation). To maintain your own, place a complete tree in
+a directory that precedes the system-wide one in the search order:
 ```bash
 ~/.zsh/lib
-```
-For example, you can modify `load.zsh`, `base.zsh`, or `screen.zsh`.
-
-### User-Level Plugin Customization:
-Create a `.zsh/plugins` directory in your home directory for user-specific plugins:
-```bash
 ~/.zsh/plugins
 ```
+You can then modify core files such as `load.zsh`, `base.zsh`, or `screen.zsh`,
+and add your own plugins.
 
-Files in these user-level directories take precedence over the system-level files.
+Note that a user-level tree **replaces** the system-wide one rather than merging
+with it:
+- The search matches on `lib/load.zsh`. A directory that contains only
+  `plugins/` is skipped, and its plugins are never loaded.
+- Once a tree is selected, only that tree's `lib/` and `plugins/` are sourced.
+  Plugins present only under `/usr/local/etc/zsh/plugins` will not load.
+
+So to add a plugin while keeping everything else, install a full copy to your
+home directory (`install_dotzsh.sh ~/.zsh nosudo`) and add your plugin there,
+rather than creating `~/.zsh/plugins` on its own.
 
 ---
 

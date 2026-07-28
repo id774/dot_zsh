@@ -30,8 +30,15 @@
 #  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent accidental deletion.
 #  - Do not remove custom installation targets automatically.
 #  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
+#  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v3.6 2026-07-28
+#       Honor the [nosudo] argument for --uninstall, which was ignored
+#       after the option was documented as --uninstall [nosudo].
+#       Install ~/.zshrc without sudo so it stays owned by the invoking user.
+#       Accept [nosudo] as the sole installation argument.
+#       Check required commands before uninstalling.
 #  v3.5 2026-07-21
 #       Stop installation and report an error when a critical command fails.
 #  v3.4 2026-07-19
@@ -211,7 +218,16 @@ install_files() {
         return 1
     fi
 
-    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
+    # ~/.zshrc belongs to the invoking user, so install it without sudo to keep
+    # it user-owned. Remove it first: a copy left root-owned by an earlier
+    # version is not writable by its owner, but can still be replaced because
+    # the home directory itself is.
+    if ! rm -f "$HOME/.zshrc" "$HOME/.zshrc.zwc"; then
+        echo "[ERROR] Failed to remove existing $HOME/.zshrc." >&2
+        return 1
+    fi
+
+    if ! cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
         echo "[ERROR] Failed to copy .zshrc." >&2
         return 1
     fi
@@ -245,8 +261,11 @@ install_dotzsh() {
 
 # Uninstall dot_zsh configuration
 uninstall() {
+    check_commands rm id dirname
     echo "[INFO] Starting dot_zsh uninstallation..."
-    setup_environment "$@"
+    # --uninstall takes [nosudo] as its first argument, so pass it through as
+    # the sudo flag and leave the target empty to keep the default path.
+    setup_environment "" "$1"
 
     TARGET="/usr/local/etc/zsh"
 
@@ -280,7 +299,13 @@ uninstall() {
 # Perform installation steps
 install() {
     check_commands zsh cp mkdir chown rm id dirname
-    install_dotzsh "$@"
+    # Accept "nosudo" on its own, keeping the target at its default instead of
+    # treating the flag as a directory name.
+    if [ "$1" = "nosudo" ]; then
+        install_dotzsh "" "$1"
+    else
+        install_dotzsh "$@"
+    fi
 }
 
 # Main entry point of the script

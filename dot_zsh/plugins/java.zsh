@@ -1,5 +1,5 @@
 # java.zsh
-# Last Change: 29-Jan-2025.
+# Last Change: 12-Jul-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_java_path() {

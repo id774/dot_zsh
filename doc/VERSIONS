@@ -4,18 +4,18 @@ dot_zsh Repository Version History
 v26.07 (Release Date: TBD)
 --------------------------
 - Replace awk {n,} interval expression in usage() with a portable equivalent for mawk compatibility.
-- Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
 - Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
 - Quote $1 in java.zsh's set_java_path and $JAVA_HOME in its PATH/CLASSPATH exports to prevent word-splitting on paths containing spaces.
 - Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
-- Honor a preset ZSH_ROOT and guide custom-target users after installation.
 - Stop installation and return an error when a critical command fails.
-- Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
 - Install ~/.zshrc without sudo so it stays owned by the invoking user instead of root.
 - Accept nosudo as the sole installation argument instead of treating it as a target directory name.
-- Check required commands before uninstalling, as is already done before installing.
+- Honor a preset ZSH_ROOT during installation.
 - Correct the README customization section to state that a user-level tree replaces the system-wide one instead of merging with it.
 - Document how ZSH_ROOT is resolved, the .zshrc_local hook, and that --uninstall keeps .zshrc_local.
+- Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
+- Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
+- Check required commands before uninstalling, as is already done before installing.
 
 v26.05 (2026-05-26)
 -------------------

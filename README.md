@@ -76,9 +76,10 @@ This installs DOT_ZSH to `/usr/local/etc/zsh`. Root privileges (via `sudo`) are 
 
 ### Custom Installation:
 ```bash
-~/dot_zsh/install_dotzsh.sh ~/.zsh nosudo
+~/dot_zsh/install_dotzsh.sh ~/.zsh --no-sudo
 ```
 This installs DOT_ZSH to `~/.zsh`, bypassing the need for `sudo`.
+The legacy `nosudo` form and the short `-n` option are also supported.
 
 When specifying a custom target, add `ZSH_ROOT` to `~/.zshenv`:
 ```bash
@@ -111,11 +112,13 @@ To remove DOT_ZSH, including the installed configuration files and compiled `.zw
 ~/dot_zsh/install_dotzsh.sh --uninstall
 ```
 
-You can also specify `[nosudo]` as with installation, if needed:
+You can also specify `--no-sudo` as with installation, if needed:
 
 ```bash
-~/dot_zsh/install_dotzsh.sh --uninstall nosudo
+~/dot_zsh/install_dotzsh.sh --uninstall --no-sudo
 ```
+
+The `nosudo` and `-n` aliases are also accepted.
 
 For safety, `--uninstall` removes only `/usr/local/etc/zsh`.
 Custom installation targets are not removed automatically.

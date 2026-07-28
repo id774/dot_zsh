@@ -32,6 +32,9 @@
 #  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
 #
 #  Version History:
+#  v3.6 2026-07-28
+#       Honor the [nosudo] argument for --uninstall, which was ignored
+#       after the option was documented as --uninstall [nosudo].
 #  v3.5 2026-07-21
 #       Stop installation and report an error when a critical command fails.
 #  v3.4 2026-07-19
@@ -246,7 +249,9 @@ install_dotzsh() {
 # Uninstall dot_zsh configuration
 uninstall() {
     echo "[INFO] Starting dot_zsh uninstallation..."
-    setup_environment "$@"
+    # --uninstall takes [nosudo] as its first argument, so pass it through as
+    # the sudo flag and leave the target empty to keep the default path.
+    setup_environment "" "$1"
 
     TARGET="/usr/local/etc/zsh"
 

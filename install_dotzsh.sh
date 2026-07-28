@@ -14,16 +14,17 @@
 #  Contact: idnanashi@gmail.com
 #
 #  Usage:
-#      ./install_dotzsh.sh [target_path] [nosudo]
-#      ./install_dotzsh.sh --uninstall [nosudo]
+#      ./install_dotzsh.sh [target_path] [nosudo|--no-sudo|-n]
+#      ./install_dotzsh.sh --uninstall [nosudo|--no-sudo|-n]
 #
 #  Options:
 #      -h, --help       Show this help message and exit.
+#      -n, --no-sudo    Run without sudo (the legacy "nosudo" form is also supported).
 #      -u, --uninstall  Remove installed dot_zsh configuration and .zshrc files.
 #
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
-#  - [nosudo]: If specified, the script runs without sudo.
+#  - [nosudo|--no-sudo|-n]: If specified, the script runs without sudo.
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
@@ -33,6 +34,8 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v3.7 2026-07-28
+#       Accept --no-sudo and -n as aliases for nosudo.
 #  v3.6 2026-07-28
 #       Honor the [nosudo] argument for --uninstall, which was ignored
 #       after the option was documented as --uninstall [nosudo].
@@ -106,6 +109,18 @@ check_sudo() {
     fi
 }
 
+# Return success when the argument disables sudo
+is_no_sudo() {
+    case "$1" in
+        nosudo|--no-sudo|-n)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
 # Set up the environment and initialize variables
 setup_environment() {
     export SCRIPT_HOME=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
@@ -118,7 +133,7 @@ setup_environment() {
     TARGET=${1:-/usr/local/etc/zsh}
     echo "[INFO] Installation target: $TARGET"
 
-    if [ -n "$2" ]; then
+    if is_no_sudo "$2"; then
         SUDO=""
     else
         SUDO="sudo"
@@ -146,7 +161,7 @@ setup_environment() {
 
 # Set file permissions and ownership
 set_permission() {
-    if [ -n "$2" ]; then
+    if is_no_sudo "$2"; then
         echo "[INFO] Setting ownership to current user and group..."
         if ! chown -R "$OWNER" "$TARGET"; then
             echo "[ERROR] Failed to set ownership on $TARGET." >&2
@@ -263,8 +278,7 @@ install_dotzsh() {
 uninstall() {
     check_commands rm id dirname
     echo "[INFO] Starting dot_zsh uninstallation..."
-    # --uninstall takes [nosudo] as its first argument, so pass it through as
-    # the sudo flag and leave the target empty to keep the default path.
+    # Pass the no-sudo argument through while keeping the default target path.
     setup_environment "" "$1"
 
     TARGET="/usr/local/etc/zsh"
@@ -299,9 +313,8 @@ uninstall() {
 # Perform installation steps
 install() {
     check_commands zsh cp mkdir chown rm id dirname
-    # Accept "nosudo" on its own, keeping the target at its default instead of
-    # treating the flag as a directory name.
-    if [ "$1" = "nosudo" ]; then
+    # Keep the default target when a no-sudo argument is used on its own.
+    if is_no_sudo "$1"; then
         install_dotzsh "" "$1"
     else
         install_dotzsh "$@"

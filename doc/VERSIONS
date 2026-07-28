@@ -16,6 +16,7 @@ v26.07 (Release Date: TBD)
 - Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
 - Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
 - Check required commands before uninstalling, as is already done before installing.
+- Accept --no-sudo and -n as aliases for the installer's existing nosudo argument.
 
 v26.05 (2026-05-26)
 -------------------

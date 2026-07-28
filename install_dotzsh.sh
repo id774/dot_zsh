@@ -33,13 +33,12 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
-#  v3.7 2026-07-28
-#       Install ~/.zshrc without sudo so it stays owned by the invoking user.
-#       Accept [nosudo] as the sole installation argument.
-#       Check required commands before uninstalling.
 #  v3.6 2026-07-28
 #       Honor the [nosudo] argument for --uninstall, which was ignored
 #       after the option was documented as --uninstall [nosudo].
+#       Install ~/.zshrc without sudo so it stays owned by the invoking user.
+#       Accept [nosudo] as the sole installation argument.
+#       Check required commands before uninstalling.
 #  v3.5 2026-07-21
 #       Stop installation and report an error when a critical command fails.
 #  v3.4 2026-07-19

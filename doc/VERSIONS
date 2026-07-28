@@ -10,6 +10,9 @@ v26.07 (Release Date: TBD)
 - Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
 - Honor a preset ZSH_ROOT and guide custom-target users after installation.
 - Stop installation and return an error when a critical command fails.
+- Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
+- Correct the README customization section to state that a user-level tree replaces the system-wide one instead of merging with it.
+- Document how ZSH_ROOT is resolved, the .zshrc_local hook, and that --uninstall keeps .zshrc_local.
 
 v26.05 (2026-05-26)
 -------------------

@@ -10,13 +10,16 @@ v26.07 (Release Date: TBD)
 - Stop installation and return an error when a critical command fails.
 - Install ~/.zshrc without sudo so it stays owned by the invoking user instead of root.
 - Accept nosudo as the sole installation argument instead of treating it as a target directory name.
-- Honor a preset ZSH_ROOT during installation.
+- Honor a preset ZSH_ROOT in the installed .zshrc, so the search for a configuration tree is skipped at shell startup.
+- Keep .zshrc exiting with status zero when ~/.zshrc_local is absent, so the first prompt no longer reports a failed command.
 - Correct the README customization section to state that a user-level tree replaces the system-wide one instead of merging with it.
 - Document how ZSH_ROOT is resolved, the .zshrc_local hook, and that --uninstall keeps .zshrc_local.
 - Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
+- Remove the obsolete README step that copies dot_zshrc by hand, which the installer already does.
 - Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
 - Check required commands before uninstalling, as is already done before installing.
 - Accept --no-sudo and -n as aliases for the installer's existing nosudo argument.
+- Accept the installer's no-sudo flag before the target path, which was previously discarded when the flag came first.
 
 v26.05 (2026-05-26)
 -------------------

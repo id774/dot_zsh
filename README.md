@@ -100,10 +100,9 @@ Because a preset `ZSH_ROOT` skips the search entirely, pointing it at a
 system-wide install will bypass a `~/.zsh` tree that would otherwise take
 precedence.
 
-After installation, copy `dot_zshrc` to your home directory:
-```bash
-cp ~/dot_zsh/dot_zshrc ~/.zshrc
-```
+The installer also places `dot_zshrc` at `~/.zshrc` and compiles it, so there
+is no separate copy step. It is installed without `sudo` so that it stays owned
+by the invoking user.
 
 ### Uninstallation:
 To remove DOT_ZSH, including the installed configuration files and compiled `.zwc` bytecode, run:
@@ -167,7 +166,7 @@ with it:
   Plugins present only under `/usr/local/etc/zsh/plugins` will not load.
 
 So to add a plugin while keeping everything else, install a full copy to your
-home directory (`install_dotzsh.sh ~/.zsh nosudo`) and add your plugin there,
+home directory (`install_dotzsh.sh ~/.zsh --no-sudo`) and add your plugin there,
 rather than creating `~/.zsh/plugins` on its own.
 
 ---

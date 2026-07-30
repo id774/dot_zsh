@@ -25,6 +25,7 @@
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo|--no-sudo|-n]: If specified, the script runs without sudo.
+#    It may be given before or after [target_path].
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
 #  - This script is not POSIX compliant and is designed specifically for zsh environments.
@@ -34,6 +35,9 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v3.7 2026-07-30
+#       Accept the no-sudo flag before [target_path], which was previously
+#       discarded when the flag came first.
 #  v3.6 2026-07-28
 #       Honor the [nosudo] argument for --uninstall, which was ignored
 #       after the option was documented as --uninstall [nosudo].
@@ -312,12 +316,20 @@ uninstall() {
 # Perform installation steps
 install() {
     check_commands zsh cp mkdir chown rm id dirname
-    # Keep the default target when a no-sudo argument is used on its own.
-    if is_no_sudo "$1"; then
-        install_dotzsh "" "$1"
-    else
-        install_dotzsh "$@"
-    fi
+
+    # Sort the arguments so the no-sudo flag may appear on either side of the
+    # target path. An absent target stays empty and falls back to the default.
+    TARGET_ARG=""
+    NO_SUDO_ARG=""
+    for arg in "$@"; do
+        if is_no_sudo "$arg"; then
+            NO_SUDO_ARG="$arg"
+        else
+            TARGET_ARG="$arg"
+        fi
+    done
+
+    install_dotzsh "$TARGET_ARG" "$NO_SUDO_ARG"
 }
 
 # Main entry point of the script

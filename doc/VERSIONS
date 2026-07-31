@@ -1,8 +1,8 @@
 dot_zsh Repository Version History
 ==================================
 
-v26.07 (Release Date: TBD)
---------------------------
+v26.07 (2026-07-31)
+-------------------
 - Replace awk {n,} interval expression in usage() with a portable equivalent for mawk compatibility.
 - Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
 - Quote $1 in java.zsh's set_java_path and $JAVA_HOME in its PATH/CLASSPATH exports to prevent word-splitting on paths containing spaces.

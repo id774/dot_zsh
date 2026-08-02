@@ -35,7 +35,7 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
-#  v3.7 2026-07-30
+#  v4.0 2026-07-30
 #       Accept the no-sudo flag before [target_path], which was previously
 #       discarded when the flag came first.
 #  v3.6 2026-07-28

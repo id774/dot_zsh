@@ -7,11 +7,11 @@ A pluggable framework for the Z shell (zsh) that simplifies configuration manage
 ## Contents
 
 1. [Overview](#1-overview)
-2. [Directory Structure](#2-directory-structure)
-3. [Supported Environments](#3-supported-environments)
-4. [Installation](#4-installation)
-5. [Default Behavior](#5-default-behavior)
-6. [Customization](#6-customization)
+2. [Supported Environments](#2-supported-environments)
+3. [Installation](#3-installation)
+4. [Default Behavior](#4-default-behavior)
+5. [Customization](#5-customization)
+6. [Directory Structure](#6-directory-structure)
 7. [Versioning](#7-versioning)
 8. [Contribution](#8-contribution)
 9. [License](#9-license)
@@ -27,26 +27,7 @@ DOT_ZSH is designed to:
 
 ---
 
-## 2. Directory Structure
-
-The main directory structure of DOT_ZSH is as follows:
-
-```
-.
-├── dot_zsh/
-│   ├── lib/
-│   │   Contains core files for loading and basic settings.
-│   ├── plugins/
-│       Holds independent .zsh plugin files for modular functionality.
-├── install_dotzsh.sh
-│   Installer script to set up DOT_ZSH in the specified directory.
-├── dot_zshrc
-    A template for the `.zshrc` file to be placed in the user's home directory.
-```
-
----
-
-## 3. Supported Environments
+## 2. Supported Environments
 
 DOT_ZSH is confirmed to work on:
 - Red Hat Enterprise Linux 5 or later
@@ -64,7 +45,7 @@ It should also work on most GNU/Linux and UNIX-compatible environments.
 
 ---
 
-## 4. Installation
+## 3. Installation
 
 Run the `install_dotzsh.sh` script to install DOT_ZSH:
 
@@ -130,17 +111,17 @@ This will remove:
 
 ---
 
-## 5. Default Behavior
+## 4. Default Behavior
 
 DOT_ZSH:
 - Optionally launches GNU Screen at startup if the file `$HOME/.run_screen_on_startup` exists.
 - Aliases are primarily set in `plugins/alias.zsh`.
 - For environments requiring a proxy, configure `plugins/proxy.zsh`. Proxy settings are commented out by default.
-- Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists. See [Customization](#6-customization).
+- Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists. See [Customization](#5-customization).
 
 ---
 
-## 6. Customization
+## 5. Customization
 
 ### Machine-Local Settings:
 If `~/.zshrc_local` exists, it is sourced at the end of `~/.zshrc`. This is the
@@ -149,7 +130,7 @@ and `--uninstall` leaves it in place.
 
 ### User-Level Configuration Tree:
 DOT_ZSH loads exactly one configuration tree, selected as described in
-[Installation](#4-installation). To maintain your own, place a complete tree in
+[Installation](#3-installation). To maintain your own, place a complete tree in
 a directory that precedes the system-wide one in the search order:
 ```bash
 ~/.zsh/lib
@@ -168,6 +149,43 @@ with it:
 So to add a plugin while keeping everything else, install a full copy to your
 home directory (`install_dotzsh.sh ~/.zsh --no-sudo`) and add your plugin there,
 rather than creating `~/.zsh/plugins` on its own.
+
+---
+
+## 6. Directory Structure
+
+This section describes the main directories of the repository and what each one
+is for. It is not a complete file listing: only the entries worth knowing about
+before editing or extending DOT_ZSH are shown.
+
+```
+.
+├── dot_zsh/                 The configuration tree that gets installed under ZSH_ROOT.
+│   ├── lib/                 Core files, sourced before any plugin.
+│   │   ├── load.zsh         Entry point. Sources base.zsh, then every plugin.
+│   │   ├── base.zsh         PATH, terminal, history and completion defaults.
+│   │   └── screen.zsh       GNU Screen startup, used only when ~/.run_screen_on_startup exists.
+│   └── plugins/             One .zsh file per topic, all sourced in filename order.
+├── dot_zshrc                Template installed as ~/.zshrc. Resolves ZSH_ROOT and sources lib/load.zsh.
+├── install_dotzsh.sh        Installer and uninstaller.
+└── doc/
+    ├── VERSIONS             Version history of the repository.
+    ├── LICENSE              License notice.
+    ├── COPYING              GPL version 3 text.
+    └── COPYING.LESSER       LGPL version 3 text.
+```
+
+`dot_zsh/lib` and `dot_zsh/plugins` are the two directories that
+`install_dotzsh.sh` copies to the target and byte-compiles. Everything the shell
+loads at startup lives there, which is why a user-level tree has to contain both
+(see [Customization](#5-customization)).
+
+Plugins are independent of one another and named after what they configure, so
+the filename is the index: `alias.zsh` for aliases, `prompt.zsh` for the prompt,
+`proxy.zsh` for proxy variables, `extract.zsh` for the archive helper, and
+per-tool files such as `python.zsh`, `ruby.zsh`, `java.zsh` and `mysql.zsh`.
+Adding a feature means adding a file here; nothing else has to be edited,
+because `load.zsh` globs the directory rather than listing its contents.
 
 ---
 

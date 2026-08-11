@@ -5,6 +5,8 @@ v26.08 (Release Date: TBD)
 --------------------------
 - Add the shared version history description guidelines to the end of this file.
 - Describe each main directory in the README Directory Structure section.
+- Add doc/POLICY.md, stating the implementation policy for the startup tree and the installer.
+- Add .gitattributes giving *.md the markdown diff driver.
 
 v26.07 (2026-07-31)
 -------------------

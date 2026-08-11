@@ -169,6 +169,7 @@ before editing or extending DOT_ZSH are shown.
 ├── dot_zshrc                Template installed as ~/.zshrc. Resolves ZSH_ROOT and sources lib/load.zsh.
 ├── install_dotzsh.sh        Installer and uninstaller.
 └── doc/
+    ├── POLICY.md            Implementation policy for this repository.
     ├── VERSIONS             Version history of the repository.
     ├── LICENSE              License notice.
     ├── COPYING              GPL version 3 text.
@@ -205,7 +206,10 @@ We welcome contributions! Here's how you can help:
 2. Add or improve a feature, or fix an issue.
 3. Submit a pull request with clear documentation and changes.
 
-Please ensure your code is well-structured and documented.
+Please ensure your code is well-structured and documented, and follow
+[doc/POLICY.md](doc/POLICY.md). Everything under `dot_zsh/` is read again each
+time an interactive shell starts, so that document asks new code there to stay
+small, to spawn no process it can avoid, and to fail in silence.
 
 ---
 

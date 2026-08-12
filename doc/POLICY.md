@@ -281,7 +281,7 @@ Before a change to the tree is proposed, it answers these:
 ## 10. License
 
 This repository is dual licensed under the GPL version 3 or the LGPL version
-3, at the user's option. See [LICENSE](LICENSE), [COPYING](COPYING), and
+3, at the user's option. See [LICENSE](LICENSE.md), [COPYING](COPYING), and
 [COPYING.LESSER](COPYING.LESSER).
 
 Files in the tree carry no licence header; the repository-wide terms cover

@@ -41,6 +41,22 @@ The implementation remains authoritative. Source file names are included where
 appropriate so that each behavior can be traced back to its configuration.
 
 
+## Feature map at a glance
+
+| Area | What DOT_ZSH changes | Main source |
+| --- | --- | --- |
+| Startup | Resolves one `ZSH_ROOT`, loads base configuration, plugins, optional Screen startup, then `~/.zshrc_local` | `dot_zshrc`, `dot_zsh/lib/load.zsh` |
+| Completion | Initializes `compinit`, configures menus, colors, process completion, and candidate display | `dot_zsh/lib/base.zsh` |
+| History | Uses extended, incremental, shared history with duplicate suppression | `dot_zsh/lib/base.zsh` |
+| Navigation and globbing | Enables automatic directory-stack behavior and extended glob / expansion features | `dot_zsh/lib/base.zsh` |
+| Aliases | Adds shortcuts and changes behavior of commands such as `cp`, `mv`, `rm`, `ls`, and `crontab` | `dot_zsh/plugins/alias.zsh` |
+| PATH and environment | Rebuilds base PATH and configures language, pager, editor, temporary-directory, and tool variables | `dot_zsh/lib/base.zsh`, `dot_zsh/plugins/*.zsh` |
+| Helper commands | Provides `extract` and `runcpp`, plus archive and source-file suffix aliases | `extract.zsh`, `runcpp.zsh` |
+| Prompt and VCS | Configures the left prompt, right-side VCS information, and terminal titles | `prompt.zsh`, `vcs_info.zsh`, `title.zsh` |
+| GNU Screen | Can automatically replace the shell with GNU Screen when the marker and runtime conditions match | `dot_zsh/lib/screen.zsh` |
+| User override | Loads `~/.zshrc_local` after repository configuration | `dot_zshrc` |
+
+
 ## 1. Startup and configuration load order
 
 The DOT_ZSH startup path is:
@@ -139,6 +155,27 @@ available to plugins loaded afterward.
 Source:
 
     dot_zsh/lib/base.zsh
+
+### Shell option summary
+
+| Area | Configured state | User-visible effect |
+| --- | --- | --- |
+| Completion | Enables `LIST_PACKED`, `AUTO_PARAM_SLASH`, `MARK_DIRS`, `LIST_TYPES`, `AUTO_LIST`, `AUTO_MENU`, `AUTO_PARAM_KEYS`, `COMPLETE_IN_WORD`; disables `AUTO_REMOVE_SLASH`, `MENU_COMPLETE` | Changes completion menus, candidate display, slash handling, and in-word completion |
+| History | Enables `EXTENDED_HISTORY`, `APPEND_HISTORY`, `INC_APPEND_HISTORY`, `SHARE_HISTORY`, `HIST_IGNORE_ALL_DUPS`, `HIST_IGNORE_DUPS`, `HIST_SAVE_NO_DUPS`, `HIST_IGNORE_SPACE`, `HIST_REDUCE_BLANKS`, `HIST_NO_STORE`, `HIST_EXPAND`; disables `HIST_VERIFY` | Makes history shared and incremental while suppressing duplicates and selected entries |
+| Directory navigation | Enables `AUTO_CD`, `AUTO_PUSHD`, `PUSHD_IGNORE_DUPS`, `PUSHD_TO_HOME`, `PUSHD_SILENT`, `CDABLE_VARS`, `AUTO_NAME_DIRS` | Makes directory changes and directory-stack use more automatic |
+| Globbing and expansion | Enables `EXTENDED_GLOB`, `BRACE_CCL`, `NUMERIC_GLOB_SORT`, `EQUALS`, `PATH_DIRS`, `MAGIC_EQUAL_SUBST` | Enables extended zsh matching and expansion behavior |
+| Word splitting | Enables `SH_WORD_SPLIT` | Unquoted parameter expansion can use Bourne-shell-like word splitting |
+| Flow control | Enables `NO_FLOW_CONTROL` | Disables terminal flow-control handling |
+| Command lookup | Enables `HASH_CMDS` | Caches command locations |
+| EOF | Enables `IGNORE_EOF` | Reduces accidental interactive-shell termination |
+| Jobs | Enables `NO_HUP`, `NO_CHECK_JOBS`, `NOTIFY`, `LONG_LIST_JOBS`, `AUTO_RESUME`, `MAIL_WARNING` | Changes shell exit, notifications, job display, and stopped-job behavior |
+| Redirection and syntax | Enables `MULTIOS`, `SHORT_LOOPS`, `ALWAYS_LAST_PROMPT`, `BSD_ECHO`, `RC_QUOTES` | Enables zsh-specific redirection and syntax behavior |
+| File overwrite | Disables `NO_CLOBBER` | Normal `>` redirection can overwrite existing files |
+| Unset parameters | Enables `NO_UNSET` | Unconditional access to unset parameters is treated strictly |
+| Beep | Enables `NO_BEEP`, `NOLISTBEEP` | Suppresses shell and completion beeps |
+| `rm *` confirmation | Enables `RM_STAR_SILENT` | zsh does not add its own extra `rm *` confirmation |
+| Character display | Enables `PRINT_EIGHT_BIT` | Treats 8-bit characters as printable |
+| Exit status | Enables `PRINT_EXIT_VALUE` | Reports nonzero command exit status |
 
 
 ## 4. Line editor
@@ -2533,6 +2570,21 @@ Source:
 The principal environment variables directly or conditionally configured by
 DOT_ZSH are listed below.
 
+| Area | Variables | Value or condition | Main source |
+| --- | --- | --- | --- |
+| Core shell | `PATH`, `LANG`, `HISTFILE`, `HISTSIZE`, `SAVEHIST`, `G_FILENAME_ENCODING`, `TIME_STYLE` | Configured during base startup; PATH and `LANG` depend on platform or terminal conditions | `lib/base.zsh` |
+| R | `R_HOME` | Set to `/usr/lib/R` when that directory exists | `R.zsh` |
+| Java | `JAVA_HOME`, `CLASSPATH`, `_JAVA_OPTIONS` | Configured for non-root users according to matching Java installation paths | `java.zsh` |
+| Libraries | `LD_LIBRARY_PATH`, `LD_FLAGS` | Set to `/usr/local/lib:/usr/lib` | `ldlib.zsh` |
+| MySQL | `MYSQL_PS1` | Configures the MySQL client prompt | `mysql.zsh` |
+| Editor and pager | `EDITOR`, `LESS`, `GIT_PAGER` | Uses Vim and configured less options | `pager.zsh` |
+| Python | `PYTHONDONTWRITEBYTECODE`, `FLASK_ENV` | Set to `1` and `development` respectively | `python.zsh` |
+| Ruby | `RUBYOPT` | Set to `rubygems` | `ruby.zsh` |
+| User script paths | `SCRIPTS`, `PRIVATE` | Set for non-root users to paths below `$HOME` | `scripts.zsh` |
+| Temporary directory | `TMP`, `TMPDIR`, `TEMPDIR` | When `TMP` is unset, uses `$HOME/.tmp` if available, otherwise `/tmp` | `settmp.zsh` |
+| SQLite | `SQLITE_TMPDIR` | Uses `${TMP:-/tmp}` | `sqlite3.zsh` |
+| Proxy template | `PROXY`, `http_proxy`, `https_proxy`, `ftp_proxy`, `HTTP_PROXY`, `HTTPS_PROXY`, `FTP_PROXY`, `no_proxy` | Not set automatically in the default configuration | `proxy.zsh` |
+
 Core:
 
     PATH
@@ -2640,31 +2692,36 @@ Source:
 
 ## 81. Suffix alias reference
 
-Archive extraction:
-
-    gz   -> extract
-    tgz  -> extract
-    zip  -> extract
-    lzh  -> extract
-    bz2  -> extract
-    tbz  -> extract
-    Z    -> extract
-    tar  -> extract
-    arj  -> extract
-    xz   -> extract
-    7z   -> extract
-    rar  -> extract
-
-Compile and run:
-
-    c    -> runcpp
-    cpp  -> runcpp
+| Suffix | Handler | Purpose |
+| --- | --- | --- |
+| `gz` | `extract` | Archive extraction |
+| `tgz` | `extract` | Archive extraction |
+| `zip` | `extract` | Archive extraction |
+| `lzh` | `extract` | Archive extraction |
+| `bz2` | `extract` | Archive extraction |
+| `tbz` | `extract` | Archive extraction |
+| `Z` | `extract` | Archive extraction |
+| `tar` | `extract` | Archive extraction |
+| `arj` | `extract` | Archive extraction |
+| `xz` | `extract` | Archive extraction |
+| `7z` | `extract` | Archive extraction |
+| `rar` | `extract` | Archive extraction |
+| `c` | `runcpp` | Compile and run |
+| `cpp` | `runcpp` | Compile and run |
 
 
 ## 82. Important automatic command-behavior changes
 
 Several DOT_ZSH aliases materially change the behavior of commands users may
 already know.
+
+| Command | Common definition | Conditional alternative | User-visible effect |
+| --- | --- | --- | --- |
+| `rm` | `rm -i` | `grm -i` with macOS GNU coreutils; `trash` for a non-root macOS user when available | Deletion becomes interactive or is redirected through Trash |
+| `cp` | `cp -avi` | `gcp -avi` with macOS GNU coreutils | Copying becomes archive-preserving, verbose, and interactive |
+| `mv` | `mv -vi` | `gmv -vi` with macOS GNU coreutils | Moving becomes verbose and interactive |
+| `crontab` | `crontab -i` | None | Uses the interactive `crontab` mode |
+| `sudo` | `sudo ` | None | The trailing space permits alias expansion for the following command |
 
 
 ### rm
@@ -2786,6 +2843,13 @@ For non-root users, DOT_ZSH scans known JDK and JRE paths and can modify
 
 The presence of a plugin file does not necessarily mean that its feature is
 fully enabled automatically.
+
+| Feature | Default state | Activation condition |
+| --- | --- | --- |
+| Proxy settings | Disabled | User supplies and enables concrete proxy definitions in the template |
+| GNU Screen automatic startup | Disabled | `$HOME/.run_screen_on_startup` exists and the runtime conditions in `screen.zsh` are satisfied |
+| Predictive input | Infrastructure only | User explicitly enables prediction through the provided ZLE widget |
+| Optional paths and applications | Conditional | The corresponding directory, application, or command must exist |
 
 
 ### Proxy
@@ -3004,261 +3068,27 @@ limits.
 
 ## 88. Plugin catalog
 
-Plugin:
-
-    R.zsh
-
-Role:
-
-    R environment
-
-Automatic effect:
-
-    Sets R_HOME when /usr/lib/R exists.
-
-
-Plugin:
-
-    alias.zsh
-
-Role:
-
-    General command aliases
-
-Automatic effect:
-
-    Defines Git, filesystem, history, Screen, SSH, editor, macOS application,
-    and other aliases. It also changes the behavior of existing commands such
-    as cp, mv, and rm.
-
-
-Plugin:
-
-    apps.zsh
-
-Role:
-
-    /opt application discovery
-
-Automatic effect:
-
-    For non-root users, adds /opt/*/bin and /opt/*/current/bin directories to
-    PATH when they exist.
-
-
-Plugin:
-
-    extract.zsh
-
-Role:
-
-    Archive extraction
-
-Automatic effect:
-
-    Provides the extract function and archive suffix aliases.
-
-
-Plugin:
-
-    java.zsh
-
-Role:
-
-    Java environment
-
-Automatic effect:
-
-    For non-root users, scans known JDK and JRE paths and sets JAVA_HOME, PATH,
-    and CLASSPATH. It also sets _JAVA_OPTIONS.
-
-
-Plugin:
-
-    ldlib.zsh
-
-Role:
-
-    Dynamic library environment
-
-Automatic effect:
-
-    Sets LD_LIBRARY_PATH and LD_FLAGS.
-
-
-Plugin:
-
-    mysql.zsh
-
-Role:
-
-    MySQL client prompt
-
-Automatic effect:
-
-    Sets MYSQL_PS1.
-
-
-Plugin:
-
-    pager.zsh
-
-Role:
-
-    Editor and pager defaults
-
-Automatic effect:
-
-    Sets EDITOR, LESS, and GIT_PAGER.
-
-
-Plugin:
-
-    pip.zsh
-
-Role:
-
-    pip completion
-
-Automatic effect:
-
-    Registers pip completion using the path appropriate for the running zsh
-    version.
-
-
-Plugin:
-
-    prompt.zsh
-
-Role:
-
-    Left prompt
-
-Automatic effect:
-
-    When TERM is not dumb, configures a prompt containing time, host,
-    directory, command status, and the privilege marker.
-
-
-Plugin:
-
-    proxy.zsh
-
-Role:
-
-    Proxy configuration template
-
-Automatic effect:
-
-    None in the default state because all proxy definitions are commented out.
-
-
-Plugin:
-
-    python.zsh
-
-Role:
-
-    Python and Flask defaults
-
-Automatic effect:
-
-    Sets PYTHONDONTWRITEBYTECODE=1 and FLASK_ENV=development.
-
-
-Plugin:
-
-    ruby.zsh
-
-Role:
-
-    Ruby environment
-
-Automatic effect:
-
-    Sets RUBYOPT=rubygems and defines be='bundle exec'.
-
-
-Plugin:
-
-    runcpp.zsh
-
-Role:
-
-    C and C++ compile and run
-
-Automatic effect:
-
-    Provides the runcpp function and .c/.cpp suffix aliases.
-
-
-Plugin:
-
-    scripts.zsh
-
-Role:
-
-    User script paths
-
-Automatic effect:
-
-    For non-root users, adds script and bin directories below HOME to PATH and
-    exports SCRIPTS and PRIVATE.
-
-
-Plugin:
-
-    settmp.zsh
-
-Role:
-
-    Temporary directory
-
-Automatic effect:
-
-    When TMP is unset, selects ~/.tmp or /tmp and exports TMP, TMPDIR, and
-    TEMPDIR.
-
-
-Plugin:
-
-    sqlite3.zsh
-
-Role:
-
-    SQLite environment
-
-Automatic effect:
-
-    Sets SQLITE_TMPDIR and provides the sqlite-csv alias.
-
-
-Plugin:
-
-    title.zsh
-
-Role:
-
-    Screen and tmux title integration
-
-Automatic effect:
-
-    In screen or tmux environments, updates the window title according to
-    commands and directory changes.
-
-
-Plugin:
-
-    vcs_info.zsh
-
-Role:
-
-    VCS right prompt
-
-Automatic effect:
-
-    Displays Git, SVN, or Mercurial information in the right prompt and
-    displays the username when no VCS information is present.
+| Plugin | Role | Automatic effect / condition |
+| --- | --- | --- |
+| `R.zsh` | R environment | Sets `R_HOME` when `/usr/lib/R` exists |
+| `alias.zsh` | General command aliases | Defines Git, filesystem, history, Screen, SSH, editor, macOS application, and other aliases; also changes commands such as `cp`, `mv`, and `rm` |
+| `apps.zsh` | `/opt` application discovery | For non-root users, adds existing `/opt/*/bin` and `/opt/*/current/bin` directories to PATH |
+| `extract.zsh` | Archive extraction | Provides the `extract` function and archive suffix aliases |
+| `java.zsh` | Java environment | For non-root users, scans known JDK/JRE paths and sets `JAVA_HOME`, PATH, `CLASSPATH`, and `_JAVA_OPTIONS` |
+| `ldlib.zsh` | Dynamic library environment | Sets `LD_LIBRARY_PATH` and `LD_FLAGS` |
+| `mysql.zsh` | MySQL client prompt | Sets `MYSQL_PS1` |
+| `pager.zsh` | Editor and pager defaults | Sets `EDITOR`, `LESS`, and `GIT_PAGER` |
+| `pip.zsh` | pip completion | Registers pip completion using the mechanism appropriate for the running zsh version |
+| `prompt.zsh` | Left prompt | When `TERM` is not `dumb`, configures time, host, directory, command-status color, and privilege marker |
+| `proxy.zsh` | Proxy configuration template | No automatic effect by default because proxy definitions are commented out |
+| `python.zsh` | Python and Flask defaults | Sets `PYTHONDONTWRITEBYTECODE=1` and `FLASK_ENV=development` |
+| `ruby.zsh` | Ruby environment | Sets `RUBYOPT=rubygems` and defines `be='bundle exec'` |
+| `runcpp.zsh` | C and C++ compile and run | Provides `runcpp` and `.c` / `.cpp` suffix aliases |
+| `scripts.zsh` | User script paths | For non-root users, exports `SCRIPTS` and `PRIVATE` and adds existing user script directories to PATH |
+| `settmp.zsh` | Temporary directory | When `TMP` is unset, selects `~/.tmp` or `/tmp` and exports `TMP`, `TMPDIR`, and `TEMPDIR` |
+| `sqlite3.zsh` | SQLite environment | Sets `SQLITE_TMPDIR` and defines `sqlite-csv` |
+| `title.zsh` | GNU Screen and tmux title integration | In `screen*` or `tmux*` terminals, updates the title for commands and directory changes |
+| `vcs_info.zsh` | VCS right prompt | Displays Git, SVN, or Mercurial information, or the username when no recognized VCS information exists |
 
 
 ## 89. Source reference

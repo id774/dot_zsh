@@ -245,6 +245,9 @@ Listed so that they are not reintroduced here by reflex.
 - The repository version is `<year>.<month>`, recorded in
   [`doc/VERSIONS`](VERSIONS) and used for the Git tag. The Version History
   Guidelines at the foot of that file govern the entries.
+- [FEATURES](FEATURES.md) is the user-facing reference for shell behavior,
+  aliases, plugins, environment variables, prompts, and other defaults enabled
+  or changed by DOT_ZSH.
 - Files in the tree carry no version of their own. `Last Change:` is their
   whole history, and `doc/VERSIONS` carries the rest.
 - `install_dotzsh.sh` keeps its own `major.minor` version history, under the

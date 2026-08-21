@@ -119,6 +119,10 @@ DOT_ZSH:
 - For environments requiring a proxy, configure `plugins/proxy.zsh`. Proxy settings are commented out by default.
 - Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists. See [Customization](#5-customization).
 
+For a complete reference to shell options, aliases, plugins, environment
+variables, prompts, and automatically enabled behavior, see
+[FEATURES](doc/FEATURES.md).
+
 ---
 
 ## 5. Customization
@@ -169,6 +173,7 @@ before editing or extending DOT_ZSH are shown.
 ├── dot_zshrc                Template installed as ~/.zshrc. Resolves ZSH_ROOT and sources lib/load.zsh.
 ├── install_dotzsh.sh        Installer and uninstaller.
 └── doc/
+    ├── FEATURES.md          User-facing reference for shell behavior, aliases, plugins and environment settings.
     ├── POLICY.md            Implementation policy for this repository.
     ├── VERSIONS             Version history of the repository.
     ├── LICENSE.md           License notice.

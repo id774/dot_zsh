@@ -7,6 +7,7 @@ v26.08 (Release Date: TBD)
 - Describe each main directory in the README Directory Structure section.
 - Add doc/POLICY.md, stating the implementation policy for the startup tree and the installer.
 - Add .gitattributes giving *.md the markdown diff driver.
+- Add doc/FEATURES.md as the user-facing behavior reference and link it from README.md and doc/POLICY.md.
 
 v26.07 (2026-07-31)
 -------------------

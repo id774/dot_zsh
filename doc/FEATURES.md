@@ -34,7 +34,7 @@ Specifically, it covers:
 - user-local customization
 - every bundled plugin and its role
 
-This document does not attempt to explain every standard Emacs or zsh feature
+This document does not attempt to explain every standard zsh feature
 used by the implementation. It explains the parts added or changed by DOT_ZSH.
 
 The implementation remains authoritative. Source file names are included where

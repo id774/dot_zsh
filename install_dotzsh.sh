@@ -28,13 +28,15 @@
 #    It may be given before or after [target_path].
 #  - Ensure that the SCRIPT_HOME environment variable points to the directory
 #    containing the dot_zsh files before running the script.
-#  - This script is not POSIX compliant and is designed specifically for zsh environments.
+#  - This installer uses POSIX sh and requires zsh to compile configuration files.
 #  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent accidental deletion.
 #  - Do not remove custom installation targets automatically.
 #  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v4.1 2026-08-21
+#       Use POSIX path resolution and check uname before platform-specific setup.
 #  v4.0 2026-07-30
 #       Accept the no-sudo flag before [target_path], which was previously
 #       discarded when the flag came first.
@@ -126,7 +128,21 @@ is_no_sudo() {
 
 # Set up the environment and initialize variables
 setup_environment() {
-    export SCRIPT_HOME=$(dirname "$(realpath "$0" 2>/dev/null || readlink -f "$0")")
+    SCRIPT_PATH=$0
+    case "$SCRIPT_PATH" in
+        */*) ;;
+        *)
+            if [ ! -f "$SCRIPT_PATH" ]; then
+                SCRIPT_PATH=$(command -v "$SCRIPT_PATH" 2>/dev/null)
+            fi
+            ;;
+    esac
+    SCRIPT_HOME=$(CDPATH= cd -P "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd)
+    if [ -z "$SCRIPT_HOME" ]; then
+        echo "[ERROR] Failed to resolve the installer directory." >&2
+        exit 1
+    fi
+    export SCRIPT_HOME
 
     if [ ! -d "$SCRIPT_HOME/dot_zsh/plugins" ]; then
         echo "[ERROR] $SCRIPT_HOME/dot_zsh/plugins directory does not exist." >&2
@@ -279,7 +295,7 @@ install_dotzsh() {
 
 # Uninstall dot_zsh configuration
 uninstall() {
-    check_commands rm id dirname
+    check_commands rm id dirname uname
     echo "[INFO] Starting dot_zsh uninstallation..."
     # Pass the no-sudo argument through while keeping the default target path.
     setup_environment "" "$1"
@@ -315,7 +331,7 @@ uninstall() {
 
 # Perform installation steps
 install() {
-    check_commands zsh cp mkdir chown rm id dirname
+    check_commands zsh cp mkdir chown rm id dirname uname
 
     # Sort the arguments so the no-sudo flag may appear on either side of the
     # target path. An absent target stays empty and falls back to the default.

@@ -2,8 +2,7 @@
 
 This document states what the code in this repository is held to. It is
 self-contained: everything that applies to the configuration tree and to
-`install_dotzsh.sh` is stated here, and no external repository's policy
-governs this one.
+`install_dotzsh.sh` is stated here.
 
 Two kinds of file live here, and they are held to different rules because
 they cost different things.

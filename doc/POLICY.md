@@ -17,9 +17,13 @@ Where this document says "the tree" it means the first of those.
 
 ## 1. About This Document
 
-- The rules apply to what is written from now on. Nothing here is a reason to
-  go back and rewrite a file that already works. A file is brought into line
-  when it is edited for another reason, and no further.
+- The rules govern work whose stated scope includes the behavior or structure
+  they describe. Nothing here authorizes unrelated changes to an existing
+  file merely because that file is already being edited. When an authorized
+  implementation change affects behavior or an interface documented by this
+  repository, keep the directly affected implementation and documentation
+  consistent unless the stated scope explicitly excludes documentation
+  changes.
 - Three priorities settle a design question, in this order: **Compatibility**,
   **Safety**, **Efficiency**. This is not a list of equally weighted
   concerns; it is an order. Compatibility outranks Safety, and Safety
@@ -87,6 +91,14 @@ Where this document says "the tree" it means the first of those.
   successful check in one convenient environment is not sufficient evidence
   for a change whose compatibility risk extends to other supported
   environments.
+
+  Scope discipline does not mean leaving documentation inconsistent with an
+  implementation change that is already authorized. When that change alters
+  behavior described by a file header, FEATURES, README, configuration
+  documentation, or release history, update the directly affected
+  documentation as part of the same change unless the stated scope explicitly
+  excludes documentation changes. Do not use that requirement as permission
+  for unrelated cleanup in the same file or repository.
 
 ## 2. The Startup Path
 

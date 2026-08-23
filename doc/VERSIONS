@@ -3,7 +3,7 @@ dot_zsh Repository Version History
 
 v26.08 (Release Date: TBD)
 --------------------------
-- Add the shared version history description guidelines to the end of this file.
+- Add the version history description guidelines to the end of this file.
 - Describe each main directory in the README Directory Structure section.
 - Make doc/POLICY.md a self-contained implementation policy for the
   startup tree and the installer, define Compatibility, Safety, and

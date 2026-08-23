@@ -5,11 +5,12 @@ v26.08 (Release Date: TBD)
 --------------------------
 - Add the shared version history description guidelines to the end of this file.
 - Describe each main directory in the README Directory Structure section.
-- Make doc/POLICY.md a self-contained implementation policy for the startup
-  tree and the installer, define Compatibility, Safety, and Efficiency as
-  the priority order for a design decision, and clarify the startup,
-  plugin, installer, and long-term compatibility policy, including
-  document roles and wording strength.
+- Make doc/POLICY.md a self-contained implementation policy for the
+  startup tree and the installer, define Compatibility, Safety, and
+  Efficiency as the priority order for a design decision, and clarify
+  change discipline for established infrastructure, startup, plugin,
+  installer, long-term compatibility, document roles, and wording
+  strength.
 - Add .gitattributes giving *.md the markdown diff driver.
 - Add doc/FEATURES.md as the user-facing behavior reference, link it from
   README.md and doc/POLICY.md, and align its wording and the README's with

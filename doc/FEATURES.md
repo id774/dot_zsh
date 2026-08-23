@@ -2071,6 +2071,21 @@ The selected path is exported as:
 If `TMP` is already set when this plugin loads, the plugin does not reset these
 variables.
 
+`$HOME/.tmp` is intended to be a private per-user temporary area. When it is
+provisioned by `scripts/installer/install_dotfiles.sh`, it is created with mode
+`0700`; DOT_ZSH itself neither creates it nor changes its permissions.
+
+The preference for `$HOME/.tmp` is intentional. It avoids the shared namespace
+of the system-wide `/tmp` directory for ordinary temporary files when the
+private directory is available. This is a security policy rather than a
+performance optimization.
+
+A tmpfs-backed `/tmp`, including the default `/tmp` configuration on Debian 13,
+changes storage and lifetime characteristics but does not make `/tmp` private
+to one user. That does not change the preference described above.
+
+The security rationale is defined in `doc/POLICY.md`.
+
 Source:
 
     dot_zsh/plugins/settmp.zsh

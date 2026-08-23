@@ -184,6 +184,23 @@ block, `Usage`, `Options`, `Notes`, and `Version History`, from which its
   second sourcing changes nothing.
 - A variable is exported at startup only when a program reads it from the
   environment. Anything else belongs in the plugin of the tool that uses it.
+- `plugins/settmp.zsh` intentionally prefers `$HOME/.tmp` to `/tmp` when
+  `TMP` is unset. `$HOME/.tmp` is the private per-user temporary area;
+  `/tmp` is the fallback when that directory does not exist.
+- The companion `scripts` repository's `installer/install_dotfiles.sh`
+  creates `.tmp` under each target home directory with mode `0700`. DOT_ZSH
+  does not create the directory or change its permissions; it relies on the
+  directory being provisioned as private.
+- This preference is a security policy, not a performance optimization. Its
+  purpose is to avoid using the shared namespace of the system-wide `/tmp`
+  directory for ordinary temporary files when a private per-user directory
+  is available.
+- A tmpfs-backed `/tmp`, including the default `/tmp` configuration on
+  Debian 13, changes storage and lifetime characteristics but does not make
+  the namespace private to one user. That difference does not change this
+  policy.
+- When `$HOME/.tmp` is absent, `/tmp` remains the fallback so the shell still
+  provides a usable temporary directory.
 
 ### 6.2 Aliases
 

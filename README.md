@@ -190,8 +190,10 @@ Plugins are independent of one another and named after what they configure, so
 the filename is the index: `alias.zsh` for aliases, `prompt.zsh` for the prompt,
 `proxy.zsh` for proxy variables, `extract.zsh` for the archive helper, and
 per-tool files such as `python.zsh`, `ruby.zsh`, `java.zsh` and `mysql.zsh`.
-Adding a feature means adding a file here; nothing else has to be edited,
-because `load.zsh` globs the directory rather than listing its contents.
+A feature that belongs to what an existing plugin already configures is added
+to that file; a feature that is its own topic gets a new file instead. Either
+way nothing else has to be edited, because `load.zsh` globs the directory
+rather than listing its contents.
 
 ---
 
@@ -199,6 +201,11 @@ because `load.zsh` globs the directory rather than listing its contents.
 
 DOT_ZSH uses the `<year>.<month>` versioning format starting from version `11.12`.
 Example: `24.12`
+
+A same-month release that corrects an earlier one may add a third `<patch>`
+level instead of a new `<year>.<month>` version, for example `25.03.1`. A
+patch release is not required for every correction; using one, and which
+correction warrants it, is for the maintainer to decide.
 
 For detailed version history, please refer to the [VERSIONS](doc/VERSIONS) file.
 

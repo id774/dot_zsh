@@ -37,8 +37,13 @@ Specifically, it covers:
 This document does not attempt to explain every standard zsh feature
 used by the implementation. It explains the parts added or changed by DOT_ZSH.
 
-The implementation remains authoritative. Source file names are included where
-appropriate so that each behavior can be traced back to its configuration.
+The implementation is the primary source of fact for what currently happens;
+this document records the intended user-facing behavior. When the two
+disagree, the implementation is not treated as correct by default: the
+history and the intended behavior are checked, and if the implementation
+shows a regression, the implementation is corrected rather than this
+document. Source file names are included where appropriate so that each
+behavior can be traced back to its configuration.
 
 
 ## Feature map at a glance

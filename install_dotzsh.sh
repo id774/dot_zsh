@@ -21,6 +21,7 @@
 #      -h, --help       Show this help message and exit.
 #      -n, --no-sudo    Run without sudo (the legacy "nosudo" form is also supported).
 #      -u, --uninstall  Remove installed dot_zsh configuration and .zshrc files.
+#      -v, --version    Show the script header and exit.
 #
 #  Notes:
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).

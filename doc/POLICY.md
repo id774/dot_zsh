@@ -41,7 +41,7 @@ Where this document says "the tree" it means the first of those.
     interface, history, the existing design, and maintenance intent; a
     regression already sitting in the implementation is not adopted as a new
     intended behavior on the strength of the implementation alone.
-  - Lowering the zsh 4.2 floor, retiring a legacy plugin or setting,
+  - Raising the zsh 4.2 floor, retiring a legacy plugin or setting,
     choosing a repository version, and other large, deliberate design
     changes are decisions for the maintainer. A routine change does not make
     that call on its own.
@@ -141,6 +141,14 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
   plugin manager, or vendored code would be a deliberate change to the
   repository's design, for the maintainer to decide explicitly, not
   something a routine change reaches for.
+  - This is a different sense of "framework" from the one in the README's
+    project description. README calling DOT_ZSH itself "a pluggable
+    framework for the Z shell" describes the modular, pluggable
+    configuration structure this repository provides. What this rule keeps
+    out is an external configuration framework, a third-party shell
+    framework, or a similar external abstraction layer added on top of
+    DOT_ZSH as a dependency. Describing DOT_ZSH as a framework and not
+    depending on an external one are not in tension.
 
 ### 2.3 Namespace
 
@@ -362,6 +370,12 @@ it is held to a different set of rules than Sections 2 through 6.
 
 ## 8. Versions and Documents
 
+- The document roles defined in this section are the documentation
+  structure of this repository itself: [FEATURES](FEATURES.md) is the
+  detailed user-facing behavior reference, this file is the DOT_ZSH
+  implementation and maintenance policy, `doc/VERSIONS` is the repository
+  release history, and `README.md` is the project overview, installation,
+  usage, structure, and versioning summary.
 - The repository version is `<year>.<month>`, recorded in
   [`doc/VERSIONS`](VERSIONS) and used for the Git tag. A same-month release
   that corrects an earlier one may add a third `<patch>` level instead, as

@@ -27,8 +27,6 @@
 #  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
 #  - [nosudo|--no-sudo|-n]: If specified, the script runs without sudo.
 #    It may be given before or after [target_path].
-#  - Ensure that the SCRIPT_HOME environment variable points to the directory
-#    containing the dot_zsh files before running the script.
 #  - This installer uses POSIX sh and requires zsh to compile configuration files.
 #  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent accidental deletion.
 #  - Do not remove custom installation targets automatically.

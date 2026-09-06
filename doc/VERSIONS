@@ -5,16 +5,11 @@ v26.08 (2026-08-26)
 -------------------
 - Add the version history description guidelines to the end of this file.
 - Describe each main directory in the README Directory Structure section.
-- Make doc/POLICY.md a self-contained implementation policy for the
-  startup tree and the installer, define Compatibility, Safety, and
-  Efficiency as the priority order for a design decision, and clarify
-  change discipline for established infrastructure, startup, plugin,
-  installer, long-term compatibility, document roles, and wording
-  strength.
+- Make doc/POLICY.md a self-contained implementation policy for the startup
+  tree and installer, ordering Compatibility, Safety, and Efficiency as priorities.
 - Add .gitattributes giving *.md the markdown diff driver.
-- Add doc/FEATURES.md as the user-facing behavior reference, link it from
-  README.md and doc/POLICY.md, and align its wording and the README's with
-  intended behavior and the current implementation.
+- Add doc/FEATURES.md as the user-facing behavior reference, link it from README.md and doc/POLICY.md,
+  and align its wording and the README's with intended behavior and the current implementation.
 - Make install_dotzsh.sh use POSIX path resolution and check uname before platform-specific setup.
 
 v26.07 (2026-07-31)

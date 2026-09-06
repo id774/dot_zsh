@@ -40,23 +40,16 @@
 #       Accept the no-sudo flag before [target_path], which was previously
 #       discarded when the flag came first.
 #  v3.6 2026-07-28
-#       Honor the [nosudo] argument for --uninstall, which was ignored
-#       after the option was documented as --uninstall [nosudo].
-#       Install ~/.zshrc without sudo so it stays owned by the invoking user.
-#       Accept [nosudo] as the sole installation argument.
-#       Check required commands before uninstalling.
-#       Accept --no-sudo and -n as aliases for nosudo.
+#       Honor [nosudo] for --uninstall, install ~/.zshrc without sudo, and
+#       accept --no-sudo/-n as aliases for nosudo.
 #  v3.5 2026-07-21
 #       Stop installation and report an error when a critical command fails.
 #  v3.4 2026-07-19
 #       Guide custom-target users to set ZSH_ROOT before .zshrc loads.
 #       Honor preset ZSH_ROOT values in the installed .zshrc.
 #  v3.3 2026-07-12
-#       Clarify in usage/help that --uninstall always targets the default
-#       path and ignores a custom [target_path].
-#       Pass paths to zsh -c zcompile as a positional parameter instead of
-#       interpolating them into the command string, to avoid word-splitting
-#       on paths containing spaces.
+#       Clarify that --uninstall ignores a custom [target_path], and pass paths
+#       to zsh -c zcompile positionally to avoid word-splitting.
 #  v3.2 2026-07-11
 #       Replace the awk {n,} interval expression in usage() with a portable
 #       equivalent, since mawk on some systems matches it incorrectly.

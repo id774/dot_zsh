@@ -5,32 +5,48 @@ v26.08 (2026-08-26)
 -------------------
 - Add the version history description guidelines to the end of this file.
 - Describe each main directory in the README Directory Structure section.
-- Make doc/POLICY.md a self-contained implementation policy for the startup
-  tree and installer, ordering Compatibility, Safety, and Efficiency as priorities.
+- Make doc/POLICY.md a self-contained implementation policy for the startup tree
+  and installer, ordering Compatibility, Safety, and Efficiency as priorities.
 - Add .gitattributes giving *.md the markdown diff driver.
-- Add doc/FEATURES.md as the user-facing behavior reference, link it from README.md and doc/POLICY.md,
-  and align its wording and the README's with intended behavior and the current implementation.
-- Make install_dotzsh.sh use POSIX path resolution and check uname before platform-specific setup.
+- Add doc/FEATURES.md as the user-facing behavior reference, link it from
+  README.md and doc/POLICY.md, and align their wording with behavior.
+- Make install_dotzsh.sh use POSIX path resolution and check uname before
+  platform-specific setup.
 
 v26.07 (2026-07-31)
 -------------------
-- Replace awk {n,} interval expression in usage() with a portable equivalent for mawk compatibility.
-- Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing spaces.
-- Quote $1 in java.zsh's set_java_path and $JAVA_HOME in its PATH/CLASSPATH exports to prevent word-splitting on paths containing spaces.
-- Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls to prevent word-splitting.
+- Replace awk {n,} interval expression in usage() with a portable equivalent for
+  mawk compatibility.
+- Quote $1 in R.zsh's set_r_path to prevent word-splitting on paths containing
+  spaces.
+- Quote $1 in java.zsh's set_java_path and $JAVA_HOME in its PATH/CLASSPATH
+  exports to prevent word-splitting on paths containing spaces.
+- Pass paths as positional parameters in install_dotzsh.sh's zsh -c zcompile calls
+  to prevent word-splitting.
 - Stop installation and return an error when a critical command fails.
-- Install ~/.zshrc without sudo so it stays owned by the invoking user instead of root.
-- Accept nosudo as the sole installation argument instead of treating it as a target directory name.
-- Honor a preset ZSH_ROOT in the installed .zshrc, so the search for a configuration tree is skipped at shell startup.
-- Keep .zshrc exiting with status zero when ~/.zshrc_local is absent, so the first prompt no longer reports a failed command.
-- Correct the README customization section to state that a user-level tree replaces the system-wide one instead of merging with it.
-- Document how ZSH_ROOT is resolved, the .zshrc_local hook, and that --uninstall keeps .zshrc_local.
-- Clarify install_dotzsh.sh usage/help and README to note that --uninstall always targets the default path and ignores a custom target_path.
-- Remove the obsolete README step that copies dot_zshrc by hand, which the installer already does.
-- Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored after the option was documented as --uninstall [nosudo].
-- Check required commands before uninstalling, as is already done before installing.
+- Install ~/.zshrc without sudo so it stays owned by the invoking user instead of
+  root.
+- Accept nosudo as the sole installation argument instead of treating it as a
+  target directory name.
+- Honor a preset ZSH_ROOT in the installed .zshrc, so the search for a
+  configuration tree is skipped at shell startup.
+- Keep .zshrc exiting with status zero when ~/.zshrc_local is absent, so the first
+  prompt no longer reports a failed command.
+- Correct the README customization section to state that a user-level tree
+  replaces the system-wide one instead of merging with it.
+- Document how ZSH_ROOT is resolved, the .zshrc_local hook, and that --uninstall
+  keeps .zshrc_local.
+- Clarify install_dotzsh.sh usage/help and README to note that --uninstall always
+  targets the default path and ignores a custom target_path.
+- Remove the obsolete README step that copies dot_zshrc by hand, which the
+  installer already does.
+- Honor the nosudo argument for install_dotzsh.sh --uninstall, which was ignored
+  after the option was documented as --uninstall [nosudo].
+- Check required commands before uninstalling, as is already done before
+  installing.
 - Accept --no-sudo and -n as aliases for the installer's existing nosudo argument.
-- Accept the installer's no-sudo flag before the target path, which was previously discarded when the flag came first.
+- Accept the installer's no-sudo flag before the target path, which was previously
+  discarded when the flag came first.
 
 v26.05 (2026-05-26)
 -------------------
@@ -38,17 +54,20 @@ v26.05 (2026-05-26)
 
 v26.02 (2026-02-27)
 -------------------
-- Prevent zsh nomatch errors when /opt is empty by using local nullglob and directory check.
+- Prevent zsh nomatch errors when /opt is empty by using local nullglob and
+  directory check.
 - Integrate erase_history into sysadmin scripts environment.
 
 v26.01 (2026-01-30)
 -------------------
-- Remove single-letter global pipe aliases to prevent unintended command expansion.
+- Remove single-letter global pipe aliases to prevent unintended command
+  expansion.
 
 v25.10 (2025-10-24)
 -------------------
 - Remove unused chmod from command dependency check in install_dotzsh.sh.
-- Standardize all shell scripts by removing trailing exit status lines (exit $?) for POSIX-safe reuse.
+- Standardize all shell scripts by removing trailing exit status lines (exit $?)
+  for POSIX-safe reuse.
 - Add alias mm to run cltmp before mail.
 - Add jjj, kkk and mmm aliases for combined clear cd cltmp and mail workflow.
 
@@ -60,17 +79,21 @@ v25.08 (2025-08-20)
 
 v25.07 (2025-07-22)
 -------------------
-- Standardize shell script comments to start with verbs instead of using 'Function to' phrasing.
-- Move usage instructions above version history and improve section structure in installer script.
+- Standardize shell script comments to start with verbs instead of using 'Function
+  to' phrasing.
+- Move usage instructions above version history and improve section structure in
+  installer script.
 
 v25.06 (2025-06-26)
 -------------------
 - Update installer scripts to display full header block as help message.
-- Improve installer script reliability by explicitly returning exit codes in main functions.
+- Improve installer script reliability by explicitly returning exit codes in main
+  functions.
 
 v25.04 (2025-04-29)
 -------------------
-- Improved install_dotzsh.sh by adding strict error checking for filesystem operations.
+- Improved install_dotzsh.sh by adding strict error checking for filesystem
+  operations.
 - Unified log output format by introducing [INFO] and [ERROR] tags.
 
 v25.03.1 (2025-03-28)
@@ -82,7 +105,8 @@ v25.03 (2025-03-23)
 - Major overhaul of installation scripts.
 - Fine-tuned alias configurations.
 - Adjusted HISTSIZE and SAVEHIST to 10000 for better performance.
-- Switched the repository license from LGPLv3 to a dual license under GPLv3 or LGPLv3, and updated related documentation.
+- Switched the repository license from LGPLv3 to a dual license under GPLv3 or
+  LGPLv3, and updated related documentation.
 
 v25.02 (2025-02-25)
 -------------------

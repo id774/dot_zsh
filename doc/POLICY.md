@@ -405,6 +405,8 @@ it is held to a different set of rules than Sections 2 through 6.
   the script version.
 - Several related changes made the same day are one version entry, not
   several.
+- Each entry's description is at most two lines, and a single line at or
+  under 80 columns is preferred whenever practical.
 
 ## 8. Versions and Documents
 
@@ -419,7 +421,8 @@ it is held to a different set of rules than Sections 2 through 6.
   that corrects an earlier one may add a third `<patch>` level instead, as
   `v25.03.1` does; using one, and which correction warrants it, is for the
   maintainer to decide. The Version History Guidelines at the foot of that
-  file govern the entries.
+  file govern the entries, including the two-line, 80-column bullet limit
+  stated there.
 - [FEATURES](FEATURES.md) is the user-facing reference for shell behavior,
   aliases, plugins, environment variables, prompts, and other defaults enabled
   or changed by DOT_ZSH.

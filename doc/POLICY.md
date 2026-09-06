@@ -407,6 +407,8 @@ it is held to a different set of rules than Sections 2 through 6.
   several.
 - Each entry's description is at most two lines, and a single line at or
   under 80 columns is preferred whenever practical.
+- The first entry, at the lowest version `install_dotzsh.sh`'s own history
+  reaches, reads only `Initial release.` and nothing else.
 
 ## 8. Versions and Documents
 
@@ -422,7 +424,7 @@ it is held to a different set of rules than Sections 2 through 6.
   `v25.03.1` does; using one, and which correction warrants it, is for the
   maintainer to decide. The Version History Guidelines at the foot of that
   file govern the entries, including the two-line, 80-column bullet limit
-  stated there.
+  and the first-version rule stated there.
 - [FEATURES](FEATURES.md) is the user-facing reference for shell behavior,
   aliases, plugins, environment variables, prompts, and other defaults enabled
   or changed by DOT_ZSH.

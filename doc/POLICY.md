@@ -375,6 +375,10 @@ it is held to a different set of rules than Sections 2 through 6.
 - A shell builtin is never listed as an external dependency to check for.
 - `sudo` availability and privilege are examined only on the path that
   actually invokes `sudo`.
+- A helper owns the external-command prerequisites it directly uses. The
+  standard header-extracting `usage()` calls `check_commands awk` immediately
+  before invoking `awk`; a usage-only `awk` dependency is not carried in the
+  normal install or uninstall command lists.
 
 ### 7.3 Logging and Exit Codes
 
@@ -409,6 +413,9 @@ it is held to a different set of rules than Sections 2 through 6.
   under 80 columns is preferred whenever practical.
 - The first entry, at the lowest version `install_dotzsh.sh`'s own history
   reaches, reads only `Initial release.` and nothing else.
+- Moving a usage-only `awk` prerequisite into `usage()` is prerequisite
+  ownership normalization. By maintainer decision, that normalization alone
+  does not move the installer version or add a `Version History` entry.
 
 ## 8. Versions and Documents
 

@@ -57,7 +57,7 @@ behavior can be traced back to its configuration.
 | Aliases | Adds shortcuts and changes behavior of commands such as `cp`, `mv`, `rm`, `ls`, and `crontab` | `dot_zsh/plugins/alias.zsh` |
 | PATH and environment | Rebuilds base PATH and configures language, pager, editor, temporary-directory, and tool variables | `dot_zsh/lib/base.zsh`, `dot_zsh/plugins/*.zsh` |
 | Helper commands | Provides `extract` and `runcpp`, plus archive and source-file suffix aliases | `extract.zsh`, `runcpp.zsh` |
-| Prompt and VCS | Configures the left prompt, right-side VCS information, and terminal titles | `prompt.zsh`, `vcs_info.zsh`, `title.zsh` |
+| Prompt and VCS | Configures the left prompt and, on zsh 4.3.7 and later, right-side VCS information; also configures terminal titles | `prompt.zsh`, `vcs_info.zsh`, `title.zsh` |
 | GNU Screen | Can automatically replace the shell with GNU Screen when the marker and runtime conditions match | `dot_zsh/lib/screen.zsh` |
 | User override | Loads `~/.zshrc_local` after repository configuration | `dot_zshrc` |
 
@@ -1960,29 +1960,51 @@ Usage:
 
     runcpp <source_file> [args...]
 
-For a source file named:
+The compiled executable is created under:
 
-    foo.cpp
+    $TMP
 
-the output executable is:
+The filename is temporary and includes shell-generated process and random
+components. DOT_ZSH does not create a `.out` file next to the source file.
 
-    foo.out
+Under the normal startup path, `settmp.zsh` establishes `TMP` before the user
+can invoke `runcpp`.
 
-The compile command is:
+The compile command remains:
 
     g++ -std=c++17 "$src" -o "$exe"
 
-After a successful compilation DOT_ZSH runs:
-
-    ./"$exe" "$@"
+After a successful compilation DOT_ZSH executes the temporary executable by
+its full path. Relative and absolute source paths are therefore both supported.
 
 Arguments following the source file are passed to the compiled program.
 
-If compilation fails, DOT_ZSH prints:
+After the program exits, DOT_ZSH removes the temporary executable. When cleanup
+succeeds, `runcpp` returns the compiled program's exit status.
+
+If compilation fails, DOT_ZSH removes the temporary executable, prints:
 
     Compilation failed.
 
-returns status 2, and does not run the program.
+and returns status 2 without running the program.
+
+When no source-file argument is given, DOT_ZSH prints:
+
+    Usage: runcpp <source_file> [args...]
+
+and returns status 1.
+
+When `TMP` is unset or does not name a directory, `runcpp` writes:
+
+    runcpp: TMP is not available.
+
+to standard error and returns status 3.
+
+If removal of the temporary executable fails, `runcpp` writes:
+
+    runcpp: Failed to remove temporary executable.
+
+to standard error and returns status 3.
 
 
 ## 63. C and C++ suffix aliases
@@ -2192,6 +2214,12 @@ Role:
 
 DOT_ZSH uses the standard zsh `vcs_info` facility.
 
+`vcs_info` support is enabled on zsh 4.3.7 and later.
+
+On zsh 4.2 through 4.3.6, this plugin does not load `vcs_info`, register its
+`precmd` hook, set `RPROMPT`, or enable `TRANSIENT_RPROMPT`. Startup continues
+without VCS right-prompt integration.
+
 The enabled VCS backends are:
 
     git
@@ -2248,20 +2276,25 @@ prompt is displayed.
 
 ### 68.6 Right prompt
 
-When VCS information exists, the right prompt displays that information.
+On zsh 4.3.7 and later, when VCS information exists, the right prompt displays
+that information.
 
 When no VCS information exists, the right prompt displays:
 
     [username]
 
+On zsh 4.2 through 4.3.6, this plugin does not configure the right prompt.
+
 
 ### 68.7 Transient right prompt
 
-DOT_ZSH enables:
+On zsh 4.3.7 and later, DOT_ZSH enables:
 
     TRANSIENT_RPROMPT
 
-The right prompt therefore uses zsh transient-right-prompt behavior.
+The VCS right prompt therefore uses zsh transient-right-prompt behavior.
+
+On zsh 4.2 through 4.3.6, this plugin does not enable the option.
 
 Source:
 
@@ -2276,10 +2309,6 @@ The left side comes from:
 
     prompt.zsh
 
-The right side comes from:
-
-    vcs_info.zsh
-
 The left side contains:
 
 - time
@@ -2288,13 +2317,14 @@ The left side contains:
 - previous-command success or failure color
 - root or non-root marker
 
-The right side contains:
+On zsh 4.3.7 and later, the right side comes from:
 
-- Git, SVN, or Mercurial information
+    vcs_info.zsh
 
-or, outside a recognized VCS:
+and contains Git, SVN, or Mercurial information, or the username outside a
+recognized VCS.
 
-- the username
+On zsh 4.2 through 4.3.6, DOT_ZSH does not configure the VCS right prompt.
 
 Source:
 
@@ -2330,33 +2360,20 @@ Source:
     linux
     xterm-256color
 
-For other terminal types it can execute:
+It also does not start another GNU Screen session when `STY` is already set,
+because `STY` identifies the current shell as already running inside GNU
+Screen.
+
+For other terminal types, when `STY` is unset and the `screen` command is
+available, DOT_ZSH executes:
 
     screen -U -D -RR
 
-when its conditions are met.
+The decision is based on the current shell state, not on whether another
+`screen` process exists elsewhere on the host.
 
-The implementation first examines the system process list.
-
-When no `screen` process is found and the `screen` command is available, it
-executes GNU Screen.
-
-The plugin also has a terminal-type branch for:
-
-    *xterm*
-    rxvt
-    dtterm
-    kterm
-    Eterm
-
-and executes:
-
-    screen -U -D -RR
-
-when `screen` is available.
-
-Because `exec` is used, a matching startup path replaces the current zsh process
-with GNU Screen.
+Because `exec` is used, a matching startup path replaces the current zsh
+process with GNU Screen.
 
 Source:
 
@@ -2444,9 +2461,14 @@ Features that require newer zsh releases use compatibility branches.
 This is the DOT_ZSH baseline.
 
 
+### zsh 4.3.7 and later
+
+`vcs_info.zsh` enables the VCS right prompt and its `precmd` update hook.
+
+
 ### zsh 4.3.10 and later
 
-`vcs_info.zsh` enables Git working-tree change checks.
+`vcs_info.zsh` additionally enables Git working-tree change checks.
 
 Additional markers become available:
 

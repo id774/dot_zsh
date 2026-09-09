@@ -34,6 +34,8 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v4.2 2026-09-09
+#       Support Solaris copy options and classify a missing sudo command correctly.
 #  v4.1 2026-08-21
 #       Use POSIX path resolution and check uname before platform-specific setup.
 #  v4.0 2026-07-30
@@ -101,6 +103,7 @@ check_commands() {
 
 # Check if the user has sudo privileges (password may be required)
 check_sudo() {
+    check_commands sudo
     if ! sudo -v 2>/dev/null; then
         echo "[ERROR] This script requires sudo privileges. Please run as a user with sudo access." >&2
         exit 1
@@ -156,6 +159,10 @@ setup_environment() {
         Darwin)
             OPTIONS=-Rv
             OWNER=root:wheel
+            ;;
+        SunOS)
+            OPTIONS=-R
+            OWNER=root:root
             ;;
         *)
             OPTIONS=-Rvd

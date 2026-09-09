@@ -441,10 +441,10 @@ it is held to a different set of rules than Sections 2 through 6.
   rules of Section 7.5.
 - A document written in Markdown takes `.md` when it is newly created. That is
   why this file is `doc/POLICY.md`.
-- `LICENSE`, `COPYING`, and `COPYING.LESSER` keep the extensionless names by
-  which they are recognised. `doc/VERSIONS` keeps its name too: a path here is
-  a public URL, and no existing document is renamed to add or change an
-  extension.
+- `COPYING` and `COPYING.LESSER` keep the extensionless names by which they are
+  recognised. `LICENSE.md` keeps its existing Markdown name. `doc/VERSIONS`
+  keeps its name too: a path here is a public URL, and no existing document is
+  renamed to add or change an extension.
 - `.gitattributes` gives `diff=markdown` to `*.md`, so that a diff hunk header
   names the section it falls in. It is a diff aid and nothing more. No file is
   given `linguist-language`, and `doc/VERSIONS`, `doc/COPYING`, and

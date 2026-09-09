@@ -1,9 +1,9 @@
 # extract.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 09-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
-    if [ -z "$1" ] || [ ! -f "$1" ]; then
+    if [ -z "${1-}" ] || [ ! -f "$1" ]; then
         echo "Usage: extract <filename>"
         return 1
     fi

@@ -1,6 +1,17 @@
 dot_zsh Repository Version History
 ==================================
 
+v26.09 (Release Date: TBD)
+--------------------------
+- Make the installer use Solaris-compatible copy options and distinguish a
+  missing sudo command from insufficient sudo privileges.
+- Guard vcs_info on zsh versions that provide it while retaining the zsh 4.2
+  support baseline.
+- Make extract and runcpp safe under NO_UNSET and run runcpp executables from
+  TMP so absolute source paths work without leaving build artifacts.
+- Detect the current GNU Screen session with STY instead of scanning the system
+  process list.
+
 v26.08 (2026-08-26)
 -------------------
 - Add the version history description guidelines to the end of this file.

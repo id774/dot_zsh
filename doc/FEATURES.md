@@ -1436,8 +1436,64 @@ For batch byte compilation it defines:
 
 ## 49. Non-macOS aliases
 
-On platforms other than macOS, DOT_ZSH configures aliases around GNU-style
-command options.
+On platforms other than macOS, DOT_ZSH configures aliases for the local
+command set. Solaris uses a dedicated branch that stays within Solaris 10
+standard command options; other non-macOS platforms use GNU-style options.
+
+
+### Solaris
+
+Solaris uses aliases compatible with Solaris 10 standard command options.
+GNU-only long options are not assigned there.
+
+File and directory operation aliases are:
+
+    cp='cp -RpiP'
+    mv='mv -i'
+    rm='rm -i'
+    copy='cp -RpiP'
+    move='mv -i'
+    ren='mv -i'
+    del='rm -i'
+    md='mkdir'
+    rd='rmdir'
+
+DOT_ZSH does not assign a `--color` alias to `ls` on Solaris.
+
+Listing aliases are:
+
+    l='ls -ltra'
+    d='ls -ltr'
+    dir='ls -l'
+    vdir='ls -l'
+    la='ls -la'
+    a='ls -a'
+    lt='ls -t'
+    lr='ls -tr'
+    ll='ls -ltra'
+    dl='ls -ltr'
+
+Disk-usage aliases are:
+
+    duh='du -h'
+
+DOT_ZSH does not define `dum`, `dua`, `duhm`, or `duha` on Solaris, because
+Solaris `du -d` has a different meaning from the GNU `--max-depth` option and
+is not used as a substitute for it.
+
+Emacs aliases are the same as the other non-macOS platforms:
+
+    e='emacs -nw'
+    em='emacs -nw'
+
+and:
+
+    emacs-compile='emacs --batch -Q -f batch-byte-compile'
+
+
+### Other non-macOS platforms
+
+DOT_ZSH configures aliases around GNU-style command options.
 
 When `TERM` is not `dumb`:
 
@@ -2441,7 +2497,13 @@ Major differences include:
 - conditional Emacs.app aliases
 
 
-### Other platforms
+### Solaris
+
+Solaris uses aliases compatible with Solaris 10 standard command options.
+GNU-only long options are not assigned there.
+
+
+### Other non-macOS platforms
 
 GNU-style command options are used.
 

@@ -245,6 +245,15 @@ Completion candidate colors use `LS_COLORS`.
 If `LS_COLORS` is unset and `dircolors` is available, DOT_ZSH derives
 `LS_COLORS` from `dircolors`.
 
+DOT_ZSH evaluates the Bourne-shell output from `dircolors` in an isolated
+subshell and assigns only the resulting raw `LS_COLORS` value to the current
+shell. Shell quoting and the trailing assignment terminator are therefore not
+stored as part of `LS_COLORS`.
+
+The `dircolors`-generated export applies only inside that subshell; DOT_ZSH
+does not newly export `LS_COLORS` in the parent shell as part of this
+derivation.
+
 If `LS_COLORS` remains unset, DOT_ZSH treats it as empty when configuring
 completion colors so that repeated sourcing remains safe under `NO_UNSET`.
 

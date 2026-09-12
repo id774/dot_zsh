@@ -21,6 +21,8 @@ v26.09 (Release Date: TBD)
   the redundant standalone compaudit from shell startup.
 - Make LS_COLORS reads safe under NO_UNSET so repeated sourcing does not fail
   when the variable remains unset.
+- Make uninstall return failure and withhold its success message when any
+  requested removal fails.
 
 v26.08 (2026-08-26)
 -------------------

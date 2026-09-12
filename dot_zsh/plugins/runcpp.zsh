@@ -10,23 +10,11 @@ function runcpp() {
 
     local src exe st
     src="$1"
-
-    if [ -z "${TMP-}" ] || [ ! -d "${TMP-}" ]; then
-        echo "runcpp: TMP is not available." >&2
-        return 3
-    fi
-
-    exe="$TMP/runcpp.$$.$RANDOM.out"
-    while [ -e "$exe" ]; do
-        exe="$TMP/runcpp.$$.$RANDOM.out"
-    done
+    exe="$TMP/runcpp.$$.out"
 
     g++ -std=c++17 "$src" -o "$exe"
     if [ $? -ne 0 ]; then
-        if ! command rm -f "$exe"; then
-            echo "runcpp: Failed to remove temporary executable." >&2
-            return 3
-        fi
+        command rm -f "$exe"
         echo "Compilation failed."
         return 2
     fi
@@ -35,11 +23,7 @@ function runcpp() {
     "$exe" "$@"
     st=$?
 
-    if ! command rm -f "$exe"; then
-        echo "runcpp: Failed to remove temporary executable." >&2
-        return 3
-    fi
-
+    command rm -f "$exe"
     return "$st"
 }
 

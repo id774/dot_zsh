@@ -57,7 +57,7 @@ behavior can be traced back to its configuration.
 | Aliases | Adds shortcuts and changes behavior of commands such as `cp`, `mv`, `rm`, `ls`, and `crontab` | `dot_zsh/plugins/alias.zsh` |
 | PATH and environment | Rebuilds base PATH and configures language, pager, editor, temporary-directory, and tool variables | `dot_zsh/lib/base.zsh`, `dot_zsh/plugins/*.zsh` |
 | Helper commands | Provides `extract` and `runcpp`, plus archive and source-file suffix aliases | `extract.zsh`, `runcpp.zsh` |
-| Prompt and VCS | Configures the left prompt and, on zsh 4.3.7 and later, right-side VCS information; also configures terminal titles | `prompt.zsh`, `vcs_info.zsh`, `title.zsh` |
+| Prompt and VCS | Configures the left prompt, right-side VCS information, and terminal titles | `prompt.zsh`, `vcs_info.zsh`, `title.zsh` |
 | GNU Screen | Can automatically replace the shell with GNU Screen when the marker and runtime conditions match | `dot_zsh/lib/screen.zsh` |
 | User override | Loads `~/.zshrc_local` after repository configuration | `dot_zshrc` |
 
@@ -120,12 +120,8 @@ that tree is used directly.
 
 No other directory is searched in that case.
 
-The initial `ZSH_ROOT` check is safe when `NO_UNSET` was already enabled by an
-earlier zsh startup file. An unset `ZSH_ROOT` is treated as absent and the
-normal search order is used.
-
-If `load.zsh` is sourced with `ZSH_ROOT` unset, it returns without loading a
-tree rather than failing under `NO_UNSET`.
+If `load.zsh` is sourced directly with `ZSH_ROOT` unset, it returns without
+loading a tree.
 
 If the preset `ZSH_ROOT` cannot be used, DOT_ZSH searches for `lib/load.zsh` in
 this order:
@@ -258,15 +254,8 @@ If `LS_COLORS` is unset and `dircolors` is available, DOT_ZSH derives
 
 DOT_ZSH evaluates the Bourne-shell output from `dircolors` in an isolated
 subshell and assigns only the resulting raw `LS_COLORS` value to the current
-shell. Shell quoting and the trailing assignment terminator are therefore not
-stored as part of `LS_COLORS`.
-
-The `dircolors`-generated export applies only inside that subshell; DOT_ZSH
-does not newly export `LS_COLORS` in the parent shell as part of this
-derivation.
-
-If `LS_COLORS` remains unset, DOT_ZSH treats it as empty when configuring
-completion colors so that repeated sourcing remains safe under `NO_UNSET`.
+shell, so shell quoting and the trailing assignment terminator are not stored
+as part of `LS_COLORS`.
 
 The completion system is configured to:
 
@@ -1492,52 +1481,15 @@ standard command options; other non-macOS platforms use GNU-style options.
 
 ### Solaris
 
-Solaris uses aliases compatible with Solaris 10 standard command options.
-GNU-only long options are not assigned there.
-
-File and directory operation aliases are:
+Solaris uses aliases compatible with Solaris 10 standard command options, for
+example:
 
     cp='cp -RpiP'
-    mv='mv -i'
     rm='rm -i'
-    copy='cp -RpiP'
-    move='mv -i'
-    ren='mv -i'
-    del='rm -i'
-    md='mkdir'
-    rd='rmdir'
 
-DOT_ZSH does not assign a `--color` alias to `ls` on Solaris.
-
-Listing aliases are:
-
-    l='ls -ltra'
-    d='ls -ltr'
-    dir='ls -l'
-    vdir='ls -l'
-    la='ls -la'
-    a='ls -a'
-    lt='ls -t'
-    lr='ls -tr'
-    ll='ls -ltra'
-    dl='ls -ltr'
-
-Disk-usage aliases are:
-
-    duh='du -h'
-
-DOT_ZSH does not define `dum`, `dua`, `duhm`, or `duha` on Solaris, because
-Solaris `du -d` has a different meaning from the GNU `--max-depth` option and
-is not used as a substitute for it.
-
-Emacs aliases are the same as the other non-macOS platforms:
-
-    e='emacs -nw'
-    em='emacs -nw'
-
-and:
-
-    emacs-compile='emacs --batch -Q -f batch-byte-compile'
+GNU-only aliases and options that Solaris does not support, such as `ls`
+`--color` and `du --max-depth`, are not assigned there. See
+`dot_zsh/plugins/alias.zsh` for the full set of Solaris alias values.
 
 
 ### Other non-macOS platforms
@@ -1674,29 +1626,11 @@ The command selected depends on the file type.
     *.xz
         xz -d
 
-`.tar.xz` uses the `xz -dc ... | tar xf -` pipeline on every supported
-platform, because some supported legacy tar implementations, including macOS
-10.5, have no `-J` compression modifier.
-
-On Solaris, the remaining compressed tar archive formats are also decompressed
-to standard output and fed to the native tar command as `tar xf -`, because
-the Solaris 10 native tar does not provide the GNU tar `z` or `j` compression
-modifiers either:
-
-    *.tar.gz, *.tgz
-        gzip -dc ... | tar xf -
-
-    *.tar.bz2, *.tbz
-        bzip2 -dc ... | tar xf -
-
-    *.tar.xz
-        xz -dc ... | tar xf -
-
-    *.tar.Z
-        uncompress -c ... | tar xf -
-
-Other platforms retain the existing direct tar commands for `.tar.gz`,
-`.tgz`, `.tar.bz2`, `.tbz`, and `.tar.Z`.
+Compressed tar formats use forms compatible with the supported native tar;
+`.tar.xz` is decompressed through `xz` and piped to `tar` where `-J` cannot be
+assumed. On Solaris, whose native tar lacks the other GNU tar compression
+modifiers too, the remaining compressed tar formats are decompressed and piped
+to `tar` the same way.
 
 
 ### Error behavior
@@ -2092,51 +2026,32 @@ Usage:
 
     runcpp <source_file> [args...]
 
-The compiled executable is created under:
-
-    $TMP
-
-The filename is temporary and includes shell-generated process and random
-components. DOT_ZSH does not create a `.out` file next to the source file.
-
-Under the normal startup path, `settmp.zsh` establishes `TMP` before the user
-can invoke `runcpp`.
-
-The compile command remains:
-
-    g++ -std=c++17 "$src" -o "$exe"
-
-After a successful compilation DOT_ZSH executes the temporary executable by
-its full path. Relative and absolute source paths are therefore both supported.
-
-Arguments following the source file are passed to the compiled program.
-
-After the program exits, DOT_ZSH removes the temporary executable. When cleanup
-succeeds, `runcpp` returns the compiled program's exit status.
-
-If compilation fails, DOT_ZSH removes the temporary executable, prints:
-
-    Compilation failed.
-
-and returns status 2 without running the program.
-
 When no source-file argument is given, DOT_ZSH prints:
 
     Usage: runcpp <source_file> [args...]
 
 and returns status 1.
 
-When `TMP` is unset or does not name a directory, `runcpp` writes:
+The compiled executable is created under:
 
-    runcpp: TMP is not available.
+    $TMP
 
-to standard error and returns status 3.
+The compile command is:
 
-If removal of the temporary executable fails, `runcpp` writes:
+    g++ -std=c++17 "$src" -o "$exe"
 
-    runcpp: Failed to remove temporary executable.
+Arguments following the source file are passed to the compiled program.
 
-to standard error and returns status 3.
+If compilation fails, DOT_ZSH prints:
+
+    Compilation failed.
+
+and returns status 2 without running the program.
+
+After a successful compilation, DOT_ZSH runs the program and returns its exit
+status.
+
+The temporary executable is removed after execution.
 
 
 ## 63. C and C++ suffix aliases
@@ -2408,25 +2323,20 @@ prompt is displayed.
 
 ### 68.6 Right prompt
 
-On zsh 4.3.7 and later, when VCS information exists, the right prompt displays
-that information.
+When VCS information exists, the right prompt displays that information.
 
 When no VCS information exists, the right prompt displays:
 
     [username]
 
-On zsh 4.2 through 4.3.6, this plugin does not configure the right prompt.
-
 
 ### 68.7 Transient right prompt
 
-On zsh 4.3.7 and later, DOT_ZSH enables:
+DOT_ZSH enables:
 
     TRANSIENT_RPROMPT
 
-The VCS right prompt therefore uses zsh transient-right-prompt behavior.
-
-On zsh 4.2 through 4.3.6, this plugin does not enable the option.
+The right prompt therefore uses zsh transient-right-prompt behavior.
 
 Source:
 
@@ -2449,14 +2359,12 @@ The left side contains:
 - previous-command success or failure color
 - root or non-root marker
 
-On zsh 4.3.7 and later, the right side comes from:
+The right side comes from:
 
     vcs_info.zsh
 
 and contains Git, SVN, or Mercurial information, or the username outside a
-recognized VCS.
-
-On zsh 4.2 through 4.3.6, DOT_ZSH does not configure the VCS right prompt.
+recognized VCS. See Section 68 for the zsh version this requires.
 
 Source:
 
@@ -2601,7 +2509,7 @@ This is the DOT_ZSH baseline.
 
 ### zsh 4.3.7 and later
 
-`vcs_info.zsh` enables the VCS right prompt and its `precmd` update hook.
+See Section 68 (`vcs_info.zsh`).
 
 
 ### zsh 4.3.10 and later

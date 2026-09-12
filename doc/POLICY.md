@@ -200,11 +200,10 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
 
 ### 2.4 Silence and Status
 
-- Startup writes no diagnostic, informational, or accidental text to stdout or
-  stderr. Intentional terminal-control sequences that implement a documented
-  terminal UI feature are permitted; `plugins/title.zsh` setting the GNU
-  Screen or tmux title is the existing example. An absent path, command, or
-  file is a normal state, not a condition to report.
+- Startup emits no diagnostic, informational, or accidental output.
+  Intentional terminal-control output that implements configured terminal UI
+  is not diagnostic output. An absent path, command, or file is a normal
+  state, not a condition to report.
 - The first prompt must not report a failed command. `base.zsh` sets
   `print_exit_value`, so the last command a startup file runs decides what the
   user sees: end a file with `if [ -f "$f" ]; then . "$f"; fi`, not with
@@ -355,13 +354,9 @@ it is held to a different set of rules than Sections 2 through 6.
 
 ### 7.1 Shell and Structure
 
-- `install_dotzsh.sh` keeps `#!/bin/sh` and uses portable shell syntax. The
-  supported platform set includes Solaris 10, whose `/bin/sh` is the legacy
-  Bourne shell rather than the standards-conforming `/usr/xpg4/bin/sh`, so the
-  installer stays within the subset accepted by that shell as well as by POSIX
-  shells. In particular, it does not use bash-specific features, `local`,
-  arrays, `[[ ... ]]`, the `function` keyword, `$(...)` command substitution,
-  or `!` pipeline negation.
+- `install_dotzsh.sh` keeps `#!/bin/sh` and uses syntax accepted by every
+  supported `/bin/sh`, including Solaris 10's legacy Bourne shell. Command
+  substitution uses the legacy-compatible backquote form for that reason.
 - The user-facing header is a `#` comment block carrying `Description`, an
   identifying block (author, source repository, license, and contact),
   `Usage`, `Options`, `Notes`, and `Version History`.
@@ -419,9 +414,6 @@ it is held to a different set of rules than Sections 2 through 6.
   under 80 columns is preferred whenever practical.
 - The first entry, at the lowest version `install_dotzsh.sh`'s own history
   reaches, reads only `Initial release.` and nothing else.
-- Moving a usage-only `awk` prerequisite into `usage()` is prerequisite
-  ownership normalization. By maintainer decision, that normalization alone
-  does not move the installer version or add a `Version History` entry.
 
 ## 8. Versions and Documents
 

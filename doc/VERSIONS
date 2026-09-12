@@ -32,6 +32,10 @@ v26.09 (Release Date: TBD)
   macOS 10.5 and Solaris 10 command sets.
 - Extract compressed tar archives with Solaris 10 native tar while preserving
   the existing extraction behavior on other platforms.
+- Make startup safe under NO_UNSET when ZSH_ROOT is unset.
+- Extract .tar.xz archives through a decompressor pipeline on every platform to
+  support tar implementations without a -J modifier.
+- Keep the installer compatible with the Solaris 10 /bin/sh environment.
 
 v26.08 (2026-08-26)
 -------------------

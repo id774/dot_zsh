@@ -120,6 +120,13 @@ that tree is used directly.
 
 No other directory is searched in that case.
 
+The initial `ZSH_ROOT` check is safe when `NO_UNSET` was already enabled by an
+earlier zsh startup file. An unset `ZSH_ROOT` is treated as absent and the
+normal search order is used.
+
+If `load.zsh` is sourced with `ZSH_ROOT` unset, it returns without loading a
+tree rather than failing under `NO_UNSET`.
+
 If the preset `ZSH_ROOT` cannot be used, DOT_ZSH searches for `lib/load.zsh` in
 this order:
 
@@ -1628,7 +1635,7 @@ The command selected depends on the file type.
         tar xzf
 
     *.tar.xz
-        tar Jxf
+        xz -dc ... | tar xf -
 
     *.zip
         unzip
@@ -1667,9 +1674,14 @@ The command selected depends on the file type.
     *.xz
         xz -d
 
-On Solaris, compressed tar archives are decompressed to standard output and fed
-to the native tar command as `tar xf -`, because the Solaris 10 native tar does
-not provide the GNU tar `z`, `j`, or `J` compression modifiers:
+`.tar.xz` uses the `xz -dc ... | tar xf -` pipeline on every supported
+platform, because some supported legacy tar implementations, including macOS
+10.5, have no `-J` compression modifier.
+
+On Solaris, the remaining compressed tar archive formats are also decompressed
+to standard output and fed to the native tar command as `tar xf -`, because
+the Solaris 10 native tar does not provide the GNU tar `z` or `j` compression
+modifiers either:
 
     *.tar.gz, *.tgz
         gzip -dc ... | tar xf -
@@ -1683,7 +1695,8 @@ not provide the GNU tar `z`, `j`, or `J` compression modifiers:
     *.tar.Z
         uncompress -c ... | tar xf -
 
-Other platforms retain the existing direct tar commands.
+Other platforms retain the existing direct tar commands for `.tar.gz`,
+`.tgz`, `.tar.bz2`, `.tbz`, and `.tar.Z`.
 
 
 ### Error behavior

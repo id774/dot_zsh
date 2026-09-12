@@ -19,13 +19,7 @@ function extract() {
                 tar xzf "$1"
             fi
             ;;
-        *.tar.xz)
-            if (( solaris )); then
-                xz -dc "$1" | tar xf -
-            else
-                tar Jxf "$1"
-            fi
-            ;;
+        *.tar.xz) xz -dc "$1" | tar xf -;;
         *.zip) unzip "$1";;
         *.lzh) lha e "$1";;
         *.tar.bz2|*.tbz)

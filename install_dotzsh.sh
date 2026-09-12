@@ -35,7 +35,7 @@
 #
 #  Version History:
 #  v4.3 2026-09-12
-#       Preserve uninstall removal failures and report success only when all removals succeed.
+#       Preserve uninstall failure status and Solaris 10 /bin/sh compatibility.
 #  v4.2 2026-09-09
 #       Support Solaris copy options and classify a missing sudo command correctly.
 #  v4.1 2026-08-21
@@ -92,7 +92,7 @@ usage() {
 # Check if required commands are available and executable
 check_commands() {
     for cmd in "$@"; do
-        cmd_path=$(command -v "$cmd" 2>/dev/null)
+        cmd_path=`command -v "$cmd" 2>/dev/null`
         if [ -z "$cmd_path" ]; then
             echo "[ERROR] Command '$cmd' is not installed. Please install $cmd and try again." >&2
             exit 127
@@ -106,7 +106,9 @@ check_commands() {
 # Check if the user has sudo privileges (password may be required)
 check_sudo() {
     check_commands sudo
-    if ! sudo -v 2>/dev/null; then
+    if sudo -v 2>/dev/null; then
+        :
+    else
         echo "[ERROR] This script requires sudo privileges. Please run as a user with sudo access." >&2
         exit 1
     fi
@@ -131,11 +133,17 @@ setup_environment() {
         */*) ;;
         *)
             if [ ! -f "$SCRIPT_PATH" ]; then
-                SCRIPT_PATH=$(command -v "$SCRIPT_PATH" 2>/dev/null)
+                SCRIPT_PATH=`command -v "$SCRIPT_PATH" 2>/dev/null`
             fi
             ;;
     esac
-    SCRIPT_HOME=$(CDPATH= cd -P "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd)
+    SCRIPT_DIR=`dirname "$SCRIPT_PATH"`
+    SCRIPT_HOME=`(
+        CDPATH=
+        cd "$SCRIPT_DIR" 2>/dev/null || exit 1
+        pwd -P 2>/dev/null || pwd
+    )`
+    unset SCRIPT_DIR
     if [ -z "$SCRIPT_HOME" ]; then
         echo "[ERROR] Failed to resolve the installer directory." >&2
         exit 1
@@ -157,7 +165,7 @@ setup_environment() {
     fi
     echo "[INFO] Using sudo: ${SUDO:-no}"
 
-    case "$(uname)" in
+    case "`uname`" in
         Darwin)
             OPTIONS=-Rv
             OWNER=root:wheel
@@ -175,7 +183,7 @@ setup_environment() {
     if [ "$SUDO" = "sudo" ]; then
         check_sudo
     else
-        OWNER="$(id -un):$(id -gn)"
+        OWNER="`id -un`:`id -gn`"
     fi
     echo "[INFO] Copy options: $OPTIONS, Owner: $OWNER"
 }
@@ -184,13 +192,17 @@ setup_environment() {
 set_permission() {
     if is_no_sudo "$2"; then
         echo "[INFO] Setting ownership to current user and group..."
-        if ! chown -R "$OWNER" "$TARGET"; then
+        if chown -R "$OWNER" "$TARGET"; then
+            :
+        else
             echo "[ERROR] Failed to set ownership on $TARGET." >&2
             return 1
         fi
     else
         echo "[INFO] Setting ownership to $OWNER..."
-        if ! $SUDO chown -R "$OWNER" "$TARGET"; then
+        if $SUDO chown -R "$OWNER" "$TARGET"; then
+            :
+        else
             echo "[ERROR] Failed to set ownership on $TARGET." >&2
             return 1
         fi
@@ -202,14 +214,18 @@ zsh_compile() {
     echo "[INFO] Compiling zsh scripts..."
     for file in "$SCRIPT_HOME/dot_zsh/lib/"*.zsh; do
         echo "[INFO] Compiling: $file"
-        if ! zsh -c 'zcompile "$1"' _ "$file"; then
+        if zsh -c 'zcompile "$1"' _ "$file"; then
+            :
+        else
             echo "[ERROR] Failed to compile $file." >&2
             return 1
         fi
     done
     for plugin in "$SCRIPT_HOME/dot_zsh/plugins/"*.zsh; do
         echo "[INFO] Compiling: $plugin"
-        if ! zsh -c 'zcompile "$1"' _ "$plugin"; then
+        if zsh -c 'zcompile "$1"' _ "$plugin"; then
+            :
+        else
             echo "[ERROR] Failed to compile $plugin." >&2
             return 1
         fi
@@ -219,8 +235,10 @@ zsh_compile() {
 # Clean up compiled .zwc files
 zwc_cleanup() {
     echo "[INFO] Cleaning up .zwc files..."
-    if ! rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc \
+    if rm -f "$SCRIPT_HOME/dot_zsh/lib/"*.zwc \
         "$SCRIPT_HOME/dot_zsh/plugins/"*.zwc; then
+        :
+    else
         echo "[ERROR] Failed to clean up .zwc files." >&2
         return 1
     fi
@@ -232,24 +250,32 @@ install_files() {
 
     if [ -d "$TARGET" ]; then
         echo "[INFO] Removing existing directory: $TARGET"
-        if ! $SUDO rm -rf "$TARGET"; then
+        if $SUDO rm -rf "$TARGET"; then
+            :
+        else
             echo "[ERROR] Failed to remove existing $TARGET." >&2
             return 1
         fi
     fi
 
     echo "[INFO] Creating target directory: $TARGET"
-    if ! $SUDO mkdir -p "$TARGET"; then
+    if $SUDO mkdir -p "$TARGET"; then
+        :
+    else
         echo "[ERROR] Failed to create target directory $TARGET." >&2
         return 1
     fi
 
-    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"; then
+    if $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/lib" "$TARGET/"; then
+        :
+    else
         echo "[ERROR] Failed to copy lib." >&2
         return 1
     fi
 
-    if ! $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"; then
+    if $SUDO cp $OPTIONS "$SCRIPT_HOME/dot_zsh/plugins" "$TARGET/"; then
+        :
+    else
         echo "[ERROR] Failed to copy plugins." >&2
         return 1
     fi
@@ -258,17 +284,23 @@ install_files() {
     # it user-owned. Remove it first: a copy left root-owned by an earlier
     # version is not writable by its owner, but can still be replaced because
     # the home directory itself is.
-    if ! rm -f "$HOME/.zshrc" "$HOME/.zshrc.zwc"; then
+    if rm -f "$HOME/.zshrc" "$HOME/.zshrc.zwc"; then
+        :
+    else
         echo "[ERROR] Failed to remove existing $HOME/.zshrc." >&2
         return 1
     fi
 
-    if ! cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
+    if cp $OPTIONS "$SCRIPT_HOME/dot_zshrc" "$HOME/.zshrc"; then
+        :
+    else
         echo "[ERROR] Failed to copy .zshrc." >&2
         return 1
     fi
 
-    if ! zsh -c 'zcompile "$1"' _ "$HOME/.zshrc"; then
+    if zsh -c 'zcompile "$1"' _ "$HOME/.zshrc"; then
+        :
+    else
         echo "[ERROR] Failed to compile $HOME/.zshrc." >&2
         return 1
     fi
@@ -278,11 +310,15 @@ install_files() {
 install_dotzsh() {
     echo "[INFO] Starting dot_zsh installation..."
     setup_environment "$@"
-    if ! zsh_compile; then
+    if zsh_compile; then
+        :
+    else
         zwc_cleanup
         return 1
     fi
-    if ! install_files; then
+    if install_files; then
+        :
+    else
         zwc_cleanup
         return 1
     fi
@@ -308,7 +344,9 @@ uninstall() {
 
     if [ -f "$HOME/.zshrc" ]; then
         echo "[INFO] Removing $HOME/.zshrc"
-        if ! rm -f "$HOME/.zshrc"; then
+        if rm -f "$HOME/.zshrc"; then
+            :
+        else
             echo "[ERROR] Failed to remove $HOME/.zshrc." >&2
             UNINSTALL_FAILED=1
         fi
@@ -316,7 +354,9 @@ uninstall() {
 
     if [ -f "$HOME/.zshrc.zwc" ]; then
         echo "[INFO] Removing $HOME/.zshrc.zwc"
-        if ! rm -f "$HOME/.zshrc.zwc"; then
+        if rm -f "$HOME/.zshrc.zwc"; then
+            :
+        else
             echo "[ERROR] Failed to remove $HOME/.zshrc.zwc." >&2
             UNINSTALL_FAILED=1
         fi
@@ -324,7 +364,9 @@ uninstall() {
 
     if [ -d "$TARGET" ]; then
         echo "[INFO] Removing target directory: $TARGET"
-        if ! $SUDO rm -rf "$TARGET"; then
+        if $SUDO rm -rf "$TARGET"; then
+            :
+        else
             echo "[ERROR] Failed to remove directory $TARGET." >&2
             return 1
         fi

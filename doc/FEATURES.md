@@ -245,6 +245,9 @@ Completion candidate colors use `LS_COLORS`.
 If `LS_COLORS` is unset and `dircolors` is available, DOT_ZSH derives
 `LS_COLORS` from `dircolors`.
 
+If `LS_COLORS` remains unset, DOT_ZSH treats it as empty when configuring
+completion colors so that repeated sourcing remains safe under `NO_UNSET`.
+
 The completion system is configured to:
 
 - use a candidate menu

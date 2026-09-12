@@ -1,6 +1,6 @@
 # ruby.zsh
-# Last Change: 02-Feb-2025.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-export RUBYOPT=rubygems
+export RUBYOPT=-rrubygems
 alias be='bundle exec'

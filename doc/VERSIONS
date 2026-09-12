@@ -11,6 +11,8 @@ v26.09 (Release Date: TBD)
   TMP so absolute source paths work without leaving build artifacts.
 - Detect the current GNU Screen session with STY instead of scanning the system
   process list.
+- Replace the obsolete ubygems RUBYOPT preload with a direct rubygems require
+  so current Ruby versions start normally.
 
 v26.08 (2026-08-26)
 -------------------

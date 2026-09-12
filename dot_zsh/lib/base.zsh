@@ -42,7 +42,10 @@ set_basic_options() {
     autoload -Uz is-at-least
 
     if [[ -z ${LS_COLORS-} ]] && command -v dircolors >/dev/null 2>&1; then
-        LS_COLORS=$(dircolors -b 2>/dev/null | grep 'LS_COLORS=' | cut -d= -f2-)
+        LS_COLORS=$(
+            eval "$(dircolors -b 2>/dev/null)"
+            printf '%s' "${LS_COLORS-}"
+        )
     fi
 
     zstyle ':completion:*:default' list-colors ${(s.:.)${LS_COLORS-}}

@@ -23,6 +23,8 @@ v26.09 (Release Date: TBD)
   when the variable remains unset.
 - Make uninstall return failure and withhold its success message when any
   requested removal fails.
+- Parse dircolors shell output correctly so LS_COLORS contains only the raw
+  color specification instead of shell quoting and assignment syntax.
 
 v26.08 (2026-08-26)
 -------------------

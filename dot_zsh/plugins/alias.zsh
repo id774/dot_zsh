@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 25-May-2026.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -170,6 +170,34 @@ case "$(uname)" in
                 alias emacs-compile='/Applications/Emacs.app/Contents/MacOS/Emacs --batch -Q -f batch-byte-compile'
             fi
         fi
+        ;;
+    SunOS)
+        alias cp='cp -RpiP'
+        alias mv='mv -i'
+        alias rm='rm -i'
+        alias copy='cp -RpiP'
+        alias move='mv -i'
+        alias ren='mv -i'
+        alias del='rm -i'
+        alias md='mkdir'
+        alias rd='rmdir'
+
+        alias l='ls -ltra'
+        alias d='ls -ltr'
+        alias dir='ls -l'
+        alias vdir='ls -l'
+        alias la='ls -la'
+        alias a='ls -a'
+        alias lt='ls -t'
+        alias lr='ls -tr'
+        alias ll='ls -ltra'
+        alias dl='ls -ltr'
+
+        alias duh='du -h'
+
+        alias e='emacs -nw'
+        alias em='emacs -nw'
+        alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
         ;;
     *)
         if [ "$TERM" != "dumb" ]; then

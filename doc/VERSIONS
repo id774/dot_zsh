@@ -15,6 +15,8 @@ v26.09 (Release Date: TBD)
   so current Ruby versions start normally.
 - Restore pip completion on zsh earlier than 5.0 by loading the zsh/compctl
   module before registering the legacy completion handler.
+- Add Solaris-specific aliases that avoid unsupported GNU command options while
+  retaining the declared Solaris 10 compatibility baseline.
 
 v26.08 (2026-08-26)
 -------------------

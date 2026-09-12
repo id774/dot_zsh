@@ -1,5 +1,5 @@
 # pip.zsh
-# Last Change: 02-Feb-2025.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function _pip_completion {
@@ -22,6 +22,6 @@ function _pip_completion {
 if is-at-least 5.0; then
     compdef _pip_completion pip
 else
-    autoload -Uz compctl
+    zmodload zsh/compctl
     compctl -K _pip_completion pip
 fi

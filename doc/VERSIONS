@@ -13,6 +13,8 @@ v26.09 (Release Date: TBD)
   process list.
 - Replace the obsolete ubygems RUBYOPT preload with a direct rubygems require
   so current Ruby versions start normally.
+- Restore pip completion on zsh earlier than 5.0 by loading the zsh/compctl
+  module before registering the legacy completion handler.
 
 v26.08 (2026-08-26)
 -------------------

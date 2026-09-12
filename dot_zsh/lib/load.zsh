@@ -1,5 +1,5 @@
 # load.zsh
-# Last Change: 02-Feb-2025.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 [ -z "$ZSH_ROOT" ] && return
@@ -10,7 +10,7 @@ call_screen() {
 
 load_plugins() {
     if [ -d "$ZSH_ROOT/plugins" ]; then
-        for ZSH_PLUGIN in "$ZSH_ROOT/plugins"/*.zsh; do
+        for ZSH_PLUGIN in "$ZSH_ROOT/plugins"/*.zsh(N); do
             [ -f "$ZSH_PLUGIN" ] && . "$ZSH_PLUGIN"
         done
     fi

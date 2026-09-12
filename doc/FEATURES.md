@@ -93,6 +93,10 @@ The major configuration stages are therefore:
 3. optional GNU Screen startup
 4. user-local configuration
 
+Only matching `.zsh` plugin files are sourced. If the selected tree has a
+plugins directory but it contains no `.zsh` files, the plugin stage is a
+no-op and startup continues normally.
+
 Because `~/.zshrc_local` is sourced last, it is the final override point for
 environment variables, aliases, options, and other settings established by
 DOT_ZSH.

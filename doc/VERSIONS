@@ -19,6 +19,8 @@ v26.09 (Release Date: TBD)
   retaining the declared Solaris 10 compatibility baseline.
 - Make compinit ignore insecure completion paths non-interactively and remove
   the redundant standalone compaudit from shell startup.
+- Make LS_COLORS reads safe under NO_UNSET so repeated sourcing does not fail
+  when the variable remains unset.
 
 v26.08 (2026-08-26)
 -------------------

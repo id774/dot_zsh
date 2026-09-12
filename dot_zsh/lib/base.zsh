@@ -41,11 +41,11 @@ set_basic_options() {
 
     autoload -Uz is-at-least
 
-    if [[ -z ${LS_COLORS} ]] && command -v dircolors >/dev/null 2>&1; then
+    if [[ -z ${LS_COLORS-} ]] && command -v dircolors >/dev/null 2>&1; then
         LS_COLORS=$(dircolors -b 2>/dev/null | grep 'LS_COLORS=' | cut -d= -f2-)
     fi
 
-    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+    zstyle ':completion:*:default' list-colors ${(s.:.)${LS_COLORS-}}
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
 
     autoload -U promptinit ; promptinit

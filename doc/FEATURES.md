@@ -231,9 +231,14 @@ DOT_ZSH initializes the zsh completion system at startup.
 The primary initialization is:
 
     autoload -U compinit
-    compinit
+    compinit -i
 
-When `compaudit` is available, DOT_ZSH runs it as well.
+The `-i` option keeps startup non-interactive when `compaudit` finds insecure
+completion files or directories. Those insecure entries are ignored rather
+than used.
+
+DOT_ZSH does not run a second standalone `compaudit` after `compinit` because
+`compinit` performs the security check itself.
 
 Completion candidate colors use `LS_COLORS`.
 

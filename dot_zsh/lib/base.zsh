@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 18-Mar-2025.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -53,8 +53,7 @@ set_basic_options() {
     autoload -U predict-on
 
     autoload -U compinit
-    compinit
-    [[ -n $(command -v compaudit) ]] && compaudit
+    compinit -i
 
     zle -N predict-on
     zle -N predict-off

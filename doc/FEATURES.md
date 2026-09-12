@@ -1769,7 +1769,11 @@ DOT_ZSH uses:
 
 ### zsh earlier than 5.0
 
-DOT_ZSH uses the historical compatibility path:
+DOT_ZSH explicitly loads:
+
+    zsh/compctl
+
+and registers the historical completion path with:
 
     compctl -K _pip_completion pip
 

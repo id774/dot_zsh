@@ -17,6 +17,8 @@ v26.09 (Release Date: TBD)
   module before registering the legacy completion handler.
 - Add Solaris-specific aliases that avoid unsupported GNU command options while
   retaining the declared Solaris 10 compatibility baseline.
+- Make compinit ignore insecure completion paths non-interactively and remove
+  the redundant standalone compaudit from shell startup.
 
 v26.08 (2026-08-26)
 -------------------

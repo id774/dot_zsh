@@ -25,6 +25,8 @@ v26.09 (Release Date: TBD)
   requested removal fails.
 - Parse dircolors shell output correctly so LS_COLORS contains only the raw
   color specification instead of shell quoting and assignment syntax.
+- Treat an empty plugins directory as a normal no-op instead of failing on an
+  unmatched plugin glob.
 
 v26.08 (2026-08-26)
 -------------------

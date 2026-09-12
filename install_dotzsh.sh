@@ -34,6 +34,8 @@
 #  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
 #
 #  Version History:
+#  v4.3 2026-09-12
+#       Preserve uninstall removal failures and report success only when all removals succeed.
 #  v4.2 2026-09-09
 #       Support Solaris copy options and classify a missing sudo command correctly.
 #  v4.1 2026-08-21
@@ -302,10 +304,13 @@ uninstall() {
 
     TARGET="/usr/local/etc/zsh"
 
+    UNINSTALL_FAILED=0
+
     if [ -f "$HOME/.zshrc" ]; then
         echo "[INFO] Removing $HOME/.zshrc"
         if ! rm -f "$HOME/.zshrc"; then
             echo "[ERROR] Failed to remove $HOME/.zshrc." >&2
+            UNINSTALL_FAILED=1
         fi
     fi
 
@@ -313,6 +318,7 @@ uninstall() {
         echo "[INFO] Removing $HOME/.zshrc.zwc"
         if ! rm -f "$HOME/.zshrc.zwc"; then
             echo "[ERROR] Failed to remove $HOME/.zshrc.zwc." >&2
+            UNINSTALL_FAILED=1
         fi
     fi
 
@@ -320,10 +326,14 @@ uninstall() {
         echo "[INFO] Removing target directory: $TARGET"
         if ! $SUDO rm -rf "$TARGET"; then
             echo "[ERROR] Failed to remove directory $TARGET." >&2
-            exit 1
+            return 1
         fi
     else
         echo "[INFO] Target directory $TARGET does not exist. Skipping."
+    fi
+
+    if [ "$UNINSTALL_FAILED" -ne 0 ]; then
+        return 1
     fi
 
     echo "[INFO] Uninstallation completed successfully."

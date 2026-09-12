@@ -741,6 +741,10 @@ DOT_ZSH therefore uses forms such as:
 
 when a parameter may legitimately be unset.
 
+TERM-dependent startup paths use `${TERM-}` when `TERM` may be unset. An unset
+`TERM` is therefore treated as an empty string for those condition checks
+instead of causing a `NO_UNSET` error.
+
 Source:
 
     dot_zsh/lib/base.zsh
@@ -1244,11 +1248,13 @@ DOT_ZSH defines:
 
 ## 46. crontab alias
 
+On platforms handled by the GNU-style non-macOS, non-Solaris alias branch,
 DOT_ZSH defines:
 
     crontab='crontab -i'
 
-The interactive form of `crontab` is therefore used.
+macOS and Solaris leave `crontab` unaliased because their supported native
+`crontab` commands do not provide the `-i` option.
 
 
 ## 47. SSH terminal aliases
@@ -1264,6 +1270,21 @@ These start SSH with `TERM` set to `xterm-256color`.
 ## 48. macOS aliases
 
 Alias behavior has additional branches on macOS.
+
+For the native macOS command set, DOT_ZSH uses file-operation aliases compatible
+with the macOS 10.5 support baseline:
+
+    cp='cp -RpPvi'
+    copy='cp -RpPvi'
+    rd='rmdir'
+
+`-RpP` preserves the archive intent previously expressed with `cp -a` without
+requiring the `-a` option that is absent from macOS 10.5. The native macOS
+10.5 `rmdir` has no `-v` option.
+
+For a non-root macOS user with GNU coreutils available, the later GNU alias
+branch still overrides `cp` and `rd` with the existing `gcp` and `grmdir`
+definitions.
 
 
 ### 48.1 ls color
@@ -1427,8 +1448,8 @@ When:
 
 exists, DOT_ZSH defines:
 
-    ch='open -a Google Chrome'
-    chrome='open -a Google Chrome'
+    ch='open -a Google\ Chrome'
+    chrome='open -a Google\ Chrome'
 
 
 ### 48.11 Emacs for macOS
@@ -1645,6 +1666,24 @@ The command selected depends on the file type.
 
     *.xz
         xz -d
+
+On Solaris, compressed tar archives are decompressed to standard output and fed
+to the native tar command as `tar xf -`, because the Solaris 10 native tar does
+not provide the GNU tar `z`, `j`, or `J` compression modifiers:
+
+    *.tar.gz, *.tgz
+        gzip -dc ... | tar xf -
+
+    *.tar.bz2, *.tbz
+        bzip2 -dc ... | tar xf -
+
+    *.tar.xz
+        xz -dc ... | tar xf -
+
+    *.tar.Z
+        uncompress -c ... | tar xf -
+
+Other platforms retain the existing direct tar commands.
 
 
 ### Error behavior

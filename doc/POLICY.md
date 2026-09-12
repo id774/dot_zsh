@@ -200,7 +200,10 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
 
 ### 2.4 Silence and Status
 
-- Startup writes nothing to stdout or stderr. An absent path, command, or
+- Startup writes no diagnostic, informational, or accidental text to stdout or
+  stderr. Intentional terminal-control sequences that implement a documented
+  terminal UI feature are permitted; `plugins/title.zsh` setting the GNU
+  Screen or tmux title is the existing example. An absent path, command, or
   file is a normal state, not a condition to report.
 - The first prompt must not report a failed command. `base.zsh` sets
   `print_exit_value`, so the last command a startup file runs decides what the

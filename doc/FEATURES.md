@@ -1923,10 +1923,9 @@ Role:
 
 DOT_ZSH exports:
 
-    RUBYOPT=rubygems
+    RUBYOPT=-rrubygems
 
-Ruby processes therefore receive `rubygems` through the default `RUBYOPT`
-environment variable.
+Ruby therefore requires `rubygems` before executing a Ruby program.
 
 DOT_ZSH also defines:
 

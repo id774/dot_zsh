@@ -2,7 +2,7 @@
 # Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-[ -z "$ZSH_ROOT" ] && return
+[ -z "${ZSH_ROOT-}" ] && return
 
 call_screen() {
     [ -f "$ZSH_ROOT/lib/screen.zsh" ] && . "$ZSH_ROOT/lib/screen.zsh"

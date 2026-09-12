@@ -186,10 +186,13 @@ before editing or extending DOT_ZSH are shown.
 loads at startup lives there, which is why a user-level tree has to contain both
 (see [Customization](#5-customization)).
 
-Plugins are independent of one another and named after what they configure, so
-the filename is the index: `alias.zsh` for aliases, `prompt.zsh` for the prompt,
+Plugins are separated by topic and named after what they configure, so the
+filename is the index: `alias.zsh` for aliases, `prompt.zsh` for the prompt,
 `proxy.zsh` for proxy variables, `extract.zsh` for the archive helper, and
 per-tool files such as `python.zsh`, `ruby.zsh`, `java.zsh` and `mysql.zsh`.
+They are sourced in filename order, and a plugin may use environment established
+by an earlier plugin; for example, `sqlite.zsh` can use `TMP` set by
+`settmp.zsh`.
 A feature that belongs to what an existing plugin already configures is added
 to that file; a feature that is its own topic gets a new file instead. Either
 way nothing else has to be edited, because `load.zsh` globs the directory

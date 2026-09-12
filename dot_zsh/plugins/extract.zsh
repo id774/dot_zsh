@@ -1,5 +1,5 @@
 # extract.zsh
-# Last Change: 09-Sep-2026.
+# Last Change: 12-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 function extract() {
@@ -8,13 +8,34 @@ function extract() {
         return 1
     fi
 
+    local solaris=0
+    [[ $OSTYPE == solaris* ]] && solaris=1
+
     case "$1" in
-        *.tar.gz|*.tgz) tar xzf "$1";;
-        *.tar.xz) tar Jxf "$1";;
+        *.tar.gz|*.tgz)
+            if (( solaris )); then
+                gzip -dc "$1" | tar xf -
+            else
+                tar xzf "$1"
+            fi
+            ;;
+        *.tar.xz) xz -dc "$1" | tar xf -;;
         *.zip) unzip "$1";;
         *.lzh) lha e "$1";;
-        *.tar.bz2|*.tbz) tar xjf "$1";;
-        *.tar.Z) tar xzf "$1";;
+        *.tar.bz2|*.tbz)
+            if (( solaris )); then
+                bzip2 -dc "$1" | tar xf -
+            else
+                tar xjf "$1"
+            fi
+            ;;
+        *.tar.Z)
+            if (( solaris )); then
+                uncompress -c "$1" | tar xf -
+            else
+                tar xzf "$1"
+            fi
+            ;;
         *.gz) gzip -d "$1";;
         *.bz2) bzip2 -d "$1";;
         *.Z) uncompress "$1";;

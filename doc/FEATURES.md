@@ -120,6 +120,13 @@ that tree is used directly.
 
 No other directory is searched in that case.
 
+The initial `ZSH_ROOT` check is safe when `NO_UNSET` was already enabled by an
+earlier zsh startup file. An unset `ZSH_ROOT` is treated as absent and the
+normal search order is used.
+
+If `load.zsh` is sourced with `ZSH_ROOT` unset, it returns without loading a
+tree rather than failing under `NO_UNSET`.
+
 If the preset `ZSH_ROOT` cannot be used, DOT_ZSH searches for `lib/load.zsh` in
 this order:
 
@@ -741,6 +748,10 @@ DOT_ZSH therefore uses forms such as:
 
 when a parameter may legitimately be unset.
 
+TERM-dependent startup paths use `${TERM-}` when `TERM` may be unset. An unset
+`TERM` is treated as an empty string for those condition checks instead of
+causing a `NO_UNSET` error.
+
 Source:
 
     dot_zsh/lib/base.zsh
@@ -1244,11 +1255,12 @@ DOT_ZSH defines:
 
 ## 46. crontab alias
 
-DOT_ZSH defines:
+On the GNU-style non-macOS, non-Solaris branch:
 
     crontab='crontab -i'
 
-The interactive form of `crontab` is therefore used.
+macOS and Solaris leave crontab unaliased because their supported native
+crontab commands do not provide -i.
 
 
 ## 47. SSH terminal aliases
@@ -1264,6 +1276,21 @@ These start SSH with `TERM` set to `xterm-256color`.
 ## 48. macOS aliases
 
 Alias behavior has additional branches on macOS.
+
+For the native macOS command set, DOT_ZSH uses file-operation aliases compatible
+with the macOS 10.5 support baseline:
+
+    cp='cp -RpPvi'
+    copy='cp -RpPvi'
+    rd='rmdir'
+
+`-RpP` preserves the archive intent previously expressed with `cp -a` without
+requiring the `-a` option that is absent from macOS 10.5. The native macOS
+10.5 `rmdir` has no `-v` option.
+
+For a non-root macOS user with GNU coreutils available, the later GNU alias
+branch still overrides `cp` and `rd` with the existing `gcp` and `grmdir`
+definitions.
 
 
 ### 48.1 ls color
@@ -1427,8 +1454,8 @@ When:
 
 exists, DOT_ZSH defines:
 
-    ch='open -a Google Chrome'
-    chrome='open -a Google Chrome'
+    ch='open -a Google\ Chrome'
+    chrome='open -a Google\ Chrome'
 
 
 ### 48.11 Emacs for macOS
@@ -1607,7 +1634,7 @@ The command selected depends on the file type.
         tar xzf
 
     *.tar.xz
-        tar Jxf
+        xz -dc ... | tar xf -
 
     *.zip
         unzip
@@ -1645,6 +1672,30 @@ The command selected depends on the file type.
 
     *.xz
         xz -d
+
+`.tar.xz` uses the `xz -dc ... | tar xf -` pipeline on every supported
+platform, because some supported legacy tar implementations, including macOS
+10.5, have no `-J` compression modifier.
+
+On Solaris, the remaining compressed tar archive formats are also decompressed
+to standard output and fed to the native tar command as `tar xf -`, because
+the Solaris 10 native tar does not provide the GNU tar `z` or `j` compression
+modifiers either:
+
+    *.tar.gz, *.tgz
+        gzip -dc ... | tar xf -
+
+    *.tar.bz2, *.tbz
+        bzip2 -dc ... | tar xf -
+
+    *.tar.xz
+        xz -dc ... | tar xf -
+
+    *.tar.Z
+        uncompress -c ... | tar xf -
+
+Other platforms retain the existing direct tar commands for `.tar.gz`,
+`.tgz`, `.tar.bz2`, `.tbz`, and `.tar.Z`.
 
 
 ### Error behavior

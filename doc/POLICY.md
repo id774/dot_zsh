@@ -200,7 +200,10 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
 
 ### 2.4 Silence and Status
 
-- Startup writes nothing to stdout or stderr. An absent path, command, or
+- Startup writes no diagnostic, informational, or accidental text to stdout or
+  stderr. Intentional terminal-control sequences that implement a documented
+  terminal UI feature are permitted; `plugins/title.zsh` setting the GNU
+  Screen or tmux title is the existing example. An absent path, command, or
   file is a normal state, not a condition to report.
 - The first prompt must not report a failed command. `base.zsh` sets
   `print_exit_value`, so the last command a startup file runs decides what the
@@ -352,10 +355,13 @@ it is held to a different set of rules than Sections 2 through 6.
 
 ### 7.1 Shell and Structure
 
-- POSIX `#!/bin/sh`, written in POSIX shell syntax. It runs before the tree
-  exists, on whatever `/bin/sh` the host provides, so it does not depend on
-  bash-specific features, `local`, arrays, `[[ ... ]]`, or the `function`
-  keyword.
+- `install_dotzsh.sh` keeps `#!/bin/sh` and uses portable shell syntax. The
+  supported platform set includes Solaris 10, whose `/bin/sh` is the legacy
+  Bourne shell rather than the standards-conforming `/usr/xpg4/bin/sh`, so the
+  installer stays within the subset accepted by that shell as well as by POSIX
+  shells. In particular, it does not use bash-specific features, `local`,
+  arrays, `[[ ... ]]`, the `function` keyword, `$(...)` command substitution,
+  or `!` pipeline negation.
 - The user-facing header is a `#` comment block carrying `Description`, an
   identifying block (author, source repository, license, and contact),
   `Usage`, `Options`, `Notes`, and `Version History`.

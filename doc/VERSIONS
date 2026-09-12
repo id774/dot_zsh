@@ -27,8 +27,12 @@ v26.09 (Release Date: TBD)
   color specification instead of shell quoting and assignment syntax.
 - Treat an empty plugins directory as a normal no-op instead of failing on an
   unmatched plugin glob.
-- Correct the README to state that plugins are separated by topic but may use
-  environment established by earlier plugins in filename load order.
+- Make startup safe under NO_UNSET when TERM or ZSH_ROOT is unset.
+- Keep crontab and native file-operation aliases compatible with the supported
+  macOS 10.5 and Solaris 10 command sets.
+- Keep compressed tar extraction compatible with the supported legacy tar
+  implementations.
+- Keep the installer compatible with the Solaris 10 /bin/sh environment.
 
 v26.08 (2026-08-26)
 -------------------

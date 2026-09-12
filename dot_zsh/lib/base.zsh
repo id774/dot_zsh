@@ -26,7 +26,7 @@ set_os_env() {
 }
 
 set_terminal_options() {
-    case "${TERM}" in
+    case "${TERM-}" in
         linux)
            export LANG=C
            ;;

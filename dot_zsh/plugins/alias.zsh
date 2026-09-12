@@ -67,13 +67,16 @@ alias scr='screen -U -D -RR'
 alias scrr='screen -U -D -RR'
 alias scls='screen -ls'
 alias scxr='screen -x -rU'
-alias crontab='crontab -i'
 alias sshx="TERM=xterm-256color ssh"
 alias sshx256="TERM=xterm-256color ssh"
 
 case "$(uname)" in
     Darwin)
-        if [ "$TERM" != "dumb" ]; then
+        alias cp='cp -RpPvi'
+        alias copy='cp -RpPvi'
+        alias rd='rmdir'
+
+        if [ "${TERM-}" != "dumb" ]; then
             alias ls='ls -G'
             alias dir='ls -G'
             alias vdir='ls -G'
@@ -200,7 +203,9 @@ case "$(uname)" in
         alias emacs-compile='emacs --batch -Q -f batch-byte-compile'
         ;;
     *)
-        if [ "$TERM" != "dumb" ]; then
+        alias crontab='crontab -i'
+
+        if [ "${TERM-}" != "dumb" ]; then
             alias ls='ls --color=auto'
             alias dir='ls --color=auto --format=vertical'
             alias vdir='ls --color=auto --format=long'

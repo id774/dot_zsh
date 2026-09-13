@@ -3,8 +3,8 @@ dot_zsh Repository Version History
 
 v26.09 (Release Date: TBD)
 --------------------------
-- Make the installer use Solaris-compatible copy options and distinguish a
-  missing sudo command from insufficient sudo privileges.
+- Finalize installer v4.2 with Solaris 10 /bin/sh and copy compatibility,
+  missing-sudo handling, uninstall failure status, and simpler control flow.
 - Guard vcs_info on zsh versions that provide it while retaining the zsh 4.2
   support baseline.
 - Make extract and runcpp safe under NO_UNSET and run runcpp executables from
@@ -21,8 +21,6 @@ v26.09 (Release Date: TBD)
   the redundant standalone compaudit from shell startup.
 - Make LS_COLORS reads safe under NO_UNSET so repeated sourcing does not fail
   when the variable remains unset.
-- Make uninstall return failure and withhold its success message when any
-  requested removal fails.
 - Parse dircolors shell output correctly so LS_COLORS contains only the raw
   color specification instead of shell quoting and assignment syntax.
 - Treat an empty plugins directory as a normal no-op instead of failing on an
@@ -35,7 +33,6 @@ v26.09 (Release Date: TBD)
 - Make startup safe under NO_UNSET when ZSH_ROOT is unset.
 - Extract .tar.xz archives through a decompressor pipeline on every platform to
   support tar implementations without a -J modifier.
-- Keep the installer compatible with the Solaris 10 /bin/sh environment.
 
 v26.08 (2026-08-26)
 -------------------

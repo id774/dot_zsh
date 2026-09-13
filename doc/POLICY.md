@@ -355,13 +355,11 @@ it is held to a different set of rules than Sections 2 through 6.
 
 ### 7.1 Shell and Structure
 
-- `install_dotzsh.sh` keeps `#!/bin/sh` and uses portable shell syntax. The
-  supported platform set includes Solaris 10, whose `/bin/sh` is the legacy
-  Bourne shell rather than the standards-conforming `/usr/xpg4/bin/sh`, so the
-  installer stays within the subset accepted by that shell as well as by POSIX
-  shells. In particular, it does not use bash-specific features, `local`,
-  arrays, `[[ ... ]]`, the `function` keyword, `$(...)` command substitution,
-  or `!` pipeline negation.
+- `install_dotzsh.sh` keeps `#!/bin/sh` and is written in POSIX shell syntax.
+  It does not depend on bash-specific features, `local`, arrays, `[[ ... ]]`,
+  or the `function` keyword. Platform-specific external-command differences,
+  such as Solaris `cp` options, are handled separately from shell-language
+  portability.
 - The user-facing header is a `#` comment block carrying `Description`, an
   identifying block (author, source repository, license, and contact),
   `Usage`, `Options`, `Notes`, and `Version History`.

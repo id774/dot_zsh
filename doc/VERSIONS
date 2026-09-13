@@ -9,8 +9,8 @@ v26.09 (Release Date: TBD)
   support baseline.
 - Make extract and runcpp safe under NO_UNSET and run runcpp executables from
   TMP so absolute source paths work without leaving build artifacts.
-- Detect the current GNU Screen session with STY instead of scanning the system
-  process list.
+- Use STY instead of TERM filtering or process scans to prevent recursive
+  GNU Screen startup while allowing marker-enabled local and SSH startup.
 - Replace the obsolete ubygems RUBYOPT preload with a direct rubygems require
   so current Ruby versions start normally.
 - Restore pip completion on zsh earlier than 5.0 by loading the zsh/compctl

@@ -14,7 +14,8 @@ A pluggable framework for the Z shell (zsh) that simplifies configuration manage
 6. [Directory Structure](#6-directory-structure)
 7. [Versioning](#7-versioning)
 8. [Contribution](#8-contribution)
-9. [License](#9-license)
+9. [Primary Branch](#9-primary-branch)
+10. [License](#10-license)
 
 ---
 
@@ -24,10 +25,6 @@ DOT_ZSH is designed to:
 - Utilize `zcompile` for precompiled bytecode to improve zsh startup performance.
 - Allow shared system-wide bytecode while enabling individual users to add custom snippets.
 - Provide a modular structure for easily adding plugins.
-
-This repository uses `master` as its primary branch name.
-
-The name is used solely as a technical identifier, following the long-standing convention historically used by Git. It does not express or imply any association with racism, slavery, discrimination, or any political or social ideology.
 
 ---
 
@@ -232,7 +229,15 @@ small, to spawn no process it can avoid, and to fail in silence.
 
 ---
 
-## 9. License
+## 9. Primary Branch
+
+This repository uses `master` as its primary branch name.
+
+The name is used solely as a technical identifier, following the long-standing convention historically used by Git. It does not express or imply any association with racism, slavery, discrimination, or any political or social ideology.
+
+---
+
+## 10. License
 
 This repository is dual licensed under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html) or the [LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your option.
 For full details, please refer to the [LICENSE](doc/LICENSE.md) file.  See also [COPYING](doc/COPYING) and [COPYING.LESSER](doc/COPYING.LESSER) for the complete license texts.

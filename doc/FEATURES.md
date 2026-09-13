@@ -2486,23 +2486,23 @@ Source:
 
 ## 71. screen.zsh conditions
 
-`screen.zsh` does not perform its automatic GNU Screen startup logic when
-`TERM` is:
+When automatic GNU Screen startup is enabled, `screen.zsh` starts GNU Screen
+when `STY` is unset and the `screen` command is available.
 
-    linux
-    xterm-256color
+`TERM` does not suppress automatic startup. This applies to local terminal
+sessions and SSH sessions alike, including `TERM=linux` and
+`TERM=xterm-256color`.
 
-It also does not start another GNU Screen session when `STY` is already set,
-because `STY` identifies the current shell as already running inside GNU
-Screen.
+When `STY` is set, DOT_ZSH does not start another GNU Screen session because
+`STY` identifies the current shell as already running inside GNU Screen.
 
-For other terminal types, when `STY` is unset and the `screen` command is
-available, DOT_ZSH executes:
+When `STY` is unset and the `screen` command is available, DOT_ZSH executes:
 
     screen -U -D -RR
 
-The decision is based on the current shell state, not on whether another
-`screen` process exists elsewhere on the host.
+The decision is based on the current shell state and command availability, not
+on terminal type, SSH status, or whether another `screen` process exists
+elsewhere on the host.
 
 Because `exec` is used, a matching startup path replaces the current zsh
 process with GNU Screen.

@@ -2478,6 +2478,64 @@ GNU Screen automatic startup is therefore opt-in behavior.
 
 When the marker file is absent, `screen.zsh` is not sourced.
 
+### Operational effects
+
+Creating `$HOME/.run_screen_on_startup` makes GNU Screen the persistent
+interactive session for that user on both local terminal and SSH startup.
+
+Because automatic startup uses:
+
+    screen -U -D -RR
+
+a new terminal or SSH login can resume an existing Screen session instead of
+starting an independent shell session.
+
+If the target Screen session is already attached elsewhere, `-D -RR` can
+detach it from the previous terminal and reattach it to the newly started
+terminal. Opening another terminal or making another SSH connection can
+therefore move the active Screen session away from the previous terminal.
+
+The marker affects only users who create it. Once zsh is already running
+inside GNU Screen, `STY` prevents automatic startup from recursively starting
+another Screen session.
+
+
+### Benefits
+
+- Shell state, the current working directory, and programs running inside
+  Screen can survive terminal closure or SSH disconnection.
+- Reconnecting from another terminal or SSH client can resume the existing
+  working session automatically.
+- One persistent working session can follow the user's most recent connection.
+
+
+### Trade-offs
+
+- A new terminal or SSH login can detach an already attached Screen session
+  from another terminal.
+- Opening an additional terminal can move the active session rather than
+  creating an independent shell.
+- This mode is not intended to provide independent shell sessions for every
+  login.
+
+
+### Suitable use cases
+
+This mode is suitable when:
+
+- one persistent Screen session should move between terminals or SSH clients;
+- work should survive terminal closure or SSH disconnection;
+- the most recent login should resume the existing working session.
+
+
+### Unsuitable use cases
+
+This mode may be unsuitable when:
+
+- multiple terminals should remain independently attached at the same time;
+- every login should start an independent shell environment;
+- opening another terminal must not detach an existing Screen display.
+
 Source:
 
     dot_zsh/lib/load.zsh

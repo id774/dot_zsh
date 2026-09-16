@@ -1,5 +1,5 @@
 # base.zsh
-# Last Change: 12-Sep-2026.
+# Last Change: 16-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -7,17 +7,17 @@ append_to_path_if_exists() {
 }
 
 set_os_env() {
-    case "$(uname)" in
-        Darwin)
+    case "$OSTYPE" in
+        darwin*)
             export PATH="/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-            [ "$(id -u)" -ne 0 ] && append_to_path_if_exists "/usr/local/bin"
+            (( EUID != 0 )) && append_to_path_if_exists "/usr/local/bin"
             ;;
         *)
             export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
             ;;
     esac
 
-    if [ "$(id -u)" -ne 0 ]; then
+    if (( EUID != 0 )); then
         append_to_path_if_exists /usr/gnu/bin
         append_to_path_if_exists /opt/bin
         append_to_path_if_exists /opt/sbin
@@ -41,7 +41,7 @@ set_basic_options() {
 
     autoload -Uz is-at-least
 
-    if [[ -z ${LS_COLORS-} ]] && command -v dircolors >/dev/null 2>&1; then
+    if [[ -z ${LS_COLORS-} ]] && (( $+commands[dircolors] )); then
         LS_COLORS=$(
             eval "$(dircolors -b 2>/dev/null)"
             printf '%s' "${LS_COLORS-}"

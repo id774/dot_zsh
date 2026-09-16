@@ -2099,8 +2099,9 @@ The compiled executable is created under:
 The filename is temporary and includes shell-generated process and random
 components. DOT_ZSH does not create a `.out` file next to the source file.
 
-Under the normal startup path, `settmp.zsh` establishes `TMP` before the user
-can invoke `runcpp`.
+Under the normal startup path, `settmp.zsh` establishes `TMP` only when
+`$HOME/.tmp` exists. If no usable `TMP` is available, the existing
+`runcpp: TMP is not available.` / status 3 behavior applies.
 
 The compile command remains:
 
@@ -2175,20 +2176,24 @@ This plugin applies its configuration only for non-root users.
 
 ### 64.1 SCRIPTS
 
-DOT_ZSH exports:
+For a non-root user, when `$HOME/scripts` exists, DOT_ZSH exports:
 
     SCRIPTS=$HOME/scripts
 
-When the directory exists, it is prepended to PATH.
+and prepends that directory to PATH.
+
+When `$HOME/scripts` does not exist, DOT_ZSH does not set `SCRIPTS`.
 
 
 ### 64.2 PRIVATE
 
-DOT_ZSH exports:
+For a non-root user, when `$HOME/private/scripts` exists, DOT_ZSH exports:
 
     PRIVATE=$HOME/private/scripts
 
-When the directory exists, it is prepended to PATH.
+and prepends that directory to PATH.
+
+When `$HOME/private/scripts` does not exist, DOT_ZSH does not set `PRIVATE`.
 
 
 ### 64.3 Local user binaries
@@ -2211,37 +2216,29 @@ Role:
 
     temporary directory
 
-This plugin chooses a temporary directory only when `TMP` is unset.
+This plugin selects a temporary directory only when TMP is unset and
+$HOME/.tmp exists.
 
-The first candidate is:
+When TMP is unset and $HOME/.tmp exists:
 
-    $HOME/.tmp
+    TMP=$HOME/.tmp
+    TMPDIR=$HOME/.tmp
+    TEMPDIR=$HOME/.tmp
 
-If that directory does not exist, DOT_ZSH uses:
+are exported.
 
-    /tmp
+When TMP is unset and $HOME/.tmp does not exist, DOT_ZSH leaves TMP,
+TMPDIR, and TEMPDIR unset. There is no automatic /tmp fallback.
 
-The selected path is exported as:
-
-    TMP
-    TMPDIR
-    TEMPDIR
-
-If `TMP` is already set when this plugin loads, the plugin does not reset these
-variables.
+When TMP is already set, the plugin does not reset TMP, TMPDIR, or TEMPDIR.
 
 `$HOME/.tmp` is intended to be a private per-user temporary area. When it is
 provisioned by `scripts/installer/install_dotfiles.sh`, it is created with mode
-`0700`; DOT_ZSH itself neither creates it nor changes its permissions.
+`0700`. DOT_ZSH itself neither creates $HOME/.tmp nor changes its
+permissions.
 
-The preference for `$HOME/.tmp` is intentional. It avoids the shared namespace
-of the system-wide `/tmp` directory for ordinary temporary files when the
-private directory is available. This is a security policy rather than a
-performance optimization.
-
-A tmpfs-backed `/tmp`, including the default `/tmp` configuration on Debian 13,
-changes storage and lifetime characteristics but does not make `/tmp` private
-to one user. That does not change the preference described above.
+The lack of an automatic /tmp fallback is intentional because /tmp is a
+shared namespace. A tmpfs-backed /tmp does not make that namespace private.
 
 The security rationale is defined in `doc/POLICY.md`.
 
@@ -2260,8 +2257,12 @@ DOT_ZSH sets:
 
     SQLITE_TMPDIR="${TMP:-/tmp}"
 
-Under the normal plugin load order this typically uses `TMP` established earlier
-by `settmp.zsh`.
+When `TMP` was established earlier by `settmp.zsh`, SQLite uses that value.
+
+When `TMP` remains unset, `sqlite3.zsh` keeps its own existing
+`${TMP:-/tmp}` fallback and therefore sets `SQLITE_TMPDIR=/tmp`.
+
+This SQLite-specific fallback is independent of the `settmp.zsh` policy.
 
 DOT_ZSH also defines:
 
@@ -2817,9 +2818,9 @@ DOT_ZSH are listed below.
 | MySQL | `MYSQL_PS1` | Configures the MySQL client prompt | `mysql.zsh` |
 | Editor and pager | `EDITOR`, `LESS`, `GIT_PAGER` | Uses Vim and configured less options | `pager.zsh` |
 | Python | `PYTHONDONTWRITEBYTECODE`, `FLASK_ENV` | Set to `1` and `development` respectively | `python.zsh` |
-| Ruby | `RUBYOPT` | Set to `rubygems` | `ruby.zsh` |
-| User script paths | `SCRIPTS`, `PRIVATE` | Set for non-root users to paths below `$HOME` | `scripts.zsh` |
-| Temporary directory | `TMP`, `TMPDIR`, `TEMPDIR` | When `TMP` is unset, uses `$HOME/.tmp` if available, otherwise `/tmp` | `settmp.zsh` |
+| Ruby | `RUBYOPT` | Set to `-rrubygems` | `ruby.zsh` |
+| User script paths | `SCRIPTS`, `PRIVATE` | Set for non-root users only when the corresponding directories below `$HOME` exist | `scripts.zsh` |
+| Temporary directory | `TMP`, `TMPDIR`, `TEMPDIR` | When `TMP` is unset, sets them to `$HOME/.tmp` only if that directory exists; otherwise leaves them unset | `settmp.zsh` |
 | SQLite | `SQLITE_TMPDIR` | Uses `${TMP:-/tmp}` | `sqlite3.zsh` |
 | Proxy template | `PROXY`, `http_proxy`, `https_proxy`, `ftp_proxy`, `HTTP_PROXY`, `HTTPS_PROXY`, `FTP_PROXY`, `no_proxy` | Not set automatically in the default configuration | `proxy.zsh` |
 
@@ -2953,18 +2954,22 @@ Source:
 Several DOT_ZSH aliases materially change the behavior of commands users may
 already know.
 
-| Command | Common definition | Conditional alternative | User-visible effect |
+| Command | Common / default definition | Platform-specific alternative | User-visible effect |
 | --- | --- | --- | --- |
 | `rm` | `rm -i` | `grm -i` with macOS GNU coreutils; `trash` for a non-root macOS user when available | Deletion becomes interactive or is redirected through Trash |
-| `cp` | `cp -avi` | `gcp -avi` with macOS GNU coreutils | Copying becomes archive-preserving, verbose, and interactive |
-| `mv` | `mv -vi` | `gmv -vi` with macOS GNU coreutils | Moving becomes verbose and interactive |
-| `crontab` | `crontab -i` | None | Uses the interactive `crontab` mode |
+| `cp` | `cp -avi` on GNU-style platforms | `cp -RpPvi` with native macOS; `gcp -avi` with macOS GNU coreutils; `cp -RpiP` on Solaris | Copy behavior follows the supported platform command set |
+| `mv` | `mv -vi` on GNU-style and native macOS paths | `gmv -vi` with macOS GNU coreutils; `mv -i` on Solaris | Moving is interactive, and verbose where the configured platform command supports it |
+| `crontab` | `crontab -i` on GNU-style non-macOS, non-Solaris platforms | Unaliased on macOS and Solaris | Interactive crontab mode is added only where supported |
 | `sudo` | `sudo ` | None | The trailing space permits alias expansion for the following command |
 
 
 ### rm
 
-Common configuration:
+Other GNU-style platforms and Solaris:
+
+    rm='rm -i'
+
+Native macOS starts from:
 
     rm='rm -i'
 
@@ -2972,27 +2977,36 @@ macOS with GNU coreutils:
 
     rm='grm -i'
 
-Non-root macOS with the `trash` command:
+Non-root macOS with trash:
 
     rm='trash'
 
-The final behavior therefore depends on the environment.
+The `trash` override applies last on a non-root macOS host where the `trash`
+command is available, so the final behavior depends on the environment.
 
 
 ### cp
 
-Common configuration:
+Other GNU-style platforms:
 
     cp='cp -avi'
+
+Native macOS:
+
+    cp='cp -RpPvi'
 
 macOS with GNU coreutils:
 
     cp='gcp -avi'
 
+Solaris:
+
+    cp='cp -RpiP'
+
 
 ### mv
 
-Common configuration:
+Other GNU-style platforms and native macOS:
 
     mv='mv -vi'
 
@@ -3000,12 +3014,21 @@ macOS with GNU coreutils:
 
     mv='gmv -vi'
 
+Solaris:
+
+    mv='mv -i'
+
 
 ### crontab
 
 DOT_ZSH defines:
 
     crontab='crontab -i'
+
+only on the GNU-style non-macOS, non-Solaris branch.
+
+macOS and Solaris leave `crontab` unaliased because the supported native
+commands do not provide the `-i` option.
 
 
 ### sudo
@@ -3035,7 +3058,7 @@ DOT_ZSH exports:
 
 DOT_ZSH exports:
 
-    RUBYOPT=rubygems
+    RUBYOPT=-rrubygems
 
 
 ### Editor
@@ -3062,13 +3085,15 @@ DOT_ZSH sets:
 
 ### Temporary directory
 
-When `TMP` is unset, DOT_ZSH uses:
+When `TMP` is unset and `$HOME/.tmp` exists, DOT_ZSH uses:
 
     $HOME/.tmp
 
-or:
+for `TMP`, `TMPDIR`, and `TEMPDIR`.
 
-    /tmp
+When `$HOME/.tmp` does not exist, DOT_ZSH does not automatically fall back
+to `/tmp`; those variables remain unset unless another environment source
+has set them.
 
 
 ### Java
@@ -3320,10 +3345,10 @@ limits.
 | `prompt.zsh` | Left prompt | When `TERM` is not `dumb`, configures time, host, directory, command-status color, and privilege marker |
 | `proxy.zsh` | Proxy configuration template | No automatic effect by default because proxy definitions are commented out |
 | `python.zsh` | Python and Flask defaults | Sets `PYTHONDONTWRITEBYTECODE=1` and `FLASK_ENV=development` |
-| `ruby.zsh` | Ruby environment | Sets `RUBYOPT=rubygems` and defines `be='bundle exec'` |
+| `ruby.zsh` | Ruby environment | Sets `RUBYOPT=-rrubygems` and defines `be='bundle exec'` |
 | `runcpp.zsh` | C and C++ compile and run | Provides `runcpp` and `.c` / `.cpp` suffix aliases |
-| `scripts.zsh` | User script paths | For non-root users, exports `SCRIPTS` and `PRIVATE` and adds existing user script directories to PATH |
-| `settmp.zsh` | Temporary directory | When `TMP` is unset, selects `~/.tmp` or `/tmp` and exports `TMP`, `TMPDIR`, and `TEMPDIR` |
+| `scripts.zsh` | User script paths | For non-root users, exports `SCRIPTS` / `PRIVATE` and prepends them to PATH only when their corresponding directories exist |
+| `settmp.zsh` | Temporary directory | When `TMP` is unset, sets `TMP`, `TMPDIR`, and `TEMPDIR` to existing `$HOME/.tmp`; otherwise leaves them unchanged |
 | `sqlite3.zsh` | SQLite environment | Sets `SQLITE_TMPDIR` and defines `sqlite-csv` |
 | `title.zsh` | GNU Screen and tmux title integration | In `screen*` or `tmux*` terminals, updates the title for commands and directory changes |
 | `vcs_info.zsh` | VCS right prompt | Displays Git, SVN, or Mercurial information, or the username when no recognized VCS information exists |

@@ -1,13 +1,9 @@
 # apps.zsh
-# Last Change: 25-Feb-2026.
+# Last Change: 16-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
-normalize_path() {
-    echo "${1:-}" | sed 's:/*$::'
-}
-
 set_app_path() {
-    dir=$(normalize_path "$1")
+    dir="${1%%/#}"
     bin_dir="$dir/bin"
     case "$dir" in
         *" "*) return ;;
@@ -33,10 +29,9 @@ set_apps_path() {
     unset dir bin_dir
 }
 
-if [ "$(id -u)" -ne 0 ]; then
+if (( EUID != 0 )); then
     set_apps_path
 fi
 
-unset -f normalize_path
 unset -f set_app_path
 unset -f set_apps_path

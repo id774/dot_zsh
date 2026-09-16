@@ -329,21 +329,17 @@ It already does, and that stays.
   second sourcing changes nothing.
 - A variable is exported at startup only when a program reads it from the
   environment. Anything else belongs in the plugin of the tool that uses it.
-- `plugins/settmp.zsh` intentionally prefers `$HOME/.tmp` to `/tmp` when
-  `TMP` is unset. `$HOME/.tmp` is a private per-user temporary area when it
-  exists. Provisioning that directory is outside what DOT_ZSH does: it
-  neither creates `$HOME/.tmp` nor changes its permissions, and simply uses
-  it if it is already there.
-- When `$HOME/.tmp` does not exist, `/tmp` is the fallback, so the shell
-  still has a usable temporary directory either way.
-- Preferring a private per-user namespace over the shared, world-writable
-  `/tmp` is a security policy, not a performance optimization. Its purpose
-  is to avoid ordinary temporary files sharing a namespace with every other
-  user on the host when a private directory is available.
-- A tmpfs-backed `/tmp`, including the default `/tmp` configuration on
-  Debian 13, changes storage and lifetime characteristics but does not make
-  the namespace private to one user. Being memory-backed is not the same
-  property as being user-private, and it does not change this preference.
+- `plugins/settmp.zsh` selects a temporary directory only when `TMP` is unset
+  and `$HOME/.tmp` already exists.
+- `$HOME/.tmp` is treated as the private per-user temporary area.
+- DOT_ZSH neither creates `$HOME/.tmp` nor changes its permissions.
+- When `TMP` is unset and `$HOME/.tmp` does not exist, `settmp.zsh` leaves
+  `TMP`, `TMPDIR`, and `TEMPDIR` unset; it does not fall back to `/tmp`.
+- A pre-existing `TMP` is preserved unchanged.
+- Avoiding the automatic `/tmp` fallback is a security policy because `/tmp`
+  is a shared namespace.
+- A tmpfs-backed `/tmp` does not make the namespace private and does not change
+  this policy.
 
 ### 6.2 Aliases
 

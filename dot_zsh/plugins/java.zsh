@@ -1,5 +1,5 @@
 # java.zsh
-# Last Change: 15-Jul-2026.
+# Last Change: 16-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 set_java_path() {
@@ -14,7 +14,7 @@ set_java_path() {
     done
 }
 
-if [ "$(id -u)" -ne 0 ]; then
+if (( EUID != 0 )); then
     set_java_path \
         /usr/java/default \
         /Library/Java/JavaVirtualMachines/jdk-8.jdk/Contents/Home \

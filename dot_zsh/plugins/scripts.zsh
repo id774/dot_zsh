@@ -1,5 +1,5 @@
 # scripts.zsh
-# Last Change: 30-Jan-2025.
+# Last Change: 16-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 append_to_path_if_exists() {
@@ -7,16 +7,20 @@ append_to_path_if_exists() {
 }
 
 set_private_path() {
-    export PRIVATE="$1"
-    append_to_path_if_exists "$1"
+    if [ -d "$1" ]; then
+        export PRIVATE="$1"
+        export PATH="$1:$PATH"
+    fi
 }
 
 set_scripts_path() {
-    export SCRIPTS="$1"
-    append_to_path_if_exists "$1"
+    if [ -d "$1" ]; then
+        export SCRIPTS="$1"
+        export PATH="$1:$PATH"
+    fi
 }
 
-if [ "$(id -u)" -ne 0 ]; then
+if (( EUID != 0 )); then
     set_scripts_path "$HOME/scripts"
     set_private_path "$HOME/private/scripts"
     append_to_path_if_exists "$HOME/.local/bin"

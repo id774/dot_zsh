@@ -33,6 +33,11 @@ v26.09 (Release Date: TBD)
 - Make startup safe under NO_UNSET when ZSH_ROOT is unset.
 - Extract .tar.xz archives through a decompressor pipeline on every platform to
   support tar implementations without a -J modifier.
+- Use zsh-native OS, privilege, and command checks to remove avoidable
+  external processes from interactive startup.
+- Set TMP only from an existing private $HOME/.tmp and remove the automatic
+  /tmp fallback.
+- Export SCRIPTS and PRIVATE only when their corresponding directories exist.
 
 v26.08 (2026-08-26)
 -------------------

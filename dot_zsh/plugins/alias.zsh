@@ -1,5 +1,5 @@
 # alias.zsh
-# Last Change: 12-Sep-2026.
+# Last Change: 16-Sep-2026.
 # Maintainer:  id774 <idnanashi@gmail.com>
 
 alias pd='popd'
@@ -70,8 +70,8 @@ alias scxr='screen -x -rU'
 alias sshx="TERM=xterm-256color ssh"
 alias sshx256="TERM=xterm-256color ssh"
 
-case "$(uname)" in
-    Darwin)
+case "$OSTYPE" in
+    darwin*)
         alias cp='cp -RpPvi'
         alias copy='cp -RpPvi'
         alias rd='rmdir'
@@ -81,7 +81,7 @@ case "$(uname)" in
             alias dir='ls -G'
             alias vdir='ls -G'
         fi
-        if [ "$UID" -eq 0 ]; then
+        if (( EUID == 0 )); then
             alias l='ls -Tltra'
             alias d='ls -Tltr'
             alias dir='ls -Tl'
@@ -92,7 +92,7 @@ case "$(uname)" in
             alias ll='ls -Tltra'
             alias dl='ls -Tltr'
         else
-            if command -v gls >/dev/null 2>&1; then
+            if (( $+commands[gls] )); then
                 alias l='gls --color=auto -ltra'
                 alias d='gls --color=auto -ltr'
                 alias dir='gls --color=auto -l'
@@ -143,9 +143,9 @@ case "$(uname)" in
                 alias ll='ls -Tltra'
                 alias dl='ls -Tltr'
             fi
-            [ -x "$(command -v gfind)" ] && alias find='gfind'
-            [ -x "$(command -v gxargs)" ] && alias xargs='gxargs'
-            [ -x "$(command -v trash)" ] && alias rm='trash'
+            (( $+commands[gfind] )) && alias find='gfind'
+            (( $+commands[gxargs] )) && alias xargs='gxargs'
+            (( $+commands[trash] )) && alias rm='trash'
 
             alias finder='open .'
             alias top='top -o cpu'
@@ -174,7 +174,7 @@ case "$(uname)" in
             fi
         fi
         ;;
-    SunOS)
+    solaris*)
         alias cp='cp -RpiP'
         alias mv='mv -i'
         alias rm='rm -i'

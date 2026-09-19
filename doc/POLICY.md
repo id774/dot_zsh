@@ -238,6 +238,19 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
   property of the tree, not a special optimization. `PATH` entries must not
   accumulate, a hook must not be registered twice, and a setup-only function
   or variable must not linger because it assumed it would run only once.
+- For repository-owned startup code, the reporting decision is fixed to silence.
+  Normal shell startup must not emit diagnostic, informational, warning, error,
+  skip, no-op, progress, or status messages to stdout or stderr. This includes
+  `[INFO]`, `[WARN]`, and `[ERROR]` style messages. A condition that a standalone
+  command or installer would report does not by itself authorize output from the
+  startup path.
+- Do not use stderr as an exception to startup silence. An absent optional path,
+  command, or file remains a normal silent state as already defined above. The
+  existing intentional terminal-control sequences remain the only permitted
+  output covered by this section.
+- The startup tree must also avoid leaking a failure through the first prompt's
+  status merely because a silent branch was taken. The existing rule that the
+  first prompt must not report a failed command remains authoritative.
 
 ## 3. Zsh, Not POSIX
 
@@ -420,7 +433,8 @@ it is held to a different set of rules than Sections 2 through 6.
   degraded or otherwise abnormal but recoverable condition the user should
   know about, and `[ERROR]` for a failure of the requested operation.
 - Do not add installer output merely to record ordinary control-flow choices.
-  The startup tree remains subject to the stricter silence rule in Section 2.4.
+  These installer logging rules do not apply to the startup tree; Section 2.4
+  requires repository-owned startup code to remain silent.
 
 ### 7.4 Destructive Operations
 

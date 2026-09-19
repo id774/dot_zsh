@@ -410,6 +410,17 @@ it is held to a different set of rules than Sections 2 through 6.
 - Exit codes follow the existing convention: 127 for a missing command, 126
   for a command that is not executable, 1 for an ordinary failure, and 0 for
   success.
+- For the installer, the operation result, whether later work continues, and
+  whether anything is printed are separate decisions. A required command or
+  prerequisite whose absence prevents the requested install or uninstall from
+  completing correctly is an error and stops the affected operation; it is not
+  downgraded to a warning merely to continue.
+- A normal no-op or intentionally inapplicable branch may be silent. Use
+  `[INFO]` only when the normal result is useful to the user, `[WARN]` for a
+  degraded or otherwise abnormal but recoverable condition the user should
+  know about, and `[ERROR]` for a failure of the requested operation.
+- Do not add installer output merely to record ordinary control-flow choices.
+  The startup tree remains subject to the stricter silence rule in Section 2.4.
 
 ### 7.4 Destructive Operations
 

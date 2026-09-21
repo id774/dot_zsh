@@ -455,8 +455,20 @@ it is held to a different set of rules than Sections 2 through 6.
   a safety fix, or a significant change to its structure.
 - Documentation-only, comment-only, and formatting-only changes do not move
   the script version.
-- Several related changes made the same day are one version entry, not
-  several.
+- `install_dotzsh.sh` must not have more than one version number for the
+  same calendar date. This rule has no exception: separate commits, pull
+  requests, independent features, bug fixes, security fixes, compatibility
+  changes, breaking changes, or release units do not permit a second version
+  on the same date. Independence may decide pull request scope or bullet
+  grouping, but never overrides this rule.
+- If another version-worthy change is made on a date already used by the
+  newest entry, keep that day's single version and rewrite the existing entry
+  to describe the completed state, whether or not the new change is related
+  to the one already recorded.
+- On a later date, follow-up work that completes, corrects, or hardens the
+  newest release unit stays in that version; update the entry date and
+  summarize the completed whole. A later-date change independent of the
+  newest entry starts a new version.
 - Each entry's description is at most two lines, and a single line at or
   under 80 columns is preferred whenever practical.
 - The first entry, at the lowest version `install_dotzsh.sh`'s own history
@@ -480,6 +492,9 @@ it is held to a different set of rules than Sections 2 through 6.
   maintainer to decide. The Version History Guidelines at the foot of that
   file govern the entries, including the two-line, 80-column bullet limit
   and the first-version rule stated there.
+- The repository never carries more than one version for the same calendar
+  date, whatever the independence of the changes released. A same-date
+  change joins that day's single entry.
 - [FEATURES](FEATURES.md) is the user-facing reference for shell behavior,
   aliases, plugins, environment variables, prompts, and other defaults enabled
   or changed by DOT_ZSH.

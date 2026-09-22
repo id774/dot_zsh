@@ -516,7 +516,16 @@ it is held to a different set of rules than Sections 2 through 6.
   command, a table, or a line that is clearer whole may exceed it.
 - A thing is named for what it is, not for a part of it. This holds in
   headers, in the documents, and in commit messages.
-- A pull request carries one purpose. A coherent change is one commit,
+- A pull request carries one purpose. "Purpose" means the higher-level
+  reason for the change, not an individual finding, file, function, or
+  review comment. Multiple findings from one cross-cutting investigation,
+  maintenance task, defect class, migration, release preparation, or
+  quality correction may therefore remain in one pull request when they
+  form one coherent review and validation unit. Do not split an approved
+  work group mechanically by finding or file when doing so only increases
+  merge conflicts, rebases, duplicated validation, or branch and
+  pull-request management cost without a clear review, release, rollback,
+  or acceptance benefit. A coherent change is one commit,
   amended and force-pushed with `--force-with-lease` as review proceeds,
   rather than gaining a further commit for each remark. A conflict with the
   base branch is resolved by rebasing onto it, so that the branch which

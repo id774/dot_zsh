@@ -38,6 +38,8 @@ alone.
 
 ## 1. About This Document
 
+### 1.1 Scope and Documentation Consistency
+
 - The rules govern work whose stated scope includes the behavior or structure
   they describe. Nothing here authorizes unrelated changes to an existing
   file merely because that file is already being edited. When an authorized
@@ -45,6 +47,9 @@ alone.
   repository, keep the directly affected implementation and documentation
   consistent unless the stated scope explicitly excludes documentation
   changes.
+
+### 1.2 Decision Priorities and Maintainer Judgment
+
 - Three priorities settle a design question, in this order: **Compatibility**,
   **Safety**, **Efficiency**. This is not a list of equally weighted
   concerns; it is an order. Compatibility outranks Safety, and Safety
@@ -77,6 +82,9 @@ alone.
   that breaks normal existing behavior, that lowers portability across a
   supported environment, or that weakens security is not adopted for its
   speed.
+
+### 1.3 Wording Strength
+
 - This document is written to be applied literally, including by an AI or
   another party working from it alone, without that literal application
   producing an absurd result. Absolute words -- "always", "never", "must",
@@ -85,6 +93,9 @@ alone.
   up as an invariant. A rule below should be traceable to Compatibility,
   Safety, or Efficiency; a principle is stated once here rather than
   repeated at the top of every section that relies on it.
+
+### 1.4 Change Discipline for Established Infrastructure
+
 - **Change established infrastructure only by explicit decision.**
   Finding a possible safety, portability, maintainability, cleanup, or
   refactoring improvement does not by itself authorize an implementation
@@ -516,6 +527,9 @@ it is held to a different set of rules than Sections 2 through 6.
   command, a table, or a line that is clearer whole may exceed it.
 - A thing is named for what it is, not for a part of it. This holds in
   headers, in the documents, and in commit messages.
+
+## 9. Pull Request Scope and History
+
 - A pull request carries one purpose. "Purpose" means the higher-level
   reason for the change, not an individual finding, file, function, or
   review comment. Multiple findings from one cross-cutting investigation,
@@ -531,7 +545,7 @@ it is held to a different set of rules than Sections 2 through 6.
   base branch is resolved by rebasing onto it, so that the branch which
   merges reads as the change it was always meant to be.
 
-## 9. Judging a Change
+## 10. Judging a Change
 
 Before a change to the tree is proposed, it answers these:
 
@@ -549,7 +563,7 @@ Before a change to the tree is proposed, it answers these:
 - Does it preserve normal, intended existing behavior, or is a change in that
   behavior a deliberate, stated decision?
 
-## 10. License
+## 11. License
 
 This repository is dual licensed under the GPL version 3 or the LGPL version
 3, at the user's option. See [LICENSE](LICENSE.md), [COPYING](COPYING), and

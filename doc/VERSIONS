@@ -7,32 +7,26 @@ v26.09 (Release Date: TBD)
   missing-sudo handling, uninstall failure status, and simpler control flow.
 - Guard vcs_info on zsh versions that provide it while retaining the zsh 4.2
   support baseline.
-- Make extract and runcpp safe under NO_UNSET and run runcpp executables from
-  TMP so absolute source paths work without leaving build artifacts.
+- Make runcpp safe under NO_UNSET and run executables from TMP so absolute
+  source paths work without leaving build artifacts.
+- Make extract safe under NO_UNSET and portable across Solaris 10 and tar
+  implementations without -J by using decompressor pipelines where required.
 - Use STY instead of TERM filtering or process scans to prevent recursive
   GNU Screen startup while allowing marker-enabled local and SSH startup.
 - Replace the obsolete ubygems RUBYOPT preload with a direct rubygems require
   so current Ruby versions start normally.
 - Restore pip completion on zsh earlier than 5.0 by loading the zsh/compctl
   module before registering the legacy completion handler.
-- Add Solaris-specific aliases that avoid unsupported GNU command options while
-  retaining the declared Solaris 10 compatibility baseline.
+- Keep command aliases, including crontab and file operations, compatible with
+  supported macOS 10.5 and Solaris 10 without unsupported GNU options.
 - Make compinit ignore insecure completion paths non-interactively and remove
   the redundant standalone compaudit from shell startup.
-- Make LS_COLORS reads safe under NO_UNSET so repeated sourcing does not fail
-  when the variable remains unset.
-- Parse dircolors shell output correctly so LS_COLORS contains only the raw
-  color specification instead of shell quoting and assignment syntax.
+- Make LS_COLORS initialization safe under NO_UNSET and parse dircolors output
+  into the raw color specification used by completion.
 - Treat an empty plugins directory as a normal no-op instead of failing on an
   unmatched plugin glob.
 - Make TERM-dependent startup safe under NO_UNSET when TERM is unset.
-- Keep crontab and native file-operation aliases compatible with the supported
-  macOS 10.5 and Solaris 10 command sets.
-- Extract compressed tar archives with Solaris 10 native tar while preserving
-  the existing extraction behavior on other platforms.
 - Make startup safe under NO_UNSET when ZSH_ROOT is unset.
-- Extract .tar.xz archives through a decompressor pipeline on every platform to
-  support tar implementations without a -J modifier.
 - Use zsh-native OS, privilege, and command checks to remove avoidable
   external processes from interactive startup.
 - Set TMP only from an existing private $HOME/.tmp and remove the automatic

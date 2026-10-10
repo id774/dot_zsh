@@ -1759,6 +1759,7 @@ It examines the following Java installation candidates in order:
     /Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
     /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
     /Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+    /Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home
 
     /usr/lib/jvm/java-8-openjdk-i386
     /usr/lib/jvm/java-8-openjdk-amd64
@@ -1776,6 +1777,10 @@ It examines the following Java installation candidates in order:
     /usr/lib/jvm/java-21-openjdk-amd64
     /usr/lib/jvm/java-21-openjdk
 
+    /usr/lib/jvm/java-25-openjdk-i386
+    /usr/lib/jvm/java-25-openjdk-amd64
+    /usr/lib/jvm/java-25-openjdk
+
     /opt/java/jre
     /opt/java/jre/current
     /opt/java/jdk
@@ -1791,8 +1796,6 @@ exists, DOT_ZSH sets:
 
     PATH=$JAVA_HOME/bin:$PATH
 
-    CLASSPATH=.:$JAVA_HOME/lib/tools.jar
-
 The scan does not stop after the first matching candidate.
 
 When multiple candidates exist, the later matching candidate therefore becomes
@@ -1800,6 +1803,8 @@ the final `JAVA_HOME`.
 
 The `bin` directories of matching installations are prepended to PATH as each
 candidate is processed.
+
+The plugin leaves an existing CLASSPATH unchanged and does not set one if absent.
 
 For non-root users DOT_ZSH also exports, independently of whether a Java
 candidate matched:
@@ -2813,7 +2818,7 @@ DOT_ZSH are listed below.
 | --- | --- | --- | --- |
 | Core shell | `PATH`, `LANG`, `HISTFILE`, `HISTSIZE`, `SAVEHIST`, `G_FILENAME_ENCODING`, `TIME_STYLE` | Configured during base startup; PATH and `LANG` depend on platform or terminal conditions | `lib/base.zsh` |
 | R | `R_HOME` | Set to `/usr/lib/R` when that directory exists | `R.zsh` |
-| Java | `JAVA_HOME`, `CLASSPATH`, `_JAVA_OPTIONS` | Configured for non-root users according to matching Java installation paths | `java.zsh` |
+| Java | `JAVA_HOME`, `_JAVA_OPTIONS` | Configured for non-root users according to matching Java installation paths | `java.zsh` |
 | Libraries | `LD_LIBRARY_PATH`, `LD_FLAGS` | Set to `/usr/local/lib:/usr/lib` | `ldlib.zsh` |
 | MySQL | `MYSQL_PS1` | Configures the MySQL client prompt | `mysql.zsh` |
 | Editor and pager | `EDITOR`, `LESS`, `GIT_PAGER` | Uses Vim and configured less options | `pager.zsh` |
@@ -2841,7 +2846,6 @@ R:
 Java:
 
     JAVA_HOME
-    CLASSPATH
     _JAVA_OPTIONS
 
 Libraries:
@@ -3099,7 +3103,7 @@ has set them.
 ### Java
 
 For non-root users, DOT_ZSH scans known JDK and JRE paths and can modify
-`JAVA_HOME`, PATH, and `CLASSPATH` according to the installations that exist.
+`JAVA_HOME` and PATH according to the installations that exist.
 
 
 ## 84. Features not enabled by default
@@ -3337,7 +3341,7 @@ limits.
 | `alias.zsh` | General command aliases | Defines Git, filesystem, history, Screen, SSH, editor, macOS application, and other aliases; also changes commands such as `cp`, `mv`, and `rm` |
 | `apps.zsh` | `/opt` application discovery | For non-root users, adds existing `/opt/*/bin` and `/opt/*/current/bin` directories to PATH |
 | `extract.zsh` | Archive extraction | Provides the `extract` function and archive suffix aliases |
-| `java.zsh` | Java environment | For non-root users, scans known JDK/JRE paths and sets `JAVA_HOME`, PATH, `CLASSPATH`, and `_JAVA_OPTIONS` |
+| `java.zsh` | Java environment | For non-root users, scans known JDK/JRE paths and sets `JAVA_HOME`, PATH, and `_JAVA_OPTIONS` |
 | `ldlib.zsh` | Dynamic library environment | Sets `LD_LIBRARY_PATH` and `LD_FLAGS` |
 | `mysql.zsh` | MySQL client prompt | Sets `MYSQL_PS1` |
 | `pager.zsh` | Editor and pager defaults | Sets `EDITOR`, `LESS`, and `GIT_PAGER` |

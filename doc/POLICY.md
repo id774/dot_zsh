@@ -343,6 +343,15 @@ It already does, and that stays.
   restates the line below it.
 - No commented-out code, except where the file is a template of settings to
   enable, as `plugins/proxy.zsh` is.
+- Write English explanatory prose in clear, natural sentences. Do not replace a
+  sentence with a label and a colon, a status prefix such as `Implement:` or
+  `Incompatible:`, a symbol, or an unexplained abbreviation. Apply this to
+  English prose in comments, docstrings, documentation, version histories,
+  release notes, commit messages, and pull request descriptions. This rule does
+  not alter the established forms of headings, list labels, tables, code,
+  configuration syntax, machine-readable fields, literal interface strings, or
+  non-English content required by the repository's purpose. Do not rewrite
+  historical entries or unrelated text merely to align their style.
 
 ## 6. What the Tree May Contain
 

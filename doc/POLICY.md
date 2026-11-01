@@ -553,6 +553,12 @@ it is held to a different set of rules than Sections 2 through 6.
   rather than gaining a further commit for each remark. A conflict with the
   base branch is resolved by rebasing onto it, so that the branch which
   merges reads as the change it was always meant to be.
+- An automated agent must not commit or push directly to `master`. It must
+  commit authorized changes to a work branch and submit them through a pull
+  request targeting the approved base branch. Creating or updating a pull
+  request does not authorize the agent to merge it or enable auto-merge.
+  Either action requires an explicit instruction from the maintainer. This
+  paragraph does not change a human maintainer's authority.
 
 ## 10. Judging a Change
 

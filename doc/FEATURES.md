@@ -37,8 +37,8 @@ Specifically, it covers:
 This document does not attempt to explain every standard zsh feature
 used by the implementation. It explains the parts added or changed by DOT_ZSH.
 
-The implementation is the primary source of fact for what currently happens;
-this document records the intended user-facing behavior. When the two
+The implementation is the primary source of fact for what currently happens.
+This document records the intended user-facing behavior. When the two
 disagree, the implementation is not treated as correct by default: the
 history and the intended behavior are checked, and if the implementation
 shows a regression, the implementation is corrected rather than this
@@ -261,7 +261,7 @@ subshell and assigns only the resulting raw `LS_COLORS` value to the current
 shell. Shell quoting and the trailing assignment terminator are therefore not
 stored as part of `LS_COLORS`.
 
-The `dircolors`-generated export applies only inside that subshell; DOT_ZSH
+The `dircolors`-generated export applies only inside that subshell. DOT_ZSH
 does not newly export `LS_COLORS` in the parent shell as part of this
 derivation.
 
@@ -1161,8 +1161,8 @@ DOT_ZSH defines:
 
     kkk='clear && cd && cltmp && mail'
 
-`cltmp` is expected to be supplied by an external command or function; it is
-not defined by this DOT_ZSH plugin.
+`cltmp` is expected to be supplied by an external command or function.
+It is not defined by this DOT_ZSH plugin.
 
 
 ## 40. Exit aliases
@@ -1487,7 +1487,7 @@ For batch byte compilation it defines:
 
 On platforms other than macOS, DOT_ZSH configures aliases for the local
 command set. Solaris uses a dedicated branch that stays within Solaris 10
-standard command options; other non-macOS platforms use GNU-style options.
+standard command options. Other non-macOS platforms use GNU-style options.
 
 
 ### Solaris
@@ -1827,8 +1827,8 @@ DOT_ZSH sets:
     LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
     LD_FLAGS=/usr/local/lib:/usr/lib
 
-These values replace the values present at the time this plugin is sourced;
-they are not appended to an existing `LD_LIBRARY_PATH`.
+These values replace the values present at the time this plugin is sourced.
+They are not appended to an existing `LD_LIBRARY_PATH`.
 
 A later `~/.zshrc_local` can override them when necessary.
 
@@ -2529,18 +2529,18 @@ another Screen session.
 
 This mode is suitable when:
 
-- one persistent Screen session should move between terminals or SSH clients;
-- work should survive terminal closure or SSH disconnection;
-- the most recent login should resume the existing working session.
+- one persistent Screen session should move between terminals or SSH clients
+- work should survive terminal closure or SSH disconnection
+- the most recent login should resume the existing working session
 
 
 ### Unsuitable use cases
 
 This mode may be unsuitable when:
 
-- multiple terminals should remain independently attached at the same time;
-- every login should start an independent shell environment;
-- opening another terminal must not detach an existing Screen display.
+- multiple terminals should remain independently attached at the same time
+- every login should start an independent shell environment
+- opening another terminal must not detach an existing Screen display
 
 Source:
 
@@ -3096,7 +3096,7 @@ When `TMP` is unset and `$HOME/.tmp` exists, DOT_ZSH uses:
 for `TMP`, `TMPDIR`, and `TEMPDIR`.
 
 When `$HOME/.tmp` does not exist, DOT_ZSH does not automatically fall back
-to `/tmp`; those variables remain unset unless another environment source
+to `/tmp`. Those variables remain unset unless another environment source
 has set them.
 
 

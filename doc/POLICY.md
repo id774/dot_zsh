@@ -20,7 +20,7 @@ Where this document says "the tree" it means the first of those.
 **Simplicity is robustness.**
 
 This is the governing principle for every rule below. It does not authorize
-dropping required behavior, compatibility, or safety; it requires meeting
+dropping required behavior, compatibility, or safety. It requires meeting
 them with the least complexity justified by the actual requirement.
 
 Complexity is itself a source of failure, compatibility risk, operational
@@ -52,7 +52,7 @@ alone.
 
 - Three priorities settle a design question, in this order: **Compatibility**,
   **Safety**, **Efficiency**. This is not a list of equally weighted
-  concerns; it is an order. Compatibility outranks Safety, and Safety
+  concerns. It is an order. Compatibility outranks Safety, and Safety
   outranks Efficiency. Where two forms both work and nothing above decides
   between them, the cheaper one to run at startup wins, and that is what
   Section 2 is about.
@@ -63,11 +63,11 @@ alone.
   - A clear bug, a regression, an unintended side effect, or behavior that is
     simply broken is not kept only because it is already there.
   - Fixing a bug that restores a broken state to a normal one is not a loss
-    of compatibility; it is compatibility working as intended.
+    of compatibility. It is compatibility working as intended.
   - The current implementation is the primary fact about what runs today,
     but it is not by itself proof of what was meant to run. Intended
     behavior is read from the implementation together with the documented
-    interface, history, the existing design, and maintenance intent; a
+    interface, history, the existing design, and maintenance intent. A
     regression already sitting in the implementation is not adopted as a new
     intended behavior on the strength of the implementation alone.
   - Raising the zsh 4.2 floor, retiring a legacy plugin or setting,
@@ -87,12 +87,12 @@ alone.
 
 - This document is written to be applied literally, including by an AI or
   another party working from it alone, without that literal application
-  producing an absurd result. Absolute words -- "always", "never", "must",
-  "whatever it costs" -- are reserved for a rule that really admits no
-  exception; an ordinary preference is written as a preference, not dressed
-  up as an invariant. A rule below should be traceable to Compatibility,
-  Safety, or Efficiency; a principle is stated once here rather than
-  repeated at the top of every section that relies on it.
+  producing an absurd result. Absolute words such as "always", "never",
+  "must", and "whatever it costs" are reserved for a rule that really admits
+  no exception. An ordinary preference is written as a preference, not
+  dressed up as an invariant. A rule below should be traceable to
+  Compatibility, Safety, or Efficiency. A principle is stated once here
+  rather than repeated at the top of every section that relies on it.
 
 ### 1.4 Change Discipline for Established Infrastructure
 
@@ -175,13 +175,13 @@ alone.
   call, and an `add-zsh-hook precmd` are the three forms used here.
 - Caching a value in a file, so that it is not recomputed at every startup,
   is a valid way to cut startup cost. It is a technique, not a goal to reach
-  for on its own. A cheap computation is simply left to run every time; a
-  cache earns its place only once recomputing the value is itself the
+  for on its own. A cheap computation is simply left to run every time.
+  A cache earns its place only once recomputing the value is itself the
   measured cost. Where the cache's own invalidation, staleness handling,
   extra state, or added complexity would cost more than the recomputation it
-  avoids, recomputing is the right choice -- per Section 1, the Efficiency a
-  cache buys does not outrank the Compatibility and Safety a simpler,
-  stateless recomputation keeps.
+  avoids, recomputing is the right choice. As stated in Section 1, the
+  Efficiency gained by caching does not outweigh the Compatibility and Safety
+  of a simpler, stateless recomputation.
 - A change proposed for speed states what it measured:
 
 ```zsh
@@ -234,7 +234,7 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
 
 - Startup writes no diagnostic, informational, or accidental text to stdout or
   stderr. Intentional terminal-control sequences that implement a documented
-  terminal UI feature are permitted; `plugins/title.zsh` setting the GNU
+  terminal UI feature are permitted. `plugins/title.zsh` setting the GNU
   Screen or tmux title is the existing example. An absent path, command, or
   file is a normal state, not a condition to report.
 - The first prompt must not report a failed command. `base.zsh` sets
@@ -252,9 +252,9 @@ for i in 1 2 3 4 5; do time zsh -i -c exit; done
 - For repository-owned startup code, the reporting decision is fixed to silence.
   Normal shell startup must not emit diagnostic, informational, warning, error,
   skip, no-op, progress, or status messages to stdout or stderr. This includes
-  `[INFO]`, `[WARN]`, and `[ERROR]` style messages. A condition that a standalone
-  command or installer would report does not by itself authorize output from the
-  startup path.
+  `[INFO]`, `[WARN]`, and `[ERROR]` style messages. A condition that a
+  standalone command or installer would report does not by itself authorize
+  output from the startup path.
 - Do not use stderr as an exception to startup silence. An absent optional path,
   command, or file remains a normal silent state as already defined above. The
   existing intentional terminal-control sequences remain the only permitted
@@ -319,7 +319,7 @@ line, then code:
   date.
 - Nothing else. No description, no usage, no requirements, no version history,
   and no licence line. Three lines are three lines to read at every file and
-  three lines to keep true; the file name says what the file configures, and
+  three lines to keep true. The file name says what the file configures, and
   the repository documents say the rest.
 
 `install_dotzsh.sh` carries the structured header described in Section 7
@@ -367,7 +367,7 @@ It already does, and that stays.
 - `$HOME/.tmp` is treated as the private per-user temporary area.
 - DOT_ZSH neither creates `$HOME/.tmp` nor changes its permissions.
 - When `TMP` is unset and `$HOME/.tmp` does not exist, `settmp.zsh` leaves
-  `TMP`, `TMPDIR`, and `TEMPDIR` unset; it does not fall back to `/tmp`.
+  `TMP`, `TMPDIR`, and `TEMPDIR` unset. It does not fall back to `/tmp`.
 - A pre-existing `TMP` is preserved unchanged.
 - Avoiding the automatic `/tmp` fallback is a security policy because `/tmp`
   is a shared namespace.
@@ -433,7 +433,7 @@ it is held to a different set of rules than Sections 2 through 6.
   actually invokes `sudo`.
 - A helper owns the external-command prerequisites it directly uses. The
   standard header-extracting `usage()` calls `check_commands awk` immediately
-  before invoking `awk`; a usage-only `awk` dependency is not carried in the
+  before invoking `awk`. A usage-only `awk` dependency is not carried in the
   normal install or uninstall command lists.
 
 ### 7.3 Logging and Exit Codes
@@ -446,21 +446,21 @@ it is held to a different set of rules than Sections 2 through 6.
 - For the installer, the operation result, whether later work continues, and
   whether anything is printed are separate decisions. A required command or
   prerequisite whose absence prevents the requested install or uninstall from
-  completing correctly is an error and stops the affected operation; it is not
+  completing correctly is an error and stops the affected operation. It is not
   downgraded to a warning merely to continue.
 - A normal no-op or intentionally inapplicable branch may be silent. Use
   `[INFO]` only when the normal result is useful to the user, `[WARN]` for a
   degraded or otherwise abnormal but recoverable condition the user should
   know about, and `[ERROR]` for a failure of the requested operation.
 - Do not add installer output merely to record ordinary control-flow choices.
-  These installer logging rules do not apply to the startup tree; Section 2.4
+  These installer logging rules do not apply to the startup tree. Section 2.4
   requires repository-owned startup code to remain silent.
 
 ### 7.4 Destructive Operations
 
 - A destructive operation names its target precisely. `--uninstall` removes
   only the default target, `/usr/local/etc/zsh`, plus `~/.zshrc` and
-  `~/.zshrc.zwc` in the invoking user's home directory; a custom
+  `~/.zshrc.zwc` in the invoking user's home directory. A custom
   installation target is never removed automatically, so installing to a
   path the user chose is not silently undone by an uninstall run without
   arguments.
@@ -486,7 +486,7 @@ it is held to a different set of rules than Sections 2 through 6.
   to describe the completed state, whether or not the new change is related
   to the one already recorded.
 - On a later date, follow-up work that completes, corrects, or hardens the
-  newest release unit stays in that version; update the entry date and
+  newest release unit stays in that version. Update the entry date and
   summarize the completed whole. A later-date change independent of the
   newest entry starts a new version.
 - Each entry's description is at most two lines, and a single line at or
@@ -508,8 +508,8 @@ it is held to a different set of rules than Sections 2 through 6.
 - The repository version is `<year>.<month>`, recorded in
   [`doc/VERSIONS`](VERSIONS) and used for the Git tag. A same-month release
   that corrects an earlier one may add a third `<patch>` level instead, as
-  `v25.03.1` does; using one, and which correction warrants it, is for the
-  maintainer to decide. The Version History Guidelines at the foot of that
+  `v25.03.1` does. The maintainer decides whether a patch release is
+  warranted. The Version History Guidelines at the foot of that
   file govern the entries, including the two-line, 80-column bullet limit
   and the first-version rule stated there.
 - The repository never carries more than one version for the same calendar
@@ -583,6 +583,6 @@ Before a change to the tree is proposed, it answers these:
 Follow the terms defined by [LICENSE](LICENSE.md), [COPYING](COPYING), and
 [COPYING.LESSER](COPYING.LESSER).
 
-Files in the tree carry no licence header; the repository-wide terms cover
+Files in the tree carry no licence header. The repository-wide terms cover
 them. `install_dotzsh.sh` repeats the licence line in its header, so that a
 script read on its own still states its terms.

@@ -19,19 +19,24 @@
 #
 #  Options:
 #      -h, --help       Show this help message and exit.
-#      -n, --no-sudo    Run without sudo (the legacy "nosudo" form is also supported).
+#      -n, --no-sudo    Run without sudo (the legacy "nosudo" form is also
+#                       supported).
 #      -u, --uninstall  Remove installed dot_zsh configuration and .zshrc files.
 #      -v, --version    Show the script header and exit.
 #
 #  Notes:
-#  - [target_path]: Path to the installation directory (default: /usr/local/etc/zsh).
+#  - [target_path]: Path to the installation directory.
+#    The default is /usr/local/etc/zsh.
 #  - [nosudo|--no-sudo|-n]: If specified, the script runs without sudo.
 #    It may be given before or after [target_path].
-#  - This installer uses POSIX sh and requires zsh to compile configuration files.
-#  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent accidental deletion.
+#  - This installer uses POSIX sh and requires zsh to compile
+#    configuration files.
+#  - Keep the uninstall target fixed at /usr/local/etc/zsh to prevent
+#    accidental deletion.
 #  - Do not remove custom installation targets automatically.
 #  - Remove ~/.zshrc and ~/.zshrc.zwc during uninstallation.
-#  - Install ~/.zshrc without sudo so that it remains owned by the invoking user.
+#  - Install ~/.zshrc without sudo so that it remains owned by the
+#    invoking user.
 #
 #  Version History:
 #  v4.2 2026-09-13

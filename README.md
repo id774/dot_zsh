@@ -1,6 +1,7 @@
 # DOT_ZSH
 
-A pluggable framework for the Z shell (zsh) that simplifies configuration management, supports shared bytecode, and allows user-level customization.
+A pluggable framework for the Z shell (zsh) that simplifies configuration
+management, supports shared bytecode, and allows user-level customization.
 
 ---
 
@@ -22,8 +23,10 @@ A pluggable framework for the Z shell (zsh) that simplifies configuration manage
 ## 1. Overview
 
 DOT_ZSH is designed to:
-- Utilize `zcompile` for precompiled bytecode to improve zsh startup performance.
-- Allow shared system-wide bytecode while enabling individual users to add custom snippets.
+- Utilize `zcompile` for precompiled bytecode to improve zsh startup
+  performance.
+- Allow shared system-wide bytecode while enabling individual users to add
+  custom snippets.
 - Provide a modular structure for easily adding plugins.
 
 ---
@@ -54,7 +57,8 @@ Run the `install_dotzsh.sh` script to install DOT_ZSH:
 ```bash
 ~/dot_zsh/install_dotzsh.sh
 ```
-This installs DOT_ZSH to `/usr/local/etc/zsh`. Root privileges (via `sudo`) are required.
+This installs DOT_ZSH to `/usr/local/etc/zsh`. Root privileges (via
+`sudo`) are required.
 
 ### Custom Installation:
 ```bash
@@ -71,8 +75,8 @@ export ZSH_ROOT="$HOME/.zsh"
 ### How `ZSH_ROOT` Is Resolved:
 `~/.zshrc` locates the configuration tree as follows:
 
-1. If `ZSH_ROOT` is already set and `$ZSH_ROOT/lib/load.zsh` exists, that tree is
-   used and no search is performed.
+1. If `ZSH_ROOT` is already set and `$ZSH_ROOT/lib/load.zsh` exists, that
+   tree is used and no search is performed.
 2. Otherwise the first of these directories containing `lib/load.zsh` is used,
    and `ZSH_ROOT` is exported to point at it:
    `~/.zsh`, `~/.config/zsh`, `~/.local/share/zsh`, `/usr/local/etc/zsh`,
@@ -87,7 +91,8 @@ is no separate copy step. It is installed without `sudo` so that it stays owned
 by the invoking user.
 
 ### Uninstallation:
-To remove DOT_ZSH, including the installed configuration files and compiled `.zwc` bytecode, run:
+To remove DOT_ZSH, including the installed configuration files and compiled
+`.zwc` bytecode, run:
 
 ```bash
 ~/dot_zsh/install_dotzsh.sh --uninstall
@@ -115,10 +120,13 @@ This will remove:
 ## 4. Default Behavior
 
 DOT_ZSH:
-- Optionally launches GNU Screen at startup if the file `$HOME/.run_screen_on_startup` exists.
+- Optionally launches GNU Screen at startup if the file
+  `$HOME/.run_screen_on_startup` exists.
 - Aliases are primarily set in `plugins/alias.zsh`.
-- For environments requiring a proxy, configure `plugins/proxy.zsh`. Proxy settings are commented out by default.
-- Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists. See [Customization](#5-customization).
+- For environments requiring a proxy, configure `plugins/proxy.zsh`.
+  Proxy settings are commented out by default.
+- Sources `$HOME/.zshrc_local` at the end of `~/.zshrc` if that file exists.
+  See [Customization](#5-customization).
 
 For a complete reference to shell options, aliases, plugins, environment
 variables, prompts, and automatically enabled behavior, see
@@ -191,25 +199,26 @@ Plugins are separated by topic and named after what they configure, so the
 filename is the index: `alias.zsh` for aliases, `prompt.zsh` for the prompt,
 `proxy.zsh` for proxy variables, `extract.zsh` for the archive helper, and
 per-tool files such as `python.zsh`, `ruby.zsh`, `java.zsh` and `mysql.zsh`.
-They are sourced in filename order, and a plugin may use environment established
-by an earlier plugin; for example, `sqlite.zsh` can use `TMP` set by
+They are sourced in filename order. A plugin may use environment established
+by an earlier plugin. For example, `sqlite.zsh` can use `TMP` set by
 `settmp.zsh`.
 A feature that belongs to what an existing plugin already configures is added
-to that file; a feature that is its own topic gets a new file instead. Either
-way nothing else has to be edited, because `load.zsh` globs the directory
+to that file. A feature that is its own topic gets a new file instead. Either
+way, nothing else has to be edited because `load.zsh` globs the directory
 rather than listing its contents.
 
 ---
 
 ## 7. Versioning
 
-DOT_ZSH uses the `<year>.<month>` versioning format starting from version `11.12`.
+DOT_ZSH uses the `<year>.<month>` versioning format starting from version
+`11.12`.
 Example: `24.12`
 
 A same-month release that corrects an earlier one may add a third `<patch>`
-level instead of a new `<year>.<month>` version, for example `25.03.1`. A
-patch release is not required for every correction; using one, and which
-correction warrants it, is for the maintainer to decide.
+level instead of a new `<year>.<month>` version, for example `25.03.1`.
+A patch release is not required for every correction. The maintainer decides
+whether a patch release is warranted.
 
 For detailed version history, please refer to the [VERSIONS](doc/VERSIONS) file.
 
@@ -233,13 +242,20 @@ small, to spawn no process it can avoid, and to fail in silence.
 
 This repository uses `master` as its primary branch name.
 
-The name is used solely as a technical identifier, following the long-standing convention historically used by Git. It does not express or imply any association with racism, slavery, discrimination, or any political or social ideology.
+The name is used solely as a technical identifier, following the
+long-standing convention historically used by Git. It does not express or
+imply any association with racism, slavery, discrimination, or any political
+or social ideology.
 
 ---
 
 ## 10. License
 
-This repository is dual licensed under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html) or the [LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your option.
-For full details, please refer to the [LICENSE](doc/LICENSE.md) file.  See also [COPYING](doc/COPYING) and [COPYING.LESSER](doc/COPYING.LESSER) for the complete license texts.
+This repository is dual licensed under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html)
+or the [LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your
+option.
+For full details, please refer to the [LICENSE](doc/LICENSE.md) file.
+See also [COPYING](doc/COPYING) and [COPYING.LESSER](doc/COPYING.LESSER) for
+the complete license texts.
 
 Thank you for using and contributing to this repository!

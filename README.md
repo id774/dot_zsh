@@ -14,9 +14,8 @@ management, supports shared bytecode, and allows user-level customization.
 5. [Customization](#5-customization)
 6. [Directory Structure](#6-directory-structure)
 7. [Versioning](#7-versioning)
-8. [Contribution](#8-contribution)
-9. [Primary Branch](#9-primary-branch)
-10. [License](#10-license)
+8. [Primary Branch](#8-primary-branch)
+9. [License](#9-license)
 
 ---
 
@@ -207,6 +206,10 @@ to that file. A feature that is its own topic gets a new file instead. Either
 way, nothing else has to be edited because `load.zsh` globs the directory
 rather than listing its contents.
 
+Everything under `dot_zsh/` is read again each time an interactive shell
+starts. See [doc/POLICY.md](doc/POLICY.md) for the startup and maintenance
+constraints.
+
 ---
 
 ## 7. Versioning
@@ -224,38 +227,22 @@ For detailed version history, please refer to the [VERSIONS](doc/VERSIONS) file.
 
 ---
 
-## 8. Contribution
-
-We welcome contributions! Here's how you can help:
-1. Fork the repository.
-2. Add or improve a feature, or fix an issue.
-3. Submit a pull request with clear documentation and changes.
-
-Please ensure your code is well-structured and documented, and follow
-[doc/POLICY.md](doc/POLICY.md). Everything under `dot_zsh/` is read again each
-time an interactive shell starts, so that document asks new code there to stay
-small, to spawn no process it can avoid, and to fail in silence.
-
----
-
-## 9. Primary Branch
+## 8. Primary Branch
 
 This repository uses `master` as its primary branch name.
 
-The name is used solely as a technical identifier, following the
-long-standing convention historically used by Git. It does not express or
-imply any association with racism, slavery, discrimination, or any political
-or social ideology.
+The name is used solely as a technical identifier, following the long-standing
+convention historically used by Git. It does not express or imply any
+association with racism, slavery, discrimination, or any political or social
+ideology.
 
 ---
 
-## 10. License
+## 9. License
 
-This repository is dual licensed under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html)
-or the [LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your
-option.
-For full details, please refer to the [LICENSE](doc/LICENSE.md) file.
-See also [COPYING](doc/COPYING) and [COPYING.LESSER](doc/COPYING.LESSER) for
-the complete license texts.
-
-Thank you for using and contributing to this repository!
+This repository is dual licensed under the
+[GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html) or the
+[LGPL version 3](https://www.gnu.org/licenses/lgpl-3.0.html), at your option.
+For full details, please refer to [doc/LICENSE.md](doc/LICENSE.md). See also
+[doc/COPYING](doc/COPYING) and [doc/COPYING.LESSER](doc/COPYING.LESSER) for the
+complete license texts.

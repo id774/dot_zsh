@@ -1,8 +1,11 @@
 # DOT_ZSH Implementation Policy
 
-This document states what the code in this repository is held to. It is
-self-contained: everything that applies to the configuration tree and to
-`install_dotzsh.sh` is stated here.
+This document states what the code in this repository is held to.
+
+This document stands on its own. It is the whole implementation policy of this
+repository, and no rule here is completed by a document kept somewhere else. A
+subject it does not cover is a gap in this document, to be filled here rather
+than looked up elsewhere.
 
 Two kinds of file live here, and they are held to different rules because
 they cost different things.
@@ -20,21 +23,24 @@ Where this document says "the tree" it means the first of those.
 **Simplicity is robustness.**
 
 This is the governing principle for every rule below. It does not authorize
-dropping required behavior, compatibility, or safety. It requires meeting
-them with the least complexity justified by the actual requirement.
+dropping required behavior, compatibility, security, safety, documentation, or
+validation. It requires satisfying those requirements with no more complexity
+than the actual problem justifies.
 
-Complexity is itself a source of failure, compatibility risk, operational
-risk, and maintenance cost. Do not add a branch, state variable, helper,
-abstraction, dependency, retry, fallback, validation, or defensive check
-unless it is required by the specification or addresses a realistic failure
-mode with meaningful operational consequence. Do not re-check a condition
-already guaranteed by a preceding successful operation or an established
-invariant.
+Complexity is itself a source of failure, compatibility risk, operational risk,
+security risk, and maintenance cost. Do not add a branch, state variable,
+helper, abstraction, dependency, network boundary, retry, fallback, validation,
+configuration state, or framework unless the specification requires it or it
+addresses a realistic failure mode with meaningful consequence.
+
+Do not re-check a condition already guaranteed by a preceding successful
+operation or an established invariant. Do not create a layer merely to resemble
+a possible future architecture.
 
 When two designs satisfy the same requirements, choose the one with less
-control flow, less state, fewer dependencies, and fewer moving parts.
-Simplicity is judged by necessary concepts and behavior, not by line count
-alone.
+control flow, less state, fewer dependencies, fewer side effects, fewer moving
+parts, and fewer operational assumptions. Simplicity is judged by the number of
+necessary concepts and behaviors, not by line count alone.
 
 ## 1. About This Document
 
@@ -47,6 +53,11 @@ alone.
   repository, keep the directly affected implementation and documentation
   consistent unless the stated scope explicitly excludes documentation
   changes.
+
+A concrete specification has exactly one authoritative home appropriate to the
+responsibility that owns it. Other documents may link to or summarize that
+specification for navigation, but they do not create a competing normative
+copy.
 
 ### 1.2 Decision Priorities and Maintainer Judgment
 
@@ -64,12 +75,6 @@ alone.
     simply broken is not kept only because it is already there.
   - Fixing a bug that restores a broken state to a normal one is not a loss
     of compatibility. It is compatibility working as intended.
-  - The current implementation is the primary fact about what runs today,
-    but it is not by itself proof of what was meant to run. Intended
-    behavior is read from the implementation together with the documented
-    interface, history, the existing design, and maintenance intent. A
-    regression already sitting in the implementation is not adopted as a new
-    intended behavior on the strength of the implementation alone.
   - Raising the zsh 4.2 floor, retiring a legacy plugin or setting,
     choosing a repository version, and other large, deliberate design
     changes are decisions for the maintainer. A routine change does not make
@@ -83,54 +88,74 @@ alone.
   supported environment, or that weakens security is not adopted for its
   speed.
 
+The implementation is the primary evidence of what currently happens. It is
+not, by itself, proof that the current behavior is the intended specification.
+
+When implementation and documentation disagree, compare the implementation,
+documented interface, component header, history, existing design, and
+maintenance intent. If the implementation contains a regression, do not adopt
+that regression as the specification merely because it is present in the
+current code.
+
 ### 1.3 Wording Strength
 
-- This document is written to be applied literally, including by an AI or
-  another party working from it alone, without that literal application
-  producing an absurd result. Absolute words such as "always", "never",
-  "must", and "whatever it costs" are reserved for a rule that really admits
-  no exception. An ordinary preference is written as a preference, not
-  dressed up as an invariant. A rule below should be traceable to
-  Compatibility, Safety, or Efficiency. A principle is stated once here
-  rather than repeated at the top of every section that relies on it.
+This document is written to be applied literally, including by an AI or
+another party working from it alone.
+
+Use `must`, `always`, and `never` only for invariants that admit no reasonable
+exception. Express preferences and situational decisions with `prefer`,
+`should`, or other qualified wording.
+
+Do not apply a rule literally where doing so would defeat the repository's
+stated purpose, intended behavior, compatibility, safety, or approved change
+scope.
+
+Where the applicable specifications and policy leave a legitimate choice
+open, an explicit maintainer decision governs that choice. General
+conventions do not override it.
+
+A rule below should be traceable to Compatibility, Safety, or Efficiency. A
+principle is stated once here rather than repeated at the top of every
+section that relies on it.
 
 ### 1.4 Change Discipline for Established Infrastructure
 
 - **Change established infrastructure only by explicit decision.**
-  Finding a possible safety, portability, maintainability, cleanup, or
-  refactoring improvement does not by itself authorize an implementation
-  change. Documentation work, policy work, review, diagnostics, cleanup, or
-  another task whose stated scope does not include an implementation change
-  must not expand into one merely because an improvement opportunity is
-  discovered.
 
-  A safety-motivated change is not automatically justified by Safety having
-  priority over Efficiency. Added complexity can itself create new failure
-  modes, compatibility risk, operational risk, and maintenance cost. Evaluate
-  the proposed change as a whole.
+Finding a possible safety, portability, maintainability, cleanup, or
+refactoring improvement does not by itself authorize an implementation
+change.
 
-  Before changing established behavior, weigh the probability and impact of
-  the failure being prevented against the added complexity, new failure modes,
-  compatibility risk, operational cost, maintenance cost, and rollback cost.
+Documentation work, policy work, review, diagnostics, cleanup, or another
+task whose stated scope does not include an implementation change must not
+expand into one merely because an improvement opportunity is discovered.
 
-  Behavior that has operated reliably over time is evidence and has value of
-  its own. Do not refactor established infrastructure merely because another
-  design appears cleaner, more modern, or more defensive.
+A safety-motivated change is not automatically justified by Safety having
+priority over Efficiency. Added complexity can itself create new failure
+modes, compatibility risk, operational risk, and maintenance cost. Evaluate
+the proposed change as a whole.
 
-  An implementation change is made only when that change has been explicitly
-  chosen as part of the work being performed. Before deployment, validate it
-  in the supported and representative environments affected by the change. A
-  successful check in one convenient environment is not sufficient evidence
-  for a change whose compatibility risk extends to other supported
-  environments.
+Before changing established behavior, weigh the probability and impact of the
+failure being prevented against the added complexity, new failure modes,
+compatibility risk, operational cost, maintenance cost, and rollback cost.
 
-  Scope discipline does not mean leaving documentation inconsistent with an
-  implementation change that is already authorized. When that change alters
-  behavior described by a file header, FEATURES, README, configuration
-  documentation, or release history, update the directly affected
-  documentation as part of the same change unless the stated scope explicitly
-  excludes documentation changes. Do not use that requirement as permission
-  for unrelated cleanup in the same file or repository.
+Behavior that has operated reliably over time is evidence and has value of
+its own. Do not refactor established infrastructure merely because another
+design appears cleaner, more modern, or more defensive.
+
+An implementation change is made only when that change has been explicitly
+chosen as part of the work being performed. Before deployment, validate it in
+the supported and representative environments affected by the change. A
+successful check in one convenient environment is not sufficient evidence for
+a change whose compatibility risk extends to other supported environments.
+
+Scope discipline does not mean leaving documentation inconsistent with an
+implementation change that is already authorized. When that change alters
+behavior described by a file header, FEATURES, README, configuration
+documentation, or release history, update the directly affected
+documentation as part of the same change unless the stated scope explicitly
+excludes documentation changes. Do not use that requirement as permission
+for unrelated cleanup in the same file or repository.
 
 ## 2. The Startup Path
 
@@ -333,25 +358,44 @@ It already does, and that stays.
   omission. A `setopt` named after what it does, a plugin named after what it
   configures, and a helper named after what it sets do not need a line
   repeating them.
-- Write a comment where the code is not its own reason: why a form that looks
-  wrong is right, why an order matters, why a value is the value it is. The
-  note in `dot_zshrc` on using `if` rather than `&&` is the example. Without
-  it the next reader tidies it back and the first prompt reports a failed
-  command again.
+
+A comment preserves a reason, constraint, non-obvious intent, or decision that
+a later change could otherwise undo. Do not use comments merely to restate code
+whose operation is already evident.
+
+The note in `dot_zshrc` on using `if` rather than `&&` is an example.
+Without it the next reader tidies it back and the first prompt reports a
+failed command again.
+
 - English, imperative, and as short as the reason allows.
-- No banner, no divider, no `Function to ...` preamble, and no comment that
-  restates the line below it.
+- No banner, no divider, and no `Function to ...` preamble.
 - No commented-out code, except where the file is a template of settings to
   enable, as `plugins/proxy.zsh` is.
-- Write English explanatory prose in clear, natural sentences. Do not replace a
-  sentence with a label and a colon, a status prefix such as `Implement:` or
-  `Incompatible:`, a symbol, or an unexplained abbreviation. Apply this to
-  English prose in comments, docstrings, documentation, version histories,
-  release notes, commit messages, and pull request descriptions. This rule does
-  not alter the established forms of headings, list labels, tables, code,
-  configuration syntax, machine-readable fields, literal interface strings, or
-  non-English content required by the repository's purpose. Do not rewrite
-  historical entries or unrelated text merely to align their style.
+
+Write English explanatory prose in clear, natural sentences. Do not replace a
+sentence with a label and a colon, a status prefix such as `Implement:` or
+`Incompatible:`, a symbol, or an unexplained abbreviation.
+
+Apply this to English prose in comments, docstrings, documentation, version
+histories, release notes, commit messages, and pull request descriptions.
+
+This rule does not alter the established forms of headings, list labels,
+tables, code, configuration syntax, machine-readable fields, literal
+interface strings, or non-English content required by the repository's
+purpose.
+
+Wrap ordinary prose at approximately 80 columns where practical. Preserve
+the logical structure of paragraphs, lists, and other document elements.
+Do not break URLs, code, tables, identifiers, or other elements whose
+structure requires a longer line.
+
+Shared boilerplate must retain its common wording, line breaks, blank lines,
+and formatting. Do not reformat it independently in individual repositories.
+Its established common form takes precedence over the ordinary line-wrapping
+guideline.
+
+Do not rewrite historical entries or unrelated text merely to align their
+style.
 
 ## 6. What the Tree May Contain
 
@@ -467,6 +511,23 @@ it is held to a different set of rules than Sections 2 through 6.
 
 ### 7.5 Script Versioning
 
+These rules apply to individual source files that carry their own version
+history. Repository release versions are governed separately.
+
+- Source file versions use a two-level `major.minor` scheme.
+- When incrementing `minor` would reach `10`, roll over instead: increment
+  `major` by 1 and reset `minor` to `0` (for example `v0.9` -> `v1.0`,
+  `v1.9` -> `v2.0`, `v2.9` -> `v3.0`).
+- Do not continue `minor` past `9` as in standard semantic versioning
+  (do not use `v1.10`, `v1.11`, ...).
+- Raising `major` for a reason other than the rollover is a decision the
+  maintainer makes, not one this document derives from the change.
+- Removing or renaming an option, changing what an existing argument means,
+  changing a default so that an unchanged invocation does something else, and
+  changing how a path or a configuration value is resolved are all incompatible
+  changes. Say so in the `Version History` entry, so that the number the change
+  is released under can be chosen knowing that.
+
 - `install_dotzsh.sh` keeps its own `major.minor` version history,
   independent of the `doc/VERSIONS` repository version described in
   Section 8.
@@ -509,9 +570,9 @@ it is held to a different set of rules than Sections 2 through 6.
   [`doc/VERSIONS`](VERSIONS) and used for the Git tag. A same-month release
   that corrects an earlier one may add a third `<patch>` level instead, as
   `v25.03.1` does. The maintainer decides whether a patch release is
-  warranted. The Version History Guidelines at the foot of that
-  file govern the entries, including the two-line, 80-column bullet limit
-  and the first-version rule stated there.
+  warranted. The Version History Guidelines at the foot of that file
+  govern the entries. The established form of an existing history takes
+  precedence over the ordinary two-line, 80-column limit.
 - The repository never carries more than one version for the same calendar
   date, whatever the independence of the changes released. A same-date
   change joins that day's single entry.
@@ -532,35 +593,60 @@ it is held to a different set of rules than Sections 2 through 6.
   names the section it falls in. It is a diff aid and nothing more. No file is
   given `linguist-language`, and `doc/VERSIONS`, `doc/COPYING`, and
   `doc/COPYING.LESSER` are excluded.
-- Plain text is wrapped near 80 columns where that is practical. A URL, a
-  command, a table, or a line that is clearer whole may exceed it.
 - A thing is named for what it is, not for a part of it. This holds in
   headers, in the documents, and in commit messages.
 
 ## 9. Pull Request Scope and History
 
-- A pull request carries one purpose. "Purpose" means the higher-level
-  reason for the change, not an individual finding, file, function, or
-  review comment. Multiple findings from one cross-cutting investigation,
-  maintenance task, defect class, migration, release preparation, or
-  quality correction may therefore remain in one pull request when they
-  form one coherent review and validation unit. Do not split an approved
-  work group mechanically by finding or file when doing so only increases
-  merge conflicts, rebases, duplicated validation, or branch and
-  pull-request management cost without a clear review, release, rollback,
-  or acceptance benefit. A coherent change is one commit,
-  amended and force-pushed with `--force-with-lease` as review proceeds,
-  rather than gaining a further commit for each remark. A conflict with the
-  base branch is resolved by rebasing onto it, so that the branch which
-  merges reads as the change it was always meant to be.
-- An automated agent must not commit or push directly to `master`. It must
-  commit authorized changes to a work branch and submit them through a pull
-  request targeting the approved base branch. Creating or updating a pull
-  request does not authorize the agent to merge it or enable auto-merge.
-  Either action requires an explicit instruction from the maintainer. This
-  paragraph does not change a human maintainer's authority.
+A pull request carries one coherent higher-level purpose, which may require
+coordinated changes across several files or responsibilities.
+
+Do not split one approved purpose mechanically by individual finding, file,
+or review comment, and do not include unrelated cleanup, formatting, or
+feature work.
+
+Represent one coherent change as one commit and amend review corrections
+instead of accumulating follow-up commits.
+
+Rewriting the history of a branch under review requires an explicit
+instruction from the maintainer. When such a rewrite is authorized, use
+`--force-with-lease` and limit the operation to the branch under review.
+
+Check the final branch against its base to remove abandoned intermediate
+wording and work. Merge only with explicit maintainer approval.
+
+"Purpose" means the higher-level reason for the change, not an individual
+finding, file, function, or review comment. Multiple findings from one
+cross-cutting investigation, maintenance task, defect class, migration,
+release preparation, or quality correction may therefore remain in one pull
+request when they form one coherent review and validation unit. Do not split
+an approved work group mechanically by finding or file when doing so only
+increases merge conflicts, rebases, duplicated validation, or branch and
+pull-request management cost without a clear review, release, rollback, or
+acceptance benefit. A conflict with the base branch is resolved by rebasing
+onto it, so that the branch which merges reads as the change it was always
+meant to be.
+
+Unless explicitly instructed otherwise by the maintainer, an automated agent
+must commit authorized changes to a work branch and submit them through a
+pull request targeting the approved base branch.
+
+An automated agent must not commit or push directly to `master` without
+explicit instructions from the maintainer authorizing that operation.
+
+Creating or updating a pull request does not authorize the agent to merge it
+or enable auto-merge. Either action requires an explicit instruction from
+the maintainer.
+
+Authorization for one operation does not imply authorization for another.
+These rules do not change a human maintainer's authority.
 
 ## 10. Judging a Change
+
+Before accepting a change, ask whether it is the smallest coherent change that
+serves its purpose, whether it alters behavior outside that purpose, whether it
+adds an unnecessary dependency or side effect, whether it exposes private
+information, and whether directly affected documentation remains correct.
 
 Before a change to the tree is proposed, it answers these:
 
@@ -586,3 +672,7 @@ Follow the terms defined by [LICENSE](LICENSE.md), [COPYING](COPYING), and
 Files in the tree carry no licence header. The repository-wide terms cover
 them. `install_dotzsh.sh` repeats the licence line in its header, so that a
 script read on its own still states its terms.
+
+Content adapted from an external article, answer, documentation example, source
+file, dataset, or other third-party material credits its source and respects
+the license or redistribution terms that apply to it.
